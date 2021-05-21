@@ -1,0 +1,12 @@
+com/hazelcast/msf/controller/MSFController$Singleton.class
+com/hazelcast/msf/persistence/DTO.class
+com/hazelcast/msf/configuration/MSFConfig.class
+com/hazelcast/msf/messaging/APIResponse.class
+com/hazelcast/msf/configuration/ConfigUtil.class
+com/hazelcast/msf/eventstore/EventStore.class
+com/hazelcast/msf/configuration/ConfigUtil$ConfigInfo.class
+com/hazelcast/msf/messaging/APIResponse$Status.class
+com/hazelcast/msf/messaging/MessageBroker.class
+com/hazelcast/msf/controller/MSFController.class
+com/hazelcast/msf/transactions/TxnMessage.class
+com/hazelcast/msf/persistence/DAO.class

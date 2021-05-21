@@ -1,13 +1,14 @@
 package com.hazelcast.msfdemo.acctsvc.events;
 
 import com.hazelcast.msf.eventstore.SequencedEvent;
+import com.hazelcast.msf.persistence.DTO;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
 
 import java.io.Serializable;
 import java.util.function.UnaryOperator;
 
-public abstract class AccountEvent extends SequencedEvent
-        implements Serializable, UnaryOperator<Account> {
+public abstract class AccountEvent extends SequencedEvent<Account>
+        implements Serializable /*, UnaryOperator<Account> */ {
     private AccountEventTypes eventType;
     protected String accountNumber;
     protected int amount;

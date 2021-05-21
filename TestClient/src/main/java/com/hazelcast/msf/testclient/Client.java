@@ -134,4 +134,19 @@ public class Client  {
 
         return response.getBalance();
     }
+
+    public boolean transfer(String fromAcct, String toAcct, int amount) {
+        TransferMoneyRequest request = TransferMoneyRequest.newBuilder()
+                .setFromAccountNumber(fromAcct)
+                .setToAccountNumber(toAcct)
+                .setAmount(amount).build();
+        TransferMoneyResponse response;
+        try {
+            response = blockingStub.transferMoney(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return false;
+        }
+        return response.getSucceeded();
+    }
 }

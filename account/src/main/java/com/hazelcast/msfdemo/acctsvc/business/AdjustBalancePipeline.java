@@ -18,11 +18,12 @@ import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest;
 import com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceEvent;
+import com.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import com.hazelcast.msfdemo.acctsvc.service.AccountService;
 
-import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
-
 import java.util.AbstractMap;
+
+import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
 
 public class AdjustBalancePipeline implements Runnable {
 
@@ -73,27 +74,21 @@ public class AdjustBalancePipeline implements Runnable {
                 })
                 .setName("Create AccountEvent.ADJUST");
 
-        // Drop the UniqueID for most use cases
-        //StreamStage<AdjustBalanceEvent> eventStream = tupleStream.map( tuple -> tuple.f1());
-
         // Peek in on progress -- will probably remove this soon
         tupleStream.window(oneSecond)
                 .aggregate(AggregateOperations.counting())
                 .writeTo(Sinks.logger(count -> "AccountEvent.ADJUST count " + count));
 
-        // Yet another rework ....
-        // Persist to the EventStore
-        ServiceFactory<?,IMap<Long,AccountEvent>> eventStoreServiceFactory = ServiceFactories.iMapService(service.getEventStore().getEventMap().getName());
         ServiceFactory<?,IMap<String,Account>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());
-        tupleStream.mapUsingService(eventStoreServiceFactory, (eventMap, tuple) -> {
-            AdjustBalanceEvent abe = tuple.f1();
-            // append would do this for us but if we are inserting into the
-            // event store manually, we have to do sequencing manually as well
-            Long key = service.getEventStore().getNextSequence();
-            abe.setSequence(key);
-            eventMap.put(key, abe);
-            return tuple; // pass thru unchanged
 
+        ServiceFactory<?, AccountEventStore> eventStoreServiceFactory =
+               ServiceFactories.sharedService(
+                        (ctx) -> AccountEventStore.getInstance()
+                );
+
+        tupleStream.mapUsingService(eventStoreServiceFactory, (eventStore, tuple) -> {
+            eventStore.append(tuple.f1());
+            return tuple; // pass thru unchanged
         }).setName("Persist AdjustBalanceEvent to event store")
 
         // Build Materialized View and Publish it

@@ -4,6 +4,8 @@ import com.hazelcast.jet.aggregate.AggregateOperations;
 import com.hazelcast.jet.datamodel.Tuple2;
 import com.hazelcast.jet.pipeline.JournalInitialPosition;
 import com.hazelcast.jet.pipeline.Pipeline;
+import com.hazelcast.jet.pipeline.ServiceFactories;
+import com.hazelcast.jet.pipeline.ServiceFactory;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.Sources;
 import com.hazelcast.jet.pipeline.StreamStage;
@@ -15,6 +17,7 @@ import com.hazelcast.msfdemo.acctsvc.domain.Account;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.OpenAccountEvent;
+import com.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import com.hazelcast.msfdemo.acctsvc.service.AccountService;
 
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
@@ -73,50 +76,51 @@ public class OpenAccountPipeline implements Runnable {
                 })
                 .setName("Create AccountEvent.OPEN");
 
-        // Drop the UniqueID for most use cases
-        StreamStage<OpenAccountEvent> eventStream = tupleStream.map( tuple -> tuple.f1())
-                .setName("Simplify stream item (drop uniqueItemID)");
+//        // Drop the UniqueID for most use cases
+//        StreamStage<OpenAccountEvent> eventStream = tupleStream.map( tuple -> tuple.f1())
+//                .setName("Simplify stream item (drop uniqueItemID)");
 
         // Peek in on progress
-        eventStream.window(oneSecond)
+        tupleStream.window(oneSecond)
                 .aggregate(AggregateOperations.counting())
                 .setName("Count operations per second")
                 .writeTo(Sinks.logger(count -> "AccountEvent.OPEN count " + count));
 
         // Persist to Event Store and Materialized View
-        //final AccountEventStore store = service.getEventStore();
-        // Really dislike exposing these here but don't see alternative at the moment
-        final IMap<Long,AccountEvent> eventStore = service.getEventStore().getEventMap();
         final IMap<String, Account> accountView = service.getView();
+        ServiceFactory<?, AccountEventStore> eventStoreServiceFactory =
+                ServiceFactories.sharedService(
+                        (ctx) -> AccountEventStore.getInstance()
+                );
 
-        eventStream.map( event -> {
-            // append would do this for us but if we are inserting into the
-            // event store manually, we have to do sequencing manually as well
-            Long key = service.getEventStore().getNextSequence();
-            event.setSequence(key);
-            return new AbstractMap.SimpleEntry<Long,AccountEvent>(key, event);
-            }).setName("Create Map.Entry for EventStore insertion")
-            .writeTo(Sinks.map(eventStore))
-            .setName("Persist OpenAccountEvent to event store");
+        ServiceFactory<?,IMap<String,Account>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());
 
-            // Create Materialized View object and publish it
-        eventStream.map(accountEvent -> {
-                //System.out.println("Creating Account (Materialized View) object");
+
+        tupleStream.mapUsingService( eventStoreServiceFactory, (eventStore, tuple) -> {
+                    eventStore.append(tuple.f1());
+                    return tuple;
+                }).setName("Persist OpenAccountEvent to event store")
+
+        // Create Materialized View object and publish it
+        .mapUsingService(materializedViewServiceFactory, (viewMap, tuple)-> {
+            //System.out.println("Creating Account (Materialized View) object");
+            OpenAccountEvent openEvent = tuple.f1();
             Account a = new Account();
-            a.setName(accountEvent.getAccountName());
-            a.setAcctNumber(accountEvent.getAccountNumber());
-            a.setBalance(accountEvent.getAmount());
-            return new AbstractMap.SimpleEntry<>(a.getAcctNumber(), a);
-        }).setName("Create Account Materialized View")
-                //.writeTo(Sinks.logger());
-                .writeTo(Sinks.map(accountView))
-                .setName("Insert into Materialized View map"); // Will be map w/Merge or Update for subsequent txns
+            a.setName(openEvent.getAccountName());
+            a.setAcctNumber(openEvent.getAccountNumber());
+            a.setBalance(openEvent.getAmount());
+            viewMap.put(openEvent.getAccountNumber(), a);
+            return tuple2(tuple.f0(), a);
+        }).setName("Create and publish Account Materialized View")
+//                //.writeTo(Sinks.logger());
+//                .writeTo(Sinks.map(accountView))
+//                .setName("Insert into Materialized View map"); // Will be map w/Merge or Update for subsequent txns
 
-        tupleStream.map( tuple -> {
+        .map( tuple -> {
             Long uniqueID = tuple.f0();
-            OpenAccountEvent event = tuple.f1();
+            Account account = tuple.f1();
             APIResponse<String> response = new APIResponse<String>(uniqueID,
-                   event.getAccountNumber());
+                   account.getAcctNumber());
             //System.out.println("Building and returning API response");
             return new AbstractMap.SimpleEntry<Long,APIResponse<String>>(uniqueID, response);
         }).setName("Build client APIResponse")

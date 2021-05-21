@@ -51,7 +51,7 @@ class AccountEventStoreTest {
 
         // 01: Test account with OPEN only
         open("001", 100);
-        Account acct = eventStore.materialize("001");
+        Account acct = eventStore.materialize("accountNumber=001");
         assertNotNull(acct);
         assertEquals("001", acct.getAcctNumber());
         assertEquals("Test-001", acct.getName());
@@ -68,12 +68,12 @@ class AccountEventStoreTest {
         adjust("001", 100);
         adjust("001", 200);
         adjust("001", 300);
-        Account a = eventStore.materialize("001");
+        Account a = eventStore.materialize("accountNumber=001");
         assertEquals(1000+100+200+300, a.getBalance());
         assertEquals(4, eventStore.getEventMap().size());
 
         adjust("001", -250);
-        a = eventStore.materialize("001");
+        a = eventStore.materialize("accountNumber=001");
         assertEquals(1000+100+200+300-250, a.getBalance());
         assertEquals(5, eventStore.getEventMap().size());
 
@@ -97,7 +97,7 @@ class AccountEventStoreTest {
         for (int i=0; i<howMany; i++) {
             String acctNum = ""+ (i+1);
             System.out.println("Validating " + acctNum);
-            Account a = eventStore.materialize(acctNum);
+            Account a = eventStore.materialize("accountNumber=" + acctNum);
             assertEquals(1450, a.getBalance());
             Collection<AccountEvent> entries = eventStore.getEventMap().values(Predicates.sql("accountNumber=" + acctNum));
             assertEquals(9, entries.size());

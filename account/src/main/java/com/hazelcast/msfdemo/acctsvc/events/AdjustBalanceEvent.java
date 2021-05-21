@@ -8,11 +8,6 @@ import java.util.function.UnaryOperator;
 public class AdjustBalanceEvent extends AccountEvent implements Serializable,
                                                                 UnaryOperator<Account> {
 
-//    // needed for Serialization
-//    public AdjustBalanceEvent() {
-//        super(AccountEventTypes.ADJUST, "", -1);
-//    }
-
     public AdjustBalanceEvent(String accountNumber, int adjustment) {
         super(AccountEventTypes.ADJUST, accountNumber, adjustment);
     }

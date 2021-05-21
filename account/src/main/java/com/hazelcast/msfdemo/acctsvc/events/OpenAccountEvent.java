@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class OpenAccountEvent extends AccountEvent implements Serializable,
-        //Supplier<Account>,
         UnaryOperator<Account> {
 
     private String accountName;
@@ -21,16 +20,6 @@ public class OpenAccountEvent extends AccountEvent implements Serializable,
     public String toString() {
         return "OPEN account " + accountNumber + " with initial balance " + amount;
     }
-
-//    @Deprecated  // going with UnaryOperator instead
-//    @Override // Supplier<Account>
-//    public Account get() {
-//        Account a = new Account();
-//        a.setAcctNumber(super.getAccountNumber());
-//        a.setName(accountName);
-//        a.setBalance(super.getAmount());
-//        return a;
-//    }
 
     @Override // UnaryOperator<Account>
     public Account apply(Account account) {

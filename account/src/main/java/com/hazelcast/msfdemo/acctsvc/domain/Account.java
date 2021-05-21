@@ -5,8 +5,6 @@ import com.hazelcast.msf.persistence.DTO;
 import java.io.Serializable;
 
 public class Account extends DTO<String> implements Serializable {
-    // Replace with flake id generator in next iteration
-    //static int nextAcctNum;
 
     private int balance;    // in cents
     private String acctNumber;
@@ -18,7 +16,6 @@ public class Account extends DTO<String> implements Serializable {
 
     // Commands
 //    public static Account open(String name, int beginningBalance) {
-//        // TODO: verify proper threadsafe contruction behavior
 //        Account a = new Account();
 //        a.name = name;
 //        a.acctNumber = ""+ ++nextAcctNum;

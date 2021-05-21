@@ -7,17 +7,14 @@ import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import com.hazelcast.query.Predicates;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: should there be an EventStore base class>? If so then we'd need
-//       a base class for the Events as well
-public class AccountEventStore extends EventStore<AccountEvent> {
+public class AccountEventStore extends EventStore<Account, String, AccountEvent> {
 
     // Singleton implementation
     private AccountEventStore() {
-        super(AccountEventStore.class.getCanonicalName());
+        super(AccountEventStore.class.getCanonicalName(), Account::new);
         MSFController controller = MSFController.getInstance();
         String mapName = "AccountEventStore";
         String keyName = "accountNumber"; // builds an index, so case sensitive!
@@ -30,19 +27,19 @@ public class AccountEventStore extends EventStore<AccountEvent> {
         return Singleton.INSTANCE;
     }
 
-    // Build a materialized view from the Event Store.  Should not be necessary
-    // in normal operation as we do this on-the-fly, but if we are in recovery
-    // scenario or taking a snapshot, then we do this.
-    public Account materialize(String acctNum) {
-        Account account = new Account();
-        List<Long> keys = new ArrayList(eventMap.keySet(Predicates.sql("accountNumber="+acctNum)));
-        Collections.sort(keys);
-        for (Long sequence : keys) {
-            AccountEvent accountEvent = eventMap.get(sequence);
-            accountEvent.apply(account);
-        }
-        return account;
-    }
+//    // Build a materialized view from the Event Store.  Should not be necessary
+//    // in normal operation as we do this on-the-fly, but if we are in recovery
+//    // scenario or taking a snapshot, then we do this.
+//    public Account materialize(String acctNum) {
+//        Account account = new Account();
+//        List<Long> keys = new ArrayList(eventMap.keySet(Predicates.sql("accountNumber="+acctNum)));
+//        Collections.sort(keys);
+//        for (Long sequence : keys) {
+//            AccountEvent accountEvent = eventMap.get(sequence);
+//            accountEvent.apply(account);
+//        }
+//        return account;
+//    }
 
     // Is this an all-or-nothing operation?  Maybe we want to use it for space
     // management so might set a threshold - checkpoint keys having over X entries.
