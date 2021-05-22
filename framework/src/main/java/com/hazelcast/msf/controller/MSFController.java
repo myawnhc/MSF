@@ -3,12 +3,10 @@ package com.hazelcast.msf.controller;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.collection.IList;
 import com.hazelcast.config.Config;
-import com.hazelcast.config.ConfigXmlGenerator;
 import com.hazelcast.config.EventJournalConfig;
 import com.hazelcast.config.IndexConfig;
 import com.hazelcast.config.IndexType;
 import com.hazelcast.config.MapConfig;
-import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.IAtomicLong;
 import com.hazelcast.flakeidgen.FlakeIdGenerator;
@@ -23,10 +21,13 @@ import com.hazelcast.msf.configuration.ConfigUtil;
 import com.hazelcast.topic.ITopic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/** Controller class to serve as central point-of-management for Hazelcast; will be responsible for
+ *  configuration, starting and stopping the cluster, and providing an interface to Hazelcast
+ *  APIs so that individual services don't need to hold IMDG or Jet references.
+ */
 public class MSFController {
 
     private HazelcastInstance hazelcast;
@@ -81,7 +82,7 @@ public class MSFController {
     public long getUniqueMessageID() { return messageID.newId(); }
     public IList getList(String name) { return hazelcast.getList(name); }
 
-    // Might move this to an EventStore base class
+    // Might move this to EventStore base class
     public IMap createEventStore(String mapName, String keyFieldName) {
         Config config = new Config();
         MapConfig mapConfig = config.getMapConfig(keyFieldName);
@@ -107,14 +108,13 @@ public class MSFController {
         return hazelcast.getCPSubsystem().getAtomicLong(name);
     }
 
-
     // Not currently used, but if we want to shut down cleanly we have to have some
     // way of knowing when all services have stopped running.
     public void startService(String service) {}
     public void stopService(String service) {}
 
     // By moving job control out of the service, we can let the framework decide
-    // (likely via configuration) whether we're  doing embedded or client/server,
+    // (likely via configuration) whether we're doing embedded or client/server,
     // how many instances to start, etc.
     public void startJob(String name, Pipeline p) {
         JobConfig jconfig = new JobConfig();
@@ -123,7 +123,6 @@ public class MSFController {
         try {
             Job j = jet.newJobIfAbsent(p, jconfig);
             runningJobs.add(j); // Maybe key by service so stopservice can cancel it?
-            //System.out.println("Started and logged");
         } catch (Throwable t) {
             System.out.println("Job start failed " + t.getMessage());
         }

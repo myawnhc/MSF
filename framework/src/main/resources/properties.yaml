@@ -1,35 +1,30 @@
 ---
-defaultConfig: personal-cluster
+defaultConfig: embedded
 
 clusterConfiguration:
 
   embedded:
     name: dev
 
-  on-prem-cluster:
+  on-premise:
     name: dev
     password: dev-pass
 
-  # Hazelcast Cloud Shared - Multi-tenant, suitable for dev and small production deployments, has a free 200MB tier and pay-as-you-go.
-  personal-cluster:
-    # This is a free tier cluster set up by the student
+  cloud-starter:
     name: training
     #password: 70b7462549ca485a9639679ae77e35c1
     discovery-token: Yfs15OIAEcQONiNEiZj1ZPvvbgUj1iIpImTs3MSA4SJDrFr5xv
     # TODO: comment this back out after finished testing in UAT!
     #url-base: https://uat.hazelcast.cloud
 
-  shared-training-cluster:
-    # This is a (proposed, not yet implemented) cluster maintained by the education team.   Starter, most likely,
-    name: training
-    password:
-    discovery-token:
-    #url-base: https://coordinator.hazelcast.cloud
-
-  # Hazelcast Cloud Enterprise - Single tenant, suitable for enterprise deployments.  Pay-as-you-go and contracted tiers.
-  enterprise-cluster:
+  cloud-enterprise:
     name: retail
     #password: 738184083493413a83d0c6519fd7f757
     discovery-token: hGqUYAhkIPx9px6iSaYvboh7AcMOlQs33Wr4CEq9sR9XrB790M
-    url-base: https://uat.hazelcast.cloud
+    #url-base: https://uat.hazelcast.cloud
     # may add SSL properties here also ... but code doesn't handle them yet
+
+    aws:
+    gcp:
+    os:
+    azure:

@@ -1,29 +1,34 @@
 package com.hazelcast.msf.testclient;
 
 
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
-import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass;
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.*;
-import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest;
-import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse;
 
-public class Client  {
+public class AccountServiceClient {
 
-    private static final Logger logger = Logger.getLogger(Client.class.getName());
+    private static final Logger logger = Logger.getLogger(AccountServiceClient.class.getName());
     private final AccountGrpc.AccountBlockingStub blockingStub;
+    private final AccountGrpc.AccountFutureStub futureStub;
 
     private List<String> accountNumbers = new ArrayList<>();
+    private static final int THREAD_COUNT = 1;
+    private static final int ACCOUNT_COUNT = 1000;
+    private static final int TRANSFER_COUNT = 1_000_000;
 
     public static void main(String[] args) throws Exception {
 
@@ -39,26 +44,39 @@ public class Client  {
                 .usePlaintext()
                 .build();
         try {
-            Client client = new Client(channel);
+            AccountServiceClient accountServiceClient = new AccountServiceClient(channel);
 
             // Open 1000 accounts
             logger.info("Opening 1000 accounts - currently single-threaded");
             // TODO: Should be multithreaded for this.
-            for(int i = 0; i<1000; i++) { // TODO: bump up when working
-                String acctName = "Acct " + i;
-                int beginningBalance = Double.valueOf(Math.random()*10000).intValue()*100;
-                client.accountNumbers.add(client.open(acctName, beginningBalance));
-            }
-            logger.info("Number of account numbers opened : " + client.accountNumbers.size());
+            long start = System.currentTimeMillis();
+//            for(int i = 0; i<1000; i++) { // TODO: bump up when working
+//                String acctName = "Acct " + i;
+//                int beginningBalance = Double.valueOf(Math.random()*10000).intValue()*100;
+//                accountServiceClient.accountNumbers.add(accountServiceClient.open(acctName, beginningBalance));
+//            }
+
+            // This works well
+            accountServiceClient.accountNumbers.addAll(accountServiceClient.nonBlockingOpen("A"));
+
+//            // This is failure - Future failures.
+//            for (int i=0; i<THREAD_COUNT; i++) {
+//                Thread t = new Thread(accountServiceClient.new NboRunnable("B0" + i));
+//                t.start();
+//            }
+
+            long elapsed = System.currentTimeMillis() - start;
+            System.out.println("Opened 1000 accounts single threaded non-blocking in " + elapsed + "ms");
+            logger.info("Number of account numbers opened : " + accountServiceClient.accountNumbers.size());
 
             // TODO: Test deposit, withdrawal
-            String acctNumber = client.accountNumbers.get(0);
-            int balance = client.checkBalance(acctNumber);
+            String acctNumber = accountServiceClient.accountNumbers.get(0);
+            int balance = accountServiceClient.checkBalance(acctNumber);
             System.out.printf("Account %s initial balance %d\n", acctNumber, balance);
             logger.info("Crediting account " + acctNumber);
-            client.adjust(acctNumber, 200);
+            accountServiceClient.adjust(acctNumber, 200);
             logger.info("Debiting one account");
-            client.adjust(acctNumber, -25);
+            accountServiceClient.adjust(acctNumber, -25);
             logger.info("Finished, disconnecting");
 
             // TODO: Test transfer money between accounts
@@ -72,12 +90,15 @@ public class Client  {
     }
 
     /** Construct client for accessing HelloWorld server using the existing channel. */
-    public Client(Channel channel) {
+    public AccountServiceClient(Channel channel) {
         // 'channel' here is a Channel, not a ManagedChannel, so it is not this code's responsibility to
         // shut it down.
 
         // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
         blockingStub = AccountGrpc.newBlockingStub(channel);
+        // Not sure if it's legit to have blocking and future share a channel,
+        // but when cutting over everything will probably switch to future at once
+        futureStub = AccountGrpc.newFutureStub(channel);
     }
 
     public String open(String name, int balance) {
@@ -95,6 +116,57 @@ public class Client  {
         }
         //logger.info("Opened account: " + response.getAccountNumber());
         return response.getAccountNumber();
+    }
+
+    class NboRunnable implements Runnable {
+        final String prefix;
+        public NboRunnable(String prefix) { this.prefix = prefix; }
+        @Override
+        public void run() {
+            List<String> openedAccounts = nonBlockingOpen(prefix);
+            accountNumbers.addAll(openedAccounts);
+        }
+    }
+
+    // TODO: wrap in a Runnable
+    public List<String> nonBlockingOpen(String prefix)  {
+        //logger.info("Opening account");
+        int n = ACCOUNT_COUNT / THREAD_COUNT;
+
+        List<ListenableFuture<OpenAccountResponse>> futures = new ArrayList<>();
+        for (int i=0; i<n; i++) {
+            String name = "Acct " + prefix + i; // TODO: will cause duplication across threads!
+            int balance = Double.valueOf(Math.random()*10000).intValue()*100;
+            OpenAccountRequest request = OpenAccountRequest.newBuilder()
+                    .setAccountName(name)
+                    .setInitialBalance(balance)
+                    .build();
+            try {
+                //response = blockingStub.open(request);
+                futures.add(futureStub.open(request));
+            } catch (StatusRuntimeException e) {
+                logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+                return null;
+            }
+        }
+        //logger.info("Opened account: " + response.getAccountNumber());
+        ListenableFuture<OpenAccountResponse> response;
+
+        try {
+            // Can use successfulAsList rather than allAsList to get only good responses
+            ListenableFuture<List<OpenAccountResponse>> responseList = Futures.successfulAsList(futures);
+            List<OpenAccountResponse> responses = responseList.get();
+            List<String> openedAccountNumbers = new ArrayList<>();
+            for (OpenAccountResponse oar : responses) {
+                openedAccountNumbers.add(oar.getAccountNumber());
+            }
+            return openedAccountNumbers;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
     }
 
     public int adjust(String acctNumber, int amount) {

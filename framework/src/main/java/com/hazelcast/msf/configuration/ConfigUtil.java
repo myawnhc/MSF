@@ -11,15 +11,23 @@ import java.util.Map;
 
 public class ConfigUtil {
 
-    public static final String EMBEDDED_CLUSTER = "embedded";
-    public static final String ONPREM_CLUSTER = "on-prem-cluster";
-    public static final String PERSONAL_CLUSTER = "personal-cluster";
-    public static final String TRAINING_CLUSTER = "shared-training-cluster";
-    public static final String ENTERPRISE_CLUSTER = "enterprise-cluster";
+    // Configuration names (as found in properties.yaml configuration)
+    public static final String EMBEDDED = "embedded";
+    public static final String ON_PREM_CLUSTER = "on-premise";
+    public static final String CLOUD_STARTER = "cloud-starter";
+    public static final String CLOUD_ENTERPRISE = "cloud-enterprise";
+    public static final String AWS = "aws";
+    public static final String GCP = "gcp";
+    public static final String AZURE = "azure";
+    public static final String OPENSHIFT = "openshift";
+
+    // Fields within the properties file
     public static final String NAME = "name";
     public static final String PASSWORD = "password";
     public static final String DISCOVERY_TOKEN = "discovery-token";
     public static final String URL_BASE = "url-base";
+    // TODO: SSL-related config fields
+    // TODO: any fields related to non-managed service cloud discovery
 
     private static Map<String, Map> configs;
     private static String defaultClusterName;
@@ -49,38 +57,38 @@ public class ConfigUtil {
         }
     }
 
-    public static MSFConfig getEmbeddedClusterConfig() {
-        Map<String,String> onprem = configs.get(EMBEDDED_CLUSTER);
+    public static MSFConfig getEmbeddedConfig() {
+        Map<String,String> onprem = configs.get(EMBEDDED);
         MSFConfig cc = new MSFConfig(onprem.get(NAME), onprem.get(PASSWORD),
                 null,null);
         return cc;
     }
 
-    public static MSFConfig getOnPremClusterConfig() {
-        Map<String,String> onprem = configs.get(ONPREM_CLUSTER);
+    public static MSFConfig getOnPremiseConfig() {
+        Map<String,String> onprem = configs.get(ON_PREM_CLUSTER);
         MSFConfig cc = new MSFConfig(onprem.get(NAME), onprem.get(PASSWORD),
                 null,null);
         return cc;
     }
 
-    public static MSFConfig getPersonalClusterConfig() {
-        Map<String,String> personal = configs.get(PERSONAL_CLUSTER);
+    public static MSFConfig getHZCloudStarterConfig() {
+        Map<String,String> personal = configs.get(CLOUD_STARTER);
         MSFConfig cc = new MSFConfig(personal.get(NAME), personal.get(PASSWORD),
                 personal.get(DISCOVERY_TOKEN), personal.get(URL_BASE));
         return cc;
     }
 
-    public static MSFConfig getTrainingClusterConfig() {
-        Map<String,String> training = configs.get(TRAINING_CLUSTER);
+    public static MSFConfig getHZCloudEnterpriseConfig() {
+        Map<String,String> training = configs.get(CLOUD_ENTERPRISE);
         MSFConfig cc = new MSFConfig(training.get(NAME), training.get(PASSWORD),
                 training.get(DISCOVERY_TOKEN), training.get(URL_BASE));
         return cc;
     }
 
-    public static MSFConfig getEnterpriseClusterConfig() {
-        Map<String,String> enterprise = configs.get(ENTERPRISE_CLUSTER);
+    public static MSFConfig getAWSConfig() {
+        Map<String,String> enterprise = configs.get(AWS);
         MSFConfig cc = new MSFConfig(enterprise.get(NAME), enterprise.get(PASSWORD),
-                enterprise.get(DISCOVERY_TOKEN), enterprise.get(URL_BASE));
+        null, null);
         return cc;
     }
 
@@ -92,26 +100,29 @@ public class ConfigUtil {
     public static ClientConfig getClientConfigForCluster(String configname) {
         if (configname == null) {
             System.out.println("No command line argument for cluster, properties.yaml default is " + defaultClusterName);
-            switch (defaultClusterName) {
-                case "on-prem-cluster": configname = "onprem"; break;
-                case "personal-cluster": configname = "personal"; break;
-                case "shared-cluster": configname = "shared"; break;
-                case "enterprise-cluster": configname = "enterprise"; break;
-                default: configname = "onprem";
-            }
+//            switch (defaultClusterName) {
+//                case "on-prem-cluster": configname = "onprem"; break;
+//                case "personal-cluster": configname = "personal"; break;
+//                case "shared-cluster": configname = "shared"; break;
+//                case "enterprise-cluster": configname = "enterprise"; break;
+//                default: configname = "onprem";
+//            }
+            configname = defaultClusterName;
         }
         System.out.println("Looking up config for " + configname);
         MSFConfig cloudConfig;
         switch (configname) {
-            case "embedded": cloudConfig = getEmbeddedClusterConfig(); break;
-            case "onprem": cloudConfig = getOnPremClusterConfig(); break;
-            case "personal": cloudConfig = getPersonalClusterConfig(); break;
-            case "shared": cloudConfig = getTrainingClusterConfig(); break;
-            case "enterprise": cloudConfig = getEnterpriseClusterConfig(); break;
+            case "embedded": cloudConfig = getEmbeddedConfig(); break;
+            case "onprem": cloudConfig = getOnPremiseConfig(); break;
+            case "cloud-starter": cloudConfig = getHZCloudStarterConfig(); break;
+            case "cloud-enterprise": cloudConfig = getHZCloudEnterpriseConfig(); break;
+            case "aws" : cloudConfig = getAWSConfig(); break;
+            // TODO: Azure, GCP, Openshift
             default:
                 throw new IllegalArgumentException(("Bad cluster config name: " + configname));
         }
 
+        // Note that for embedded we need a Config, not a ClientConfig.
         ClientConfig config = new ClientConfig();
         config.setClusterName(cloudConfig.name);
 
@@ -129,10 +140,15 @@ public class ConfigUtil {
     //  maybe some CSP-specific but autodiscovery might take care of us.
     public static String findConfigNameInArgs(String[] args) {
         for (String arg : args) {
-            if (arg.equals("-onprem")) return "onprem";
-            if (arg.equals("-personal")) return "personal";
-            if (arg.equals("-shared")) return "shared";
-            if (arg.equals("-enterprise")) return "enterprise";
+            if (arg.equals("-embedded")) return "embedded";
+            if (arg.equals("-onprem")) return "on-premise";
+            if (arg.equals("-hzcs")) return "cloud-starter";
+            if (arg.equals("-hzce")) return "cloud-enterprise";
+            if (arg.equals("-aws")) return "aws";
+            if (arg.equals("-gcp")) return "gcp";
+            if (arg.equals("-azure")) return "azure";
+            if (arg.equals("-openshift")) return "openshift";
+
         }
         return null;
     }
