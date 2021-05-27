@@ -17,13 +17,12 @@ import com.hazelcast.jet.config.JetConfig;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.map.IMap;
+import com.hazelcast.multimap.MultiMap;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.topic.ITopic;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 
 /** Controller class to serve as central point-of-management for Hazelcast; will be responsible for
  *  configuration, starting and stopping the cluster, and providing an interface to Hazelcast
@@ -35,9 +34,9 @@ public class MSFController {
     private JetInstance jet;
     private FlakeIdGenerator messageID;
     //private Map<String, FlakeIdGenerator> idGenerators = new HashMap<>();
-    private List<Job> runningJobs = new ArrayList<>();
+    //private List<Job> runningJobs = new ArrayList<>();
 
-    private Map<String, Class> servicesStarted;
+    private MultiMap<String, String> servicesStarted;
 
     // Singleton implementation
     private MSFController() { this.init(); }
@@ -51,7 +50,7 @@ public class MSFController {
     private void init() {
 
         // TODO: make configurable
-        boolean embedded = false;
+        boolean embedded = true;
 
         if (embedded) {
             JetConfig jetConfig = new JetConfig();
@@ -62,6 +61,7 @@ public class MSFController {
         }
         hazelcast = jet.getHazelcastInstance();
         messageID = hazelcast.getFlakeIdGenerator("messageID");
+        servicesStarted = hazelcast.getMultiMap("servicesRunning");
     }
 
     // Probably an unnecessary level of indirection, but thought there might
@@ -101,15 +101,25 @@ public class MSFController {
 
     // Not currently used, but if we want to shut down cleanly we have to have some
     // way of knowing when all services have stopped running.
-    public void startService(String service) {}
-    public void stopService(String service) {}
+    public void startService(String service) {
+        servicesStarted.put(service, null);  // might not be legal
+    }
+    public void stopService(String service) {
+        Collection<String> jobsRunning = servicesStarted.get(service);
+        for (String job : jobsRunning) {
+            jet.getJob(job).cancel();
+        }
+        servicesStarted.remove(service);
+        // TODO: use logger
+        System.out.println("All jobs for " + service + " have initiated shutdown.");
+    }
 
     // By moving job control out of the service, we can let the framework decide
     // (likely via configuration) whether we're doing embedded or client/server,
     // how many instances to start, etc.
-    public void startJob(String name, File serviceJar, Pipeline p) {
+    public void startJob(String service, String jobName, File serviceJar, Pipeline p) {
         JobConfig jconfig = new JobConfig();
-        jconfig.setName(name);
+        jconfig.setName(jobName);
 
         // Always add the Framework jar
         File f = new File("./framework/target/framework-1.0-SNAPSHOT.jar");
@@ -119,10 +129,12 @@ public class MSFController {
         // Service will submit its own jar
         jconfig.addJar(serviceJar);
 
-        System.out.println("MSFController starting job " + name);
+        System.out.println("MSFController starting job " + jobName);
         try {
             Job j = jet.newJobIfAbsent(p, jconfig);
-            runningJobs.add(j); // Maybe key by service so stopservice can cancel it?
+            //runningJobs.add(j); // Maybe key by service so stopservice can cancel it?
+            servicesStarted.put(service, jobName);
+            System.out.println(servicesStarted.get(service).size() + " jobs now running for " + service);
         } catch (Throwable t) {
             System.out.println("Job start failed " + t.getMessage());
         }

@@ -40,7 +40,7 @@ public class AdjustBalancePipeline implements Runnable {
             File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
             //System.out.println("AdjustBalancePipeline Found service: " + f.exists());
             System.out.println("AdjustBalancePipeline.run() invoked, submitting job");
-            controller.startJob("AccountService.AdjustBalance", f, createPipeline());
+            controller.startJob("AccountService", "AccountService.AdjustBalance", f, createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }

@@ -40,7 +40,7 @@ public class OpenAccountPipeline implements Runnable {
             File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
             //System.out.println("OpenAccountPipeline Found service: " + f.exists());
             System.out.println("OpenAccountPipeline.run() invoked, submitting job");
-            controller.startJob("AccountService.OpenAccount", f, createPipeline());
+            controller.startJob("AccountService", "AccountService.OpenAccount", f, createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }

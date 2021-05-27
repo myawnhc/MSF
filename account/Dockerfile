@@ -1,12 +1,15 @@
-FROM hazelcast/hazelcast-jet:4.5
+#FROM hazelcast/hazelcast-jet:4.5
+FROM library/openjdk:11-jre-slim
 
-# TODO: add config files
+# add config files
 # hazelcast-jet.yaml - not needed
-# hazelcast-yaml - needed for event store map journal config
+COPY target/classes/hazelcast.yaml hazelcast.yaml
 
-# TODO: add jar files (/ext directory)
-# framework jar
-# service jar
+# add jar files (/ext directory)
+# latest framework jar will be copied to ext by maven build
+COPY target/classes/ext/*                       ext/
+# done below ...
+#COPY target/account.service-1.0-SNAPSHOT.jar    application.jar
 
 # TODO: Start the service (should set main class atttribute in manifest and then it's just run the jar)
 

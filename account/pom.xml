@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>AccountService</artifactId>
+    <artifactId>account.service</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -17,22 +17,28 @@
 
         <!-- Environment variables -->
         <docker.image.name>${project.artifactId}</docker.image.name>
-        <docker.jar.file>${project.artifactId}-${project.version}.jar</docker.jar.file>
-        <docker.project.prefix>${user.name}</docker.project.prefix>
-        <dockerfile.skip>true</dockerfile.skip>
+        <!-- adding with-dependencies version of the jar -->
+        <docker.jar.file>${project.artifactId}-${project.version}-with-dependencies.jar</docker.jar.file>
+        <my.main.class>com.hazelcast.msfdemo.acctsvc.service.AccountService</my.main.class>
+        <!-- prefix was ${user.name} -->
+        <docker.project.prefix>msf</docker.project.prefix>
+        <dockerfile.skip>false</dockerfile.skip>
         <main.basedir>${project.basedir}</main.basedir>
         <maven.build.timestamp.format>yyyy-MM-dd'T'HH-mm-ss</maven.build.timestamp.format>
 
+        <!-- blue/green deployment stuff, probably won't use in this demo
         <your.build.timestamp>${maven.build.timestamp}</your.build.timestamp>
         <your.cluster1.name>account-blue</your.cluster1.name>
         <your.cluster1.external.port.list>5701,5702,5703</your.cluster1.external.port.list>
         <your.cluster2.name>account-green</your.cluster2.name>
         <your.cluster2.external.port.list>6701,6702,6703</your.cluster2.external.port.list>
+        -->
 
-        <!-- For Management Center, Postgres etc logons -->
+        <!-- For Management Center, Postgres etc logons
         <my.other.user>admin</my.other.user>
         <my.other.password>password1</my.other.password>
         <my.other.database>friday</my.other.database>
+        -->
 
         <!-- From settings.xml
         <your.license.key>${my.license.key}</your.license.key>
@@ -49,6 +55,7 @@
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     </properties>
 
     <build>
@@ -59,6 +66,15 @@
                 <version>1.6.2</version>
             </extension>
         </extensions>
+        <resources>
+            <resource>
+                <directory>../framework/target</directory>
+                <targetPath>ext</targetPath>
+                <includes>
+                    <include>framework-*.jar</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
@@ -78,6 +94,22 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- build jar without dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>ext/</classpathPrefix>
+                            <mainClass>
+                                ${my.main.class}
+                            </mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
@@ -96,7 +128,7 @@
                         <MY_OTHERPASSWORD>${my.other.password}</MY_OTHERPASSWORD>
                         <MY_OTHERUSER>${my.other.user}</MY_OTHERUSER>
                     </buildArgs>
-                    <dockerfile>Dockerfile-old</dockerfile>
+                    <dockerfile>Dockerfile</dockerfile>
                     <pullNewerImage>false</pullNewerImage>
                     <repository>${docker.project.prefix}/${docker.image.name}</repository>
                     <tag>latest</tag>
@@ -107,6 +139,35 @@
                         <id>default</id>
                         <goals>
                             <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- build jar with dependencies -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin.version}</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>${my.main.class}</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                        </manifestEntries>
+                    </archive>
+                    <attach>false</attach>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>${project.artifactId}-${project.version}-with-dependencies</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
