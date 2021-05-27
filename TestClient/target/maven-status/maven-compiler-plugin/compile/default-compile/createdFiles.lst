@@ -1,1 +1,3 @@
 com/hazelcast/msf/testclient/AccountServiceClient.class
+com/hazelcast/msf/testclient/AccountServiceClient$OpenRunnable.class
+com/hazelcast/msf/testclient/AccountServiceClient$TransferRunnable.class
