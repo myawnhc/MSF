@@ -1,6 +1,5 @@
 package com.hazelcast.msfdemo.acctsvc.business;
 
-import com.hazelcast.jet.aggregate.AggregateOperations;
 import com.hazelcast.jet.datamodel.Tuple2;
 import com.hazelcast.jet.pipeline.JournalInitialPosition;
 import com.hazelcast.jet.pipeline.Pipeline;
@@ -10,17 +9,18 @@ import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.Sources;
 import com.hazelcast.jet.pipeline.StreamStage;
 import com.hazelcast.jet.pipeline.WindowDefinition;
+import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.messaging.APIResponse;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
-import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest;
 import com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceEvent;
 import com.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import com.hazelcast.msfdemo.acctsvc.service.AccountService;
 
+import java.io.File;
 import java.util.AbstractMap;
 
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
@@ -37,8 +37,10 @@ public class AdjustBalancePipeline implements Runnable {
     public void run() {
         try {
             MSFController controller = MSFController.getInstance();
+            File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
+            //System.out.println("AdjustBalancePipeline Found service: " + f.exists());
             System.out.println("AdjustBalancePipeline.run() invoked, submitting job");
-            controller.startJob("AccountService.AdjustBalance", createPipeline());
+            controller.startJob("AccountService.AdjustBalance", f, createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }
@@ -48,9 +50,11 @@ public class AdjustBalancePipeline implements Runnable {
         Pipeline p = Pipeline.create();
         String requestMapName = AccountEventTypes.ADJUST.getQualifiedName();
         IMap<Long, AdjustBalanceRequest> requestMap = MSFController.getInstance().getMap(requestMapName);
-        String responseMapName = requestMapName + "Results";
+        String responseMapName = requestMapName + ".Results";
         IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
         WindowDefinition oneSecond = WindowDefinition.sliding(1000, 1000);
+        WindowDefinition tenSeconds = WindowDefinition.sliding(10000, 10000);
+
         // Kind of a pain that we have to propagate the request ID throughout the entire
         // pipeline but don't want to pollute domain objects with it.
         StreamStage<Tuple2<Long, AdjustBalanceEvent>> tupleStream = p.readFrom(Sources.mapJournal(requestMap,
@@ -75,9 +79,18 @@ public class AdjustBalancePipeline implements Runnable {
                 .setName("Create AccountEvent.ADJUST");
 
         // Peek in on progress -- will probably remove this soon
-        tupleStream.window(oneSecond)
-                .aggregate(AggregateOperations.counting())
-                .writeTo(Sinks.logger(count -> "AccountEvent.ADJUST count " + count));
+//        tupleStream.window(oneSecond)
+//                .aggregate(AggregateOperations.counting())
+//                .writeTo(Sinks.logger(count -> "AccountEvent.ADJUST count " + count));
+
+//        tupleStream.rollingAggregate(AggregateOperations.summingLong(tuple->tuple.f1().getAmount()))
+//                //.window(tenSeconds)
+//                .writeTo(Sinks.logger(runningTotal -> "Total adjustments so far " + runningTotal));
+//
+//        // Show the amount during the window
+//        tupleStream.window(tenSeconds)
+//                .aggregate(AggregateOperations.summingLong(tuple -> tuple.f1().getAmount()))
+//                .writeTo(Sinks.logger(windowTotal -> "Total adjustments during window " + windowTotal));
 
         ServiceFactory<?,IMap<String,Account>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());
 
@@ -94,12 +107,20 @@ public class AdjustBalancePipeline implements Runnable {
         // Build Materialized View and Publish it
         .mapUsingService(materializedViewServiceFactory, (viewMap, tuple) -> {
             AdjustBalanceEvent adjustEvent = tuple.f1();
-            Account mview = viewMap.get(adjustEvent.getAccountNumber());
-            // TODO: handle invalid account number -> null mview 
-            mview.setBalance(mview.getBalance() + adjustEvent.getAmount());
-            viewMap.put(adjustEvent.getAccountNumber(), mview);
-            return tuple2(tuple.f0(), mview);
-            //return new AbstractMap.SimpleEntry<String,Account>(a.getAcctNumber(), a);
+            // How not to do this (race condition)
+            //Account mview = viewMap.get(adjustEvent.getAccountNumber());
+            //mview.setBalance(mview.getBalance() + adjustEvent.getAmount());
+            //viewMap.put(adjustEvent.getAccountNumber(), mview);
+            assert adjustEvent != null;
+            Account accountView = viewMap.executeOnKey(adjustEvent.getAccountNumber(),
+                    (EntryProcessor<String, Account, Account>) accountEntry -> {
+                Account accountView1 = accountEntry.getValue();
+                int newBalance = accountView1.getBalance() + adjustEvent.getAmount();
+                accountView1.setBalance(newBalance);
+                accountEntry.setValue(accountView1);
+                return accountView1;
+            });
+            return tuple2(tuple.f0(), accountView);
         }).setName("Update Account Materialized View")
 
         // Build API response and publish it

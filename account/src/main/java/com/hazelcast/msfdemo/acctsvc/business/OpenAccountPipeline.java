@@ -14,17 +14,16 @@ import com.hazelcast.map.IMap;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.messaging.APIResponse;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
-import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.OpenAccountEvent;
 import com.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import com.hazelcast.msfdemo.acctsvc.service.AccountService;
 
+import java.io.File;
+import java.util.AbstractMap;
+
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
 import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest;
-
-
-import java.util.AbstractMap;
 
 public class OpenAccountPipeline implements Runnable {
 
@@ -38,8 +37,10 @@ public class OpenAccountPipeline implements Runnable {
     public void run() {
         try {
             MSFController controller = MSFController.getInstance();
+            File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
+            //System.out.println("OpenAccountPipeline Found service: " + f.exists());
             System.out.println("OpenAccountPipeline.run() invoked, submitting job");
-            controller.startJob("AccountService.OpenAccount", createPipeline());
+            controller.startJob("AccountService.OpenAccount", f, createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }
@@ -49,7 +50,7 @@ public class OpenAccountPipeline implements Runnable {
         Pipeline p = Pipeline.create();
         String requestMapName = AccountEventTypes.OPEN.getQualifiedName();
         IMap<Long, OpenAccountRequest> requestMap = MSFController.getInstance().getMap(requestMapName);
-        String responseMapName = requestMapName + "Results";
+        String responseMapName = requestMapName + ".Results";
         IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
         WindowDefinition oneSecond = WindowDefinition.sliding(1000, 1000);
         // Kind of a pain that we have to propagate the request ID throughout the entire

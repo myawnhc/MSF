@@ -3,6 +3,7 @@ com/hazelcast/msf/persistence/DTO.class
 com/hazelcast/msf/configuration/MSFConfig.class
 com/hazelcast/msf/messaging/APIResponse.class
 com/hazelcast/msf/configuration/ConfigUtil.class
+com/hazelcast/msf/eventstore/SequencedEvent.class
 com/hazelcast/msf/eventstore/EventStore.class
 com/hazelcast/msf/configuration/ConfigUtil$ConfigInfo.class
 com/hazelcast/msf/messaging/APIResponse$Status.class

@@ -5,8 +5,8 @@ import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msfdemo.acctsvc.business.AdjustBalancePipeline;
 import com.hazelcast.msfdemo.acctsvc.business.OpenAccountPipeline;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
-import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
+import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -46,7 +46,7 @@ public class AccountService {
     }
 
 
-    // An example of doing transfer without the framework
+    // Obsolete: An example of doing transfer without the framework
     public void transfer(String fromAccount, String toAccount, int amount) {
         Account from = accountDAO.findByKey(fromAccount);
         Account to = accountDAO.findByKey(toAccount);
@@ -60,8 +60,6 @@ public class AccountService {
         AccountService acctService = new AccountService();
         acctService.init();
 
-        // Will want this here eventually but while debugging it's easier to have
-        // the logs separated.
         final GrpcServer server = new GrpcServer();
         server.start();
         server.blockUntilShutdown();

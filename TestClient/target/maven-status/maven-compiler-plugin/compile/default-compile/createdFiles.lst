@@ -1,1 +1,2 @@
-com/hazelcast/msf/testclient/Client.class
+com/hazelcast/msf/testclient/AccountServiceClient.class
+com/hazelcast/msf/testclient/AccountServiceClient$NboRunnable.class

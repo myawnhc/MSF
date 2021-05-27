@@ -7,54 +7,45 @@ import com.hazelcast.msf.messaging.APIResponse;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
-import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest;
-import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse;
-import com.hazelcast.msfdemo.acctsvc.service.AccountService;
+import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.*;
 import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 
 import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.*;
 
-/** Server-side implementation of the AccountService Open API
- *  Takes requests and puts them to API-specific IMap that triggers Jet pipeline
+/** Server-side implementation of the AccountService API
+ *  Takes requests and puts them to API-specific IMaps that trigger Jet pipelines
  *  Looks for result in corresponding result map to return to client
  */
 public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
 
-    MSFController controller = MSFController.getInstance();
+    final MSFController controller = MSFController.getInstance();
 
     // OPEN
-    String openRequestMapName = AccountEventTypes.OPEN.getQualifiedName();
-    IMap<Long, OpenAccountRequest> openPipelineInput = controller.getMap(openRequestMapName);
-    String openResponseMapName = openRequestMapName + "Results";
-    IMap<Long, APIResponse<String>> openPipelineOutput = controller.getMap(openResponseMapName);
+    final String openRequestMapName = AccountEventTypes.OPEN.getQualifiedName();
+    final IMap<Long, OpenAccountRequest> openPipelineInput = controller.getMap(openRequestMapName);
+    final String openResponseMapName = openRequestMapName + ".Results";
+    final IMap<Long, APIResponse<String>> openPipelineOutput = controller.getMap(openResponseMapName);
 
     // ADJUST
-    String adjustRequestMapName = AccountEventTypes.ADJUST.getQualifiedName();
-    IMap<Long, AdjustBalanceRequest> adjustPipelineInput = controller.getMap(adjustRequestMapName);
-    String adjustResponseMapName = adjustRequestMapName + "Results";
-    IMap<Long, APIResponse<Integer>> adjustPipelineOutput = controller.getMap(adjustResponseMapName);
+    final String adjustRequestMapName = AccountEventTypes.ADJUST.getQualifiedName();
+    final IMap<Long, AdjustBalanceRequest> adjustPipelineInput = controller.getMap(adjustRequestMapName);
+    final String adjustResponseMapName = adjustRequestMapName + ".Results";
+    final IMap<Long, APIResponse<Integer>> adjustPipelineOutput = controller.getMap(adjustResponseMapName);
 
-    private List<UUID> openPipelineOutputlistenersToCleanUp = new ArrayList<>();
-    private List<UUID> adjustPipelineOutputlistenersToCleanUp = new ArrayList<>();
+    final private Map<Long, UUID> listenersByRequestID = new HashMap<>();
+
 
     @Override
     public void open(OpenAccountRequest request, StreamObserver<OpenAccountResponse> responseObserver) {
         // Unique ID used to pair up requests with responses
         long uniqueID = controller.getUniqueMessageID();
-
-        // We should never have more listeners attached than there are threads
-        // feeding us Open events.  We should configure that somewhere, but for
-        // now let's assume it won't be greater than 10.
-        while (openPipelineOutputlistenersToCleanUp.size() > 10) {
-            UUID id = openPipelineOutputlistenersToCleanUp.remove(0);
-            //System.out.println("Cleaned up listener " + id); // temp
-        }
 
         // Get listener to result map armed before we trigger the pipeline
         UUID listenerID = openPipelineOutput.addEntryListener((EntryAddedListener<Long, APIResponse<String>>) entryEvent -> {
@@ -71,30 +62,33 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             responseObserver.onCompleted();
             openPipelineOutput.remove(uniqueID);
             openPipelineInput.remove(uniqueID);
+            // Remove ourself as a listener.  Have to do this indirection of getting from map because
+            // otherwise we get 'listenerID may not have been initialized'.
+            UUID myID = listenersByRequestID.remove(uniqueID);
+            if (myID == null) {
+                System.out.println("AccountAPIImpl.open handler - listener for " + uniqueID + " was already removed");
+            } else {
+                openPipelineOutput.removeEntryListener(myID);
+            }
+
         }, Predicates.sql("__key=" + uniqueID), true);
 
+        UUID oldID = listenersByRequestID.put(uniqueID, listenerID);
+        if (oldID != null)
+            System.out.println("ERROR: Multiple requests with same ID! " + oldID + " (seen in open)");
         // Pass the request into the OpenAccountHandler pipeline
         openPipelineInput.set(uniqueID, request);
-        openPipelineOutputlistenersToCleanUp.add(listenerID);
     }
 
     @Override
     public void deposit(AdjustBalanceRequest request, StreamObserver<AdjustBalanceResponse> responseObserver) {
-        System.out.println("deposit requested " + request.getAccountNumber() + " " + request.getAmount());
+        //System.out.println("deposit requested " + request.getAccountNumber() + " " + request.getAmount());
         // Unique ID used to pair up requests with responses
         long uniqueID = controller.getUniqueMessageID();
 
-        // We should never have more listeners attached than there are threads
-        // feeding us Open events.  We should configure that somewhere, but for
-        // now let's assume it won't be greater than 10.
-        while (adjustPipelineOutputlistenersToCleanUp.size() > 10) {
-            UUID id = adjustPipelineOutputlistenersToCleanUp.remove(0);
-            //System.out.println("Cleaned up listener " + id); // temp
-        }
-
         // Get listener to result map armed before we trigger the pipeline
         UUID listenerID = adjustPipelineOutput.addEntryListener((EntryAddedListener<Long, APIResponse<Integer>>) entryEvent -> {
-            System.out.println("ADJUST completion listener fired for ID " + uniqueID);
+            //System.out.println("ADJUST completion listener fired for ID " + uniqueID);
             APIResponse<Integer> apiResponse = entryEvent.getValue();
             if (apiResponse.getStatus() == APIResponse.Status.SUCCESS) {
                 Integer newBalance = apiResponse.getResultValue();
@@ -107,16 +101,30 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             responseObserver.onCompleted();
             adjustPipelineOutput.remove(uniqueID);
             adjustPipelineInput.remove(uniqueID);
+            // Remove ourself as a listener.  Have to do this indirection of getting from map because
+            // otherwise we get 'listerID may not have been initialized'.
+            UUID myID = listenersByRequestID.remove(uniqueID);
+            if (myID == null) {
+                if (request.getAmount() > 0)
+                    System.out.println("AccountAPIImpl.deposit    - listener for " + uniqueID + " was already removed");
+                else
+                    System.out.println("AccountAPIImpl.withdrawal - listener for " + uniqueID + " was already removed");
+
+            } else {
+                adjustPipelineOutput.removeEntryListener(myID);
+            }
         }, Predicates.sql("__key=" + uniqueID), true);
 
+        UUID oldID = listenersByRequestID.put(uniqueID, listenerID);
+        if (oldID != null)
+            System.out.println("ERROR: Multiple requests with same ID! " + oldID + " (seen in deposit)");
         // Pass the request into the AdjustBalancePipeline
         adjustPipelineInput.set(uniqueID, request);
-        adjustPipelineOutputlistenersToCleanUp.add(listenerID);
     }
 
     @Override
     public void withdraw(AdjustBalanceRequest request, StreamObserver<AdjustBalanceResponse> responseObserver) {
-        System.out.println("withdrawal requested " + request.getAccountNumber() + " " + request.getAmount());
+        //System.out.println("withdrawal requested " + request.getAccountNumber() + " " + request.getAmount());
         AdjustBalanceRequest withdrawal = AdjustBalanceRequest.newBuilder(request)
                 .setAmount(request.getAmount() * -1)
                 .build();
@@ -140,5 +148,74 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             responseObserver.onNext(response);
         }
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void transferMoney(TransferMoneyRequest request, StreamObserver<TransferMoneyResponse> responseObserver) {
+        //System.out.println("transfer requested " + request.getFromAccountNumber() + " to " + request.getToAccountNumber() + " " + request.getAmount());
+
+        AdjustBalanceRequest withdrawal = AdjustBalanceRequest.newBuilder()
+                .setAccountNumber(request.getFromAccountNumber())
+                // Note that withdraw() will flip sign of the amount so don't do it here.
+                .setAmount(request.getAmount())
+                .build();
+
+        AdjustBalanceRequest deposit = AdjustBalanceRequest.newBuilder()
+                .setAccountNumber(request.getToAccountNumber())
+                .setAmount(request.getAmount())
+                .build();
+
+        final CountDownLatch latch = new CountDownLatch(2);  // Simple Java, not HZ's distributed CPSubsystem one
+
+        withdraw(withdrawal, new StreamObserver<>() {
+                    @Override
+                    public void onNext(AdjustBalanceResponse adjustBalanceResponse) {
+                        //System.out.println("Withdrawal processed");
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        // pass to our caller
+                        responseObserver.onError(throwable);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        latch.countDown();
+                    }
+                });
+
+        deposit(deposit, new StreamObserver<>() {
+            @Override
+            public void onNext(AdjustBalanceResponse adjustBalanceResponse) {
+                //System.out.println("Deposit processed");
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                // pass to our caller
+                responseObserver.onError(throwable);
+            }
+
+            @Override
+            public void onCompleted() {
+                latch.countDown();
+            }
+        });
+
+        try {
+            latch.await(); // TODO: maybe use a timer here in case of issues with pipeline
+            //System.out.println("Both halves complete, sending response");
+            TransferMoneyResponse response = TransferMoneyResponse.newBuilder()
+                    .setSucceeded(true)
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            responseObserver.onError(e);
+        }
+
     }
 }

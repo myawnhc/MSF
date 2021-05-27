@@ -1,9 +1,11 @@
 package com.hazelcast.msf.persistence;
 
-import com.hazelcast.core.Hazelcast;
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import com.hazelcast.msf.controller.MSFController;
+import com.hazelcast.msf.configuration.ConfigUtil;
+import com.hazelcast.sql.SqlService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,13 +16,26 @@ import java.util.List;
    K = key type
  */
 public abstract class DAO<T extends DTO<K>, K> {
-    //HazelcastInstance hazelcast;
-    IMap<K, T> map;
+    protected IMap<K, T> map;
+    protected SqlService sql;
 
     public DAO(String mapName) {
-        //hazelcast = Hazelcast.newHazelcastInstance();
-        MSFController controller = MSFController.getInstance();
-        map = controller.getMap(mapName);
+        //MSFController controller = MSFController.getInstance();
+        HazelcastInstance client = getClientConnection();
+        map = client.getMap(mapName);
+        sql = client.getSql();
+    }
+
+    private HazelcastInstance getClientConnection() {
+        String configname = "embedded";
+        //String configname = ConfigUtil.findConfigNameInArgs(args);
+        // Jet doesn't accept a clientConfig argument, only Config().
+        ClientConfig clientConfig = ConfigUtil.getClientConfigForCluster(configname);
+        // TODO: this shouldn't be a hard-coded address!
+        //clientConfig.getNetworkConfig().addAddress("172.17.0.2:5701");
+        clientConfig.setClusterName("jet"); // dev when embedded, jet when client-server
+        HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+        return client;
     }
 
     public IMap<K, T> getMap() { return map; }
@@ -47,6 +62,4 @@ public abstract class DAO<T extends DTO<K>, K> {
         return Collections.unmodifiableList(new ArrayList<>(values));
 
     }
-
-
 }

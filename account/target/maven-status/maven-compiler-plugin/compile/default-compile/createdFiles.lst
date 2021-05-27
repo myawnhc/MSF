@@ -1,4 +1,5 @@
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$TransferMoneyResponse.class
+com/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl$2.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$TransferMoneyRequest.class
 com/hazelcast/msfdemo/acctsvc/service/GrpcServer$1.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$2.class
@@ -8,8 +9,11 @@ com/hazelcast/msfdemo/acctsvc/events/AccountGrpc.class
 com/hazelcast/msfdemo/acctsvc/domain/Account.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$CheckBalanceRequest.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$AccountFutureStub.class
+com/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl.class
+com/hazelcast/msfdemo/acctsvc/events/AdjustBalanceEvent.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$OpenAccountRequest$1.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$OpenAccountResponse$1.class
+com/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl$1.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$AccountMethodDescriptorSupplier.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$AccountBaseDescriptorSupplier.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$AccountStub.class
@@ -19,6 +23,7 @@ com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$3.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$CheckBalanceRequest$1.class
 com/hazelcast/msfdemo/acctsvc/service/AccountService.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass.class
+com/hazelcast/msfdemo/acctsvc/views/AccountDAO.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$MethodHandlers.class
 com/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStore$Singleton.class
 com/hazelcast/msfdemo/acctsvc/events/AccountEvent.class

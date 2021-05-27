@@ -1,25 +1,26 @@
 package com.hazelcast.msf.controller;
 
-import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.collection.IList;
 import com.hazelcast.config.Config;
-import com.hazelcast.config.EventJournalConfig;
 import com.hazelcast.config.IndexConfig;
 import com.hazelcast.config.IndexType;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.IAtomicLong;
+import com.hazelcast.cp.ICountDownLatch;
 import com.hazelcast.flakeidgen.FlakeIdGenerator;
 import com.hazelcast.jet.Jet;
 import com.hazelcast.jet.JetInstance;
 import com.hazelcast.jet.Job;
+import com.hazelcast.jet.config.JetClientConfig;
 import com.hazelcast.jet.config.JetConfig;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.map.IMap;
-import com.hazelcast.msf.configuration.ConfigUtil;
+import com.hazelcast.sql.SqlService;
 import com.hazelcast.topic.ITopic;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,28 +49,17 @@ public class MSFController {
     }
 
     private void init() {
-        // Hard coding to use embedded for now, but ConfigUtil has been
-        // added to the project so I can start adapting it to the
-        // needs of the framework
-        String configname = "embedded";
-        //String configname = ConfigUtil.findConfigNameInArgs(args);
-        // Jet doesn't accept a clientConfig argument, only Config().
-        ClientConfig clientConfig = ConfigUtil.getClientConfigForCluster(configname);
 
-        Config config = new Config();
-        // Wildcards don't seem to work here; need a service registration model
-        // where we can register all the pipelines up front and then iterate
-        // through their configs before we start the cluster.
-        MapConfig mc = config.getMapConfig("AccountEvent_OPEN");
-        MapConfig m2 = config.getMapConfig("AccountEvent_ADJUST");
-        EventJournalConfig ejc = new EventJournalConfig();
-        ejc.setEnabled(true);
-        mc.setEventJournalConfig(ejc);
-        m2.setEventJournalConfig(ejc);
+        // TODO: make configurable
+        boolean embedded = false;
 
-        JetConfig jetConfig = new JetConfig();
-        jetConfig.setHazelcastConfig(config);
-        jet = Jet.newJetInstance(jetConfig); // TODO: make configurable whether embedded or client
+        if (embedded) {
+            JetConfig jetConfig = new JetConfig();
+            jet = Jet.newJetInstance();
+        } else {
+            JetClientConfig clientConfig = new JetClientConfig();
+            jet = Jet.newJetClient();
+        }
         hazelcast = jet.getHazelcastInstance();
         messageID = hazelcast.getFlakeIdGenerator("messageID");
     }
@@ -81,6 +71,7 @@ public class MSFController {
     public ITopic getTopic(String name) { return hazelcast.getReliableTopic(name); }
     public long getUniqueMessageID() { return messageID.newId(); }
     public IList getList(String name) { return hazelcast.getList(name); }
+    public ICountDownLatch getCountDownLatch(String name) { return hazelcast.getCPSubsystem().getCountDownLatch(name); }
 
     // Might move this to EventStore base class
     public IMap createEventStore(String mapName, String keyFieldName) {
@@ -116,9 +107,18 @@ public class MSFController {
     // By moving job control out of the service, we can let the framework decide
     // (likely via configuration) whether we're doing embedded or client/server,
     // how many instances to start, etc.
-    public void startJob(String name, Pipeline p) {
+    public void startJob(String name, File serviceJar, Pipeline p) {
         JobConfig jconfig = new JobConfig();
         jconfig.setName(name);
+
+        // Always add the Framework jar
+        File f = new File("./framework/target/framework-1.0-SNAPSHOT.jar");
+        //System.out.println("Found framework: " + f.exists());
+        jconfig.addJar(f);
+
+        // Service will submit its own jar
+        jconfig.addJar(serviceJar);
+
         System.out.println("MSFController starting job " + name);
         try {
             Job j = jet.newJobIfAbsent(p, jconfig);
@@ -127,5 +127,7 @@ public class MSFController {
             System.out.println("Job start failed " + t.getMessage());
         }
     }
+
+    public SqlService getSqlService() { return hazelcast.getSql(); }
 
 }

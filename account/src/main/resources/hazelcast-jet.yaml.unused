@@ -1,0 +1,3 @@
+hazelcast-jet:
+  properties:
+    # defaults work
