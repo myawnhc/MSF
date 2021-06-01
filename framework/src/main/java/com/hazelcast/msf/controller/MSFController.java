@@ -124,10 +124,10 @@ public class MSFController {
         // Always add the Framework jar
         File f = new File("./framework/target/framework-1.0-SNAPSHOT.jar");
         //System.out.println("Found framework: " + f.exists());
-        jconfig.addJar(f);
+        //jconfig.addJar(f);
 
         // Service will submit its own jar
-        jconfig.addJar(serviceJar);
+        //jconfig.addJar(serviceJar);
 
         System.out.println("MSFController starting job " + jobName);
         try {

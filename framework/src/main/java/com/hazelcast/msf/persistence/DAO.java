@@ -33,9 +33,13 @@ public abstract class DAO<T extends DTO<K>, K> {
         ClientConfig clientConfig = ConfigUtil.getClientConfigForCluster(configname);
         // TODO: this shouldn't be a hard-coded address!
         //clientConfig.getNetworkConfig().addAddress("172.17.0.2:5701");
-        clientConfig.setClusterName("jet"); // dev when embedded, jet when client-server
+        clientConfig.setClusterName("dev"); // dev when embedded, jet when client-server
         HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
         return client;
+    }
+
+    public void disconnect() {
+        getClientConnection().shutdown();
     }
 
     public IMap<K, T> getMap() { return map; }

@@ -44,9 +44,10 @@ public class AccountServiceClient {
                 // needing certificates.
                 .usePlaintext()
                 .build();
+        AccountDAO accountDAO = new AccountDAO(); // for queries
+
         try {
             AccountServiceClient accountServiceClient = new AccountServiceClient(channel);
-            AccountDAO accountDAO = new AccountDAO(); // for queries
 
             // Open 1000 accounts
             logger.info("Opening 1000 accounts using " + OPEN_THREAD_COUNT + " threads");
@@ -107,6 +108,7 @@ public class AccountServiceClient {
             // resources the channel should be shut down when it will no longer be used. If it may be used
             // again leave it running.
             channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+            accountDAO.disconnect();
         }
     }
 

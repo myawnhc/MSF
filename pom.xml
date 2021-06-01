@@ -12,6 +12,7 @@
     <modules>
         <module>framework</module>
         <module>account</module>
+        <module>order</module>
         <module>TestClient</module>
     </modules>
 
