@@ -4,6 +4,8 @@ import com.hazelcast.aggregation.Aggregators;
 import com.hazelcast.msf.persistence.DAO;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
 
+import java.util.Collection;
+
 public class AccountDAO extends DAO<Account, String> {
 
     public AccountDAO() {
@@ -11,6 +13,10 @@ public class AccountDAO extends DAO<Account, String> {
     }
 
     // Non-inheritable query methods
+
+    public Collection<Account> getAllAccounts() {
+        return getMap().values();
+    }
     public long getTotalAccountBalances() {
         return getMap().aggregate(Aggregators.integerSum("balance"));
 

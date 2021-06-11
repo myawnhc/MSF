@@ -1,4 +1,9 @@
 hazelcast:
+  cluster-name: account
+  network:
+    port:
+      port-count: 10
+      port: 5701
   map:
     AccountEvent_*:
       event-journal:

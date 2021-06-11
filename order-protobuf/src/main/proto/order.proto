@@ -1,0 +1,25 @@
+syntax = "proto3";
+package order;
+
+option java_package = "com.hazelcast.msfdemo.ordersvc.events";
+
+service Order {
+  rpc CreateOrder (CreateOrderRequest) returns (stream OrderEventResponse) {}
+}
+
+message CreateOrderRequest {
+  string accountNumber = 1;
+  int32 quantity = 2;
+  string itemNumber = 3;
+  string location = 4;
+}
+
+message OrderEventResponse {
+  string orderNumber = 1;
+  string accountNumber = 2;
+  string itemNumber = 3;
+  string location = 4;
+  int32 quantity = 5;
+  int32 extendedPrice = 6;
+  string eventName = 7;
+}

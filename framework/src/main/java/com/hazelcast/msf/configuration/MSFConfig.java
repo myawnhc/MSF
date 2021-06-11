@@ -3,6 +3,7 @@ package com.hazelcast.msf.configuration;
 // Most fields based on using Hazelcast Cloud
 // Just cluster name is enough to connect to on-premise
 // Embedded added but not yet implemented
+@Deprecated
 public class MSFConfig {
     public boolean embedded;
     public String name;

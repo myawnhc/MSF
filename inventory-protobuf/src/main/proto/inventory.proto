@@ -1,0 +1,30 @@
+syntax = "proto3";
+package inventory;
+
+option java_package = "com.hazelcast.msfdemo.invsvc.events";
+
+service Inventory {
+  rpc CheckAvailability (ATPRequest) returns (ATPResponse) {}
+  rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
+  rpc Ship (ShipRequest) returns (ShipResponse) {}
+  // Additional APIs including add / move not required for initial demo use case
+}
+
+message ATPRequest {
+  string itemNumber = 1;
+  string location = 2; // might be null
+}
+
+message ATPResponse {
+  int32 available = 1;
+}
+
+message ShipRequest {
+  string itemNumber = 1;
+  string location = 2;
+  int32 quantity = 3;
+}
+
+message ShipResponse {
+  bool success = 1;
+}

@@ -12,7 +12,10 @@
     <modules>
         <module>framework</module>
         <module>account</module>
-        <module>order</module>
+        <module>order-protobuf</module>
+        <module>order-java</module>
+        <module>catalog-protobuf</module>
+        <module>inventory-protobuf</module>
         <module>TestClient</module>
     </modules>
 

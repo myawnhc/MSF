@@ -1,15 +1,13 @@
-#FROM hazelcast/hazelcast-jet:4.5
 FROM library/openjdk:11-jre-slim
 
 # add config files
-# hazelcast-jet.yaml - not needed
-COPY target/classes/hazelcast.yaml hazelcast.yaml
+COPY target/classes/hazelcast-jet.yaml hazelcast-jet.yaml
+COPY target/classes/hazelcast.yaml     hazelcast.yaml
+COPY target/classes/service.yaml       service.yaml
 
 # add jar files (/ext directory)
 # latest framework jar will be copied to ext by maven build
 COPY target/classes/ext/*                       ext/
-# done below ...
-#COPY target/account.service-1.0-SNAPSHOT.jar    application.jar
 
 # TODO: Start the service (should set main class atttribute in manifest and then it's just run the jar)
 

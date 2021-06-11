@@ -25,23 +25,26 @@
         </dependency>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>account.service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
+            <!-- TODO: extract protobuf and depend on that rather than service -->
             <artifactId>account.service</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>order.service</artifactId>
+            <artifactId>order.protobuf</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>order.service</artifactId>
+            <artifactId>catalog.protobuf</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>inventory.protobuf</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

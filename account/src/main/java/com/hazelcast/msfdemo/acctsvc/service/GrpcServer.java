@@ -1,5 +1,6 @@
 package com.hazelcast.msfdemo.acctsvc.service;
 
+import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msfdemo.acctsvc.business.AccountAPIImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -14,8 +15,10 @@ public class GrpcServer {
     private Server server;
 
     public void start() throws IOException {
+        ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
+
         /* The port on which the server should run */
-        int port = 50051;
+        int port = props.getPort();
         server = ServerBuilder.forPort(port)
                 .addService(new AccountAPIImpl())
                 .build()

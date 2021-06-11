@@ -1,0 +1,16 @@
+hazelcast:
+  cluster-name: order
+  network:
+    port:
+      port-count: 10
+      port: 5711
+  map:
+    OrderEvent*:
+      event-journal:
+        enabled: true
+        capacity: 100000
+      indexes:
+      # Sorted index on key (sequence)
+        - type: SORTED
+          attributes:
+            - "__key"

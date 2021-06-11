@@ -56,6 +56,7 @@ com/hazelcast/msfdemo/acctsvc/events/OpenAccountEvent.class
 com/hazelcast/msfdemo/acctsvc/business/OpenAccountPipeline.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$TransferMoneyRequest$Builder.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$TransferMoneyResponseOrBuilder.class
+com/hazelcast/msfdemo/acctsvc/events/CompactionEvent.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$CheckBalanceResponseOrBuilder.class
 com/hazelcast/msfdemo/acctsvc/events/AccountGrpc$AccountBlockingStub.class
 com/hazelcast/msfdemo/acctsvc/events/AccountOuterClass$OpenAccountRequest$Builder.class

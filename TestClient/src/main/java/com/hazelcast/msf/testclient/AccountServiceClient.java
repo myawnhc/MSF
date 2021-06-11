@@ -2,6 +2,7 @@ package com.hazelcast.msf.testclient;
 
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
 import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import io.grpc.Channel;
@@ -34,7 +35,10 @@ public class AccountServiceClient {
     public static void main(String[] args) throws Exception {
 
         // Access a service running on the local machine on port 50051
-        String target = "localhost:50051";
+        //String target = "localhost:50051";
+        ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
+        String target = props.getTarget();
+        logger.info("Target from service.yaml " + target);
 
         // Create a communication channel to the server, known as a Channel. Channels are thread-safe
         // and reusable. It is common to create channels at the beginning of your application and reuse

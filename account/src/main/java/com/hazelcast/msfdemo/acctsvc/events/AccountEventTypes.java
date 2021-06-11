@@ -4,7 +4,7 @@ public enum AccountEventTypes {
     OPEN("AccountEvent_OPEN"),
     ADJUST( "AccountEvent_ADJUST"),
     TRANSFER("AccountEvent_TRANSFER"),
-    SNAPSHOT("AccountEvent_SNAPSHOT");
+    COMPACTION("AccountEvent_COMPACTION");
 
     private String qualifiedName;
     AccountEventTypes(String fqname) {

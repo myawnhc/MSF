@@ -1,0 +1,8 @@
+---
+service_name: account-service
+hostname: localhost
+port: 50051
+---
+service_name: order-service
+hostname: localhost
+port: 50052

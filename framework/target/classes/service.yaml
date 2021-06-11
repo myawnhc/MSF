@@ -1,0 +1,16 @@
+---
+service_name: test-service-1
+hostname: localhost
+port: 50051
+# Will add additional fields as needed for cloud deployments
+#  apis:
+#    - api: open
+#      request-map: AccountService.OPEN.Request
+#      response-map: AccountService.OPEN.Response
+#    - api: adjust
+#      request-map: AccountService.ADJUST.Request
+#      response-map: AccountService.ADJUST.Response
+---
+service_name: test-service-2
+hostname: 192.168.50.32
+port: 50052

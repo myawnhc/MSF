@@ -1,28 +1,36 @@
 package com.hazelcast.msf.testclient;
 
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
+import com.hazelcast.msf.configuration.ServiceConfig;
+import com.hazelcast.msfdemo.acctsvc.domain.Account;
+import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
 import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass;
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import io.grpc.stub.StreamObserver;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OrderServiceClient {
     private static final Logger logger = Logger.getLogger(OrderServiceClient.class.getName());
-    private final OrderGrpc.OrderBlockingStub blockingStub;
+    private final OrderGrpc.OrderBlockingStub blockingStub; // unused
     private final OrderGrpc.OrderFutureStub futureStub;
+    private final OrderGrpc.OrderStub asyncStub; // unused
+
+    private List<Account> validAccounts;
 
     public static void main(String[] args) {
         // Access a service running on the local machine on port 50052
-        String target = "localhost:50052"; // TODO: get from a config file
+        //String target = "localhost:50052";
+        ServiceConfig.ServiceProperties props = ServiceConfig.get("order-service");
+        String target = props.getTarget();
+        logger.info("Target from service.yaml " + target);
 
         // Create a communication channel to the server, known as a Channel. Channels are thread-safe
         // and reusable. It is common to create channels at the beginning of your application and reuse
@@ -35,6 +43,7 @@ public class OrderServiceClient {
 
         try {
             OrderServiceClient orderServiceClient = new OrderServiceClient(channel);
+            orderServiceClient.nonBlockingOrder();
         } finally {
 
         }
@@ -48,47 +57,62 @@ public class OrderServiceClient {
         // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
         blockingStub = OrderGrpc.newBlockingStub(channel);
         futureStub = OrderGrpc.newFutureStub(channel);
+        asyncStub = OrderGrpc.newStub(channel);
+
+        Collection<Account> ac = new AccountDAO().getAllAccounts();
+        validAccounts = new ArrayList(ac);
+        System.out.println("Retrieved " + validAccounts.size() + " accounts from AccountDAO");
+    }
+
+    private static class OrderEventResponseProcessor implements StreamObserver<OrderOuterClass.OrderEventResponse> {
+
+        @Override
+        public void onNext(OrderOuterClass.OrderEventResponse orderEventResponse) {
+            System.out.println(formatResponse(orderEventResponse));
+        }
+
+        @Override
+        public void onError(Throwable throwable) {
+            System.out.println("onError " + throwable);
+        }
+
+        @Override
+        public void onCompleted() { }
+    }
+
+    static String formatResponse(OrderOuterClass.OrderEventResponse response) {
+        return response.getEventName() + " O:" + response.getOrderNumber() +
+                " A:" + response.getAccountNumber() +
+                " I: " + response.getItemNumber() +
+                " L: " + response.getLocation() +
+                " Q: " + response.getQuantity() +
+                " $: " + response.getExtendedPrice();
     }
 
     public void nonBlockingOrder()  {
-        List<ListenableFuture<OrderOuterClass.CreateOrderResponse>> futures = new ArrayList<>();
+        //ExecutorService pool = Executors.newCachedThreadPool() ;
+        //List<ListenableFuture<OrderOuterClass.CreateOrderResponse>> futures = new ArrayList<>();
         for (int i=0; i<10; i++) {
-            // TODO: Because we use flake ids for acct numbers we can't guess them,
-            //       probably need to do an AccountDAO query to get them.
-            // TODO: Inventory service not written yet but probably has the same issue
-            // TODO: Locations can be simple formula like Store001-Store099, Warehouse01-Warehouse09
-            //String name = "Acct " + prefix + i;
-            //int balance = Double.valueOf(Math.random()*10000).intValue()*100;
-            OrderOuterClass.CreateOrderRequest request = OrderOuterClass.CreateOrderRequest.newBuilder()
-                    .setAccountNumber("1")
+            int index = (int)(Math.random()*validAccounts.size()+1);
+            String acctNumber = validAccounts.get(index).getAcctNumber();
+            //System.out.println("Account at index " + index + " is " + acctNumber);
+             OrderOuterClass.CreateOrderRequest request = OrderOuterClass.CreateOrderRequest.newBuilder()
+                    .setAccountNumber(acctNumber)
                     .setItemNumber("1")
                     .setQuantity(1)
                     .setLocation("1")
                     .build();
             try {
-                futures.add(futureStub.createOrder(request));
+                // When changed to server-side streaming RPC, createOrder disappeared from futureStub!
+                //ListenableFuture<OrderOuterClass.OrderEventResponse> future = futureStub.createOrder(request);
+                asyncStub.createOrder(request, new OrderEventResponseProcessor());
+
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
                 return;
             }
         }
 
-        try {
-            // Can use successfulAsList rather than allAsList to get only good responses
-            ListenableFuture<List<OrderOuterClass.CreateOrderResponse>> responseList = Futures.allAsList(futures);
-            List<OrderOuterClass.CreateOrderResponse> responses = responseList.get();
-            //List<String> openedAccountNumbers = new ArrayList<>();
-            //System.out.println("Successful response count for group " + prefix + " = " + responses.size());
-            for (OrderOuterClass.CreateOrderResponse oar : responses) {
-                boolean succeeded = oar.getSucceeded();
-                // Count them?  Do what with responses?
-            }
-            return;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         return;
     }
 }

@@ -12,8 +12,6 @@ import com.hazelcast.flakeidgen.FlakeIdGenerator;
 import com.hazelcast.jet.Jet;
 import com.hazelcast.jet.JetInstance;
 import com.hazelcast.jet.Job;
-import com.hazelcast.jet.config.JetClientConfig;
-import com.hazelcast.jet.config.JetConfig;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.map.IMap;
@@ -49,14 +47,16 @@ public class MSFController {
 
     private void init() {
 
-        // TODO: make configurable
+        // TODO: make configurable - maybe add to service.yaml?
         boolean embedded = true;
 
         if (embedded) {
-            JetConfig jetConfig = new JetConfig();
+            //JetConfig jetConfig = new JetConfig();
+            System.out.println("MSFController starting embedded Jet with config from classpath");
             jet = Jet.newJetInstance();
         } else {
-            JetClientConfig clientConfig = new JetClientConfig();
+            //JetClientConfig clientConfig = new JetClientConfig();
+            System.out.println("MSFController starting Jet client with config from classpath");
             jet = Jet.newJetClient();
         }
         hazelcast = jet.getHazelcastInstance();

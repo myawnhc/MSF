@@ -1,0 +1,4 @@
+---
+service_name: order-service
+hostname: localhost
+port: 50052

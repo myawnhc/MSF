@@ -1,0 +1,17 @@
+syntax = "proto3";
+package catalog;
+
+option java_package = "com.hazelcast.msfdemo.protosvc.events";
+
+service Catalog {
+  rpc PriceLookup (PriceLookupRequest) returns (PriceLookupResponse) {}
+  // Additional APIs such as add/update/delete items not needed for initial demo use case
+}
+
+message PriceLookupRequest {
+  string itemNumber = 1;
+}
+
+message PriceLookupResponse {
+  int32 price = 1;
+}

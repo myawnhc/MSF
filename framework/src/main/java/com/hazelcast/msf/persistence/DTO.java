@@ -1,10 +1,8 @@
 package com.hazelcast.msf.persistence;
 
-// Probably only need for this is to specify the key type and getter method for it
-// Everything else will be in the concrete subclass
+/** Data Transfer Object base class; parameterized by the Key type */
 public abstract class DTO<K> {
-    K key;
+    private K key;
 
     public K getKey() { return key; }
-
 }

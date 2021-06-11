@@ -8,3 +8,4 @@
 /Users/myawn/Documents/GitHub/MSF/framework/src/main/java/com/hazelcast/msf/transactions/TxnMessage.java
 /Users/myawn/Documents/GitHub/MSF/framework/src/main/java/com/hazelcast/msf/configuration/ConfigUtil.java
 /Users/myawn/Documents/GitHub/MSF/framework/src/main/java/com/hazelcast/msf/messaging/MessageBroker.java
+/Users/myawn/Documents/GitHub/MSF/framework/src/main/java/com/hazelcast/msf/configuration/ServiceConfig.java

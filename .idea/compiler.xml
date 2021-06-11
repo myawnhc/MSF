@@ -6,10 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="order-java" />
         <module name="framework" />
-        <module name="order.service" />
-        <module name="account.service" />
+        <module name="order.protobuf" />
         <module name="TestClient" />
+        <module name="inventory.protobuf" />
+        <module name="account.service" />
+        <module name="catalog.protobuf" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,4 +1,5 @@
 com/hazelcast/msf/controller/MSFController$Singleton.class
+com/hazelcast/msf/configuration/ServiceConfig$ServiceProperties.class
 com/hazelcast/msf/persistence/DTO.class
 com/hazelcast/msf/configuration/MSFConfig.class
 com/hazelcast/msf/messaging/APIResponse.class
@@ -11,3 +12,4 @@ com/hazelcast/msf/messaging/MessageBroker.class
 com/hazelcast/msf/controller/MSFController.class
 com/hazelcast/msf/transactions/TxnMessage.class
 com/hazelcast/msf/persistence/DAO.class
+com/hazelcast/msf/configuration/ServiceConfig.class

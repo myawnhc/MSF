@@ -4,11 +4,7 @@ import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.eventstore.EventStore;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEvent;
-import com.hazelcast.query.Predicates;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.hazelcast.msfdemo.acctsvc.events.CompactionEvent;
 
 public class AccountEventStore extends EventStore<Account, String, AccountEvent> {
 
@@ -27,19 +23,7 @@ public class AccountEventStore extends EventStore<Account, String, AccountEvent>
         return Singleton.INSTANCE;
     }
 
-//    // Build a materialized view from the Event Store.  Should not be necessary
-//    // in normal operation as we do this on-the-fly, but if we are in recovery
-//    // scenario or taking a snapshot, then we do this.
-//    public Account materialize(String acctNum) {
-//        Account account = new Account();
-//        List<Long> keys = new ArrayList(eventMap.keySet(Predicates.sql("accountNumber="+acctNum)));
-//        Collections.sort(keys);
-//        for (Long sequence : keys) {
-//            AccountEvent accountEvent = eventMap.get(sequence);
-//            accountEvent.apply(account);
-//        }
-//        return account;
-//    }
+    // Materialize method generified and moved to EventStore base class
 
     // Is this an all-or-nothing operation?  Maybe we want to use it for space
     // management so might set a threshold - checkpoint keys having over X entries.
@@ -53,5 +37,10 @@ public class AccountEventStore extends EventStore<Account, String, AccountEvent>
         //    Remove all entries for the key from the event store
         //    Append the snapshot record to the event store
         //    (maybe flip order of those last two so we have less risk of data loss)
+    }
+
+    public CompactionEvent writeAsCheckpoint(Account account, long sequence) {
+        CompactionEvent checkpoint = new CompactionEvent(account.getAcctNumber(), account.getName(), account.getBalance());
+        return checkpoint;
     }
 }

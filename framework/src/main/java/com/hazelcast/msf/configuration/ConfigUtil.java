@@ -8,7 +8,7 @@ import com.hazelcast.client.properties.ClientProperty;
 
 import java.net.URL;
 import java.util.Map;
-
+@Deprecated
 public class ConfigUtil {
 
     // Configuration names (as found in properties.yaml configuration)

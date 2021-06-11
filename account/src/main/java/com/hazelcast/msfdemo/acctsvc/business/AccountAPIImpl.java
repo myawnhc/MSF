@@ -7,7 +7,6 @@ import com.hazelcast.msf.messaging.APIResponse;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
 import com.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
-import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.*;
 import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
@@ -66,7 +65,7 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             // otherwise we get 'listenerID may not have been initialized'.
             UUID myID = listenersByRequestID.remove(uniqueID);
             if (myID == null) {
-                System.out.println("AccountAPIImpl.open handler - listener for " + uniqueID + " was already removed");
+                //System.out.println("AccountAPIImpl.open handler - listener for " + uniqueID + " was already removed");
             } else {
                 openPipelineOutput.removeEntryListener(myID);
             }
@@ -105,10 +104,10 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             // otherwise we get 'listerID may not have been initialized'.
             UUID myID = listenersByRequestID.remove(uniqueID);
             if (myID == null) {
-                if (request.getAmount() > 0)
-                    System.out.println("AccountAPIImpl.deposit    - listener for " + uniqueID + " was already removed");
-                else
-                    System.out.println("AccountAPIImpl.withdrawal - listener for " + uniqueID + " was already removed");
+//                if (request.getAmount() > 0)
+//                    System.out.println("AccountAPIImpl.deposit    - listener for " + uniqueID + " was already removed");
+//                else
+//                    System.out.println("AccountAPIImpl.withdrawal - listener for " + uniqueID + " was already removed");
 
             } else {
                 adjustPipelineOutput.removeEntryListener(myID);

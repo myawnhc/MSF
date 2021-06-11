@@ -67,6 +67,13 @@
             </extension>
         </extensions>
         <resources>
+            <!-- Not sure why the default is being suppressed, adding it explicitly -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
             <resource>
                 <directory>../framework/target</directory>
                 <targetPath>ext</targetPath>
@@ -146,6 +153,7 @@
                 <configuration>
                     <buildArgs>
                         <JAR_FILE>${docker.jar.file}</JAR_FILE>
+                        <!--
                         <CLUSTER1_NAME>${your.cluster1.name}</CLUSTER1_NAME>
                         <CLUSTER1_PORTLIST>${your.cluster1.external.port.list}</CLUSTER1_PORTLIST>
                         <CLUSTER2_NAME>${your.cluster2.name}</CLUSTER2_NAME>
@@ -156,6 +164,7 @@
                         <MY_OTHERDATABASE>${my.other.database}</MY_OTHERDATABASE>
                         <MY_OTHERPASSWORD>${my.other.password}</MY_OTHERPASSWORD>
                         <MY_OTHERUSER>${my.other.user}</MY_OTHERUSER>
+                        -->
                     </buildArgs>
                     <dockerfile>Dockerfile</dockerfile>
                     <pullNewerImage>false</pullNewerImage>

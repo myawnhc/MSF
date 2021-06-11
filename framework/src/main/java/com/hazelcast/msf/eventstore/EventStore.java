@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-/** Hazelcast-centric implmentation of an Event Store to support the Event Sourcing
+/** Hazelcast-centric implementation of an Event Store to support the Event Sourcing
  *  microservice pattern (@see https://microservices.io/patterns/data/event-sourcing.html)
  *  An 'event' is a representation of state changes made to the domain object during the
  *  execution of business logic.  Rather than persisting the current, up-to-date view of
@@ -29,7 +29,7 @@ import java.util.function.Supplier;
  * @param <K> the type of the key of the domain object
  * @param <T> the Event Object type that will be appended to the Event Store
  */
-public class EventStore<D extends DTO<K>, K, T extends SequencedEvent> {
+public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> {
     // Key is sequence number; event store is not kept sorted so must sort upon use
     protected IMap<Long, T> eventMap;
     protected IAtomicLong sequenceProvider;
@@ -59,10 +59,6 @@ public class EventStore<D extends DTO<K>, K, T extends SequencedEvent> {
         eventMap.set(sequence, event);
     }
 
-    // Build a materialized view from the Event Store.  Should not be necessary
-    // in normal operation as we do this on-the-fly, but if we are in recovery
-    // scenario or taking a snapshot, then we do this.
-
     /** Materialize a domain object from the event store.  In normal operation this isn't
      * used as we always keep an up-to-date materialized view, but in a recovery
      * scenario where the in-memory copy is lost this will rebuild it.
@@ -80,12 +76,32 @@ public class EventStore<D extends DTO<K>, K, T extends SequencedEvent> {
         Collections.sort(keys);
         for (Long sequence : keys) {
             T accountEvent = eventMap.get(sequence);
-            // TODO: apply comes from UnaryOperator on AccountEvent, would need to move it
-            // up to SequencedEvent and parameterize it
             accountEvent.apply(materializedObject);
         }
         return materializedObject;
     }
+
+    public void compact(String predicate, float compressionPercentage) {
+        // Note this shares a lot of code with materialize, should eventually
+        // refactor to eliminate duplication
+        D compressedData = domainObjectConstructor.get();
+        List<Long> keys = new ArrayList(eventMap.keySet(Predicates.sql(predicate)));
+        Collections.sort(keys);
+        int entriesToCompress = (int) (keys.size() * compressionPercentage);
+        System.out.println("Will compress " + entriesToCompress + " of " + keys.size() + " entries");
+        long sequenceOfLastAppliedEvent = -1;
+        for (int i=0; i<entriesToCompress; i++) {
+            T accountEvent = eventMap.get(keys.get(i));
+            accountEvent.apply(compressedData);
+            eventMap.remove(accountEvent);
+            sequenceOfLastAppliedEvent = keys.get(i);
+        }
+        // Now write the summarized object back into the slot of the last-compressed entry
+        T checkpointEvent = (T) writeAsCheckpoint(compressedData, sequenceOfLastAppliedEvent);
+        eventMap.put(sequenceOfLastAppliedEvent, checkpointEvent);
+    }
+
+    abstract public SequencedEvent writeAsCheckpoint(D domainObject, long sequence);
 
     /** Return the event map.  This is public to support unit tests; framework users
      * should not need to call this directly.
