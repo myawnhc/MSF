@@ -1,0 +1,16 @@
+hazelcast:
+  cluster-name: catalog
+  network:
+    port:
+      port-count: 10
+      port: 5731
+  map:
+    CatalogEvent*:
+      event-journal:
+        enabled: true
+        capacity: 100000
+      indexes:
+      # Sorted index on key (sequence)
+        - type: SORTED
+          attributes:
+            - "__key"

@@ -1,0 +1,16 @@
+hazelcast:
+  cluster-name: inventory
+  network:
+    port:
+      port-count: 10
+      port: 5721
+  map:
+    InventoryEvent*:
+      event-journal:
+        enabled: true
+        capacity: 100000
+      indexes:
+      # Sorted index on key (sequence)
+        - type: SORTED
+          attributes:
+            - "__key"
