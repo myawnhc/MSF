@@ -72,7 +72,7 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
                                 .setQuantity(event.getQuantity())
                                 .setEventName(event.getEventName())
                                 .build();
-                System.out.println("OrderAPIImpl sending first response from APIResponse");
+                //System.out.println("OrderAPIImpl sending first response from APIResponse");
                 responseObserver.onNext(grpcResponse);
                 // Handle additional events for the order
                 new EventHandler(event.getOrderNumber(), responseObserver);
@@ -103,14 +103,6 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
         orderPipelineInput.set(uniqueID, request);
     }
 
-    @Deprecated // eventHandler instantiated directly in above method
-    private void processOrder(String orderNumber, StreamObserver<OrderEventResponse> responseObserver) {
-        //OrderEventStore eventStore = OrderEventStore.getInstance();
-        System.out.println("Registered to monitor event store for subsequent events");
-        // TODO: need to unregister once temrinal event is received
-        new EventHandler(orderNumber, responseObserver);
-    }
-
     public static class EventHandler {
         private StreamObserver<OrderEventResponse> responseObserver;
         private OrderEventStore eventStore;
@@ -120,7 +112,7 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
             this.responseObserver = observer;
             this.eventStore = OrderEventStore.getInstance();
             this.listenerID = eventStore.registerEventHandler(orderNumber, this);
-            System.out.println("Registered handler for subsequent events on order " + orderNumber);
+            //System.out.println("Registered handler for subsequent events on order " + orderNumber);
         }
 
         // Needs responseStream in order to respond!

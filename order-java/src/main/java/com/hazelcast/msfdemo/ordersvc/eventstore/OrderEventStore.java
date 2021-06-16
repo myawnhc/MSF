@@ -26,7 +26,6 @@ import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.events.CompactionEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
-import com.hazelcast.msfdemo.ordersvc.events.OrderShippedEvent;
 import com.hazelcast.query.Predicates;
 
 import java.util.Map;
@@ -84,27 +83,15 @@ public class OrderEventStore extends EventStore<Order, String, OrderEvent> {
 
         // There is a lag in registering handlers - pick events we've missed
         Set<Map.Entry<Long,OrderEvent>> missedEvents = eventMap.entrySet(Predicates.sql("orderNumber=" + orderNumber));
-        System.out.println("Re-processing " + missedEvents.size() + " missed events");
+        //System.out.println("Re-processing " + missedEvents.size() + " missed events");
         for (Map.Entry<Long,OrderEvent> mapEntry : missedEvents) {
             OrderEvent event = mapEntry.getValue();
             if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
-                System.out.println("Skipping create event");
+                //System.out.println("Skipping create event");
             } else {
                 handler.handleEvent(event);
             }
         }
-
-        // TODO: remove this fake event code!
-        try {
-            // Wait long enough for price lookup to clear, otherwise we close stream prematurely
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        OrderShippedEvent ship = new OrderShippedEvent(orderNumber, "AcctNum", "ItemNum", "Loc",
-                10, 1000);
-        super.append(ship);
-        // TODO: end fake event code
         return id;
     }
 

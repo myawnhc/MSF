@@ -6,3 +6,11 @@ port: 50052
 service_name: catalog-service
 hostname: localhost
 port: 50054
+---
+service_name: inventory-service
+hostname: localhost
+port: 50053
+---
+service_name: account-service
+hostname: localhost
+port: 50051

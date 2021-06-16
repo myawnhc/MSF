@@ -33,6 +33,10 @@ public abstract class OrderEvent extends SequencedEvent<Order> implements Serial
     protected int    extendedPrice;
     protected boolean terminal;
 
+    public OrderEvent(OrderEventTypes type) {
+        this.eventType = type;
+    }
+
     public OrderEvent(OrderEventTypes type, String orderNumber, String accountNumber,
                       String itemNumber, String location, int quantity) {
         this.eventType = type;
@@ -51,6 +55,30 @@ public abstract class OrderEvent extends SequencedEvent<Order> implements Serial
     public int getExtendedPrice() { return extendedPrice; }
     public String getEventName() { return eventType.getQualifiedName(); }
     public boolean isTerminal() { return terminal; }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
+        this.itemNumber = itemNumber;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setExtendedPrice(int extendedPrice) {
+        this.extendedPrice = extendedPrice;
+    }
 
     @Override
     public String toString() {

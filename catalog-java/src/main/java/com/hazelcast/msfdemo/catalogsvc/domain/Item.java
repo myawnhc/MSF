@@ -22,6 +22,7 @@ import com.hazelcast.msf.persistence.DTO;
 import java.io.Serializable;
 
 public class Item extends DTO<String> implements Serializable {
+
     private String itemNumber;
     private String itemDescription;
     private int price;

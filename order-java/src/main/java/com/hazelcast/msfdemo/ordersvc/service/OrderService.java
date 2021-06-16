@@ -20,6 +20,7 @@ package com.hazelcast.msfdemo.ordersvc.service;
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msfdemo.ordersvc.business.CreateOrderPipeline;
+import com.hazelcast.msfdemo.ordersvc.business.InventoryReservePipeline;
 import com.hazelcast.msfdemo.ordersvc.business.PriceLookupPipeline;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
@@ -50,6 +51,9 @@ public class OrderService {
 
         PriceLookupPipeline pricePipeline = new PriceLookupPipeline(this);
         executor.submit(pricePipeline);
+
+        InventoryReservePipeline reservePipeline = new InventoryReservePipeline(this);
+        executor.submit(reservePipeline);
 
     }
 

@@ -7,6 +7,7 @@ service Inventory {
   rpc CheckAvailability (ATPRequest) returns (ATPResponse) {}
   rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
   rpc Ship (ShipRequest) returns (ShipResponse) {}
+  rpc Reserve (ReserveRequest) returns (ReserveResponse) {}
   // Additional APIs including add / move not required for initial demo use case
 }
 
@@ -27,4 +28,17 @@ message ShipRequest {
 
 message ShipResponse {
   bool success = 1;
+  string reason = 2;
+}
+
+message ReserveRequest {
+  string itemNumber = 1;
+  string location = 2;
+  int32 quantity = 3;
+  int32 duration_minutes = 4;
+}
+
+message ReserveResponse {
+  bool success = 1;
+  string reason = 2;
 }

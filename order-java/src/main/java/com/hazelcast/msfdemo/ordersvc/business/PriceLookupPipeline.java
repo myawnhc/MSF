@@ -116,7 +116,7 @@ public class PriceLookupPipeline implements Runnable {
                                         PriceLookupEvent lookup = new PriceLookupEvent(create.getOrderNumber(),
                                                 create.getAccountNumber(), create.getItemNumber(), create.getLocation(),
                                                 create.getQuantity(), response.getPrice());
-                                        System.out.println("Lookup " + lookup.getOrderNumber() + " now priced " + lookup.getExtendedPrice());
+                                        //System.out.println("Lookup " + lookup.getOrderNumber() + " now priced " + lookup.getExtendedPrice());
                                         return tuple2(eventEntry.getKey(), lookup);
                                     });
                         });
@@ -131,13 +131,11 @@ public class PriceLookupPipeline implements Runnable {
 
         lookupStream.mapUsingService(eventStoreServiceFactory, (store, lookupEntry) -> {
             store.append(lookupEntry.getValue());
-            System.out.println("PriceCalculatedEvent persisted to event store");
             return lookupEntry;
         }).setName("Persist PriceCalculatedEvent to event store")
 
          // Create Materialized View object and publish it
         .mapUsingService(materializedViewServiceFactory, (viewMap, tuple)-> {
-            System.out.println("Updating Order (Materialized View) object with price");
             PriceLookupEvent orderEvent = tuple.getValue();
             viewMap.executeOnKey(orderEvent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
                 Order orderView1 = orderEntry.getValue();
@@ -147,13 +145,12 @@ public class PriceLookupPipeline implements Runnable {
             });
             //System.out.println("View object updated with extended price");
             return tuple;
-        }).setName("Create and publish Order Materialized View")
+        }).setName("Update Order Materialized View")
 
         // Write APIResponse to result map, triggering gRPC response to client
         .map( tuple -> {
             Long uniqueID = tuple.getKey();
             OrderEvent event = tuple.getValue();
-
             APIResponse<OrderEvent> response = new APIResponse<>(uniqueID, event);
             //System.out.println("Building and returning API response");
             return new AbstractMap.SimpleEntry<>(uniqueID, response);

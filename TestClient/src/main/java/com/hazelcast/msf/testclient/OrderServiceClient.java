@@ -112,12 +112,16 @@ public class OrderServiceClient {
         for (int i=0; i<10; i++) {
             int index = (int)(Math.random()*validAccounts.size()+1);
             String acctNumber = validAccounts.get(index).getAcctNumber();
+            int itemOffset = (int)(Math.random()*1000+1);
+            int locationNum = (int)(Math.random()*100+1);
+            String itemNumber = ""+(10101+itemOffset);
+            String location = locationNum < 10 ? "W" + locationNum : "S" + locationNum;
             //System.out.println("Account at index " + index + " is " + acctNumber);
              OrderOuterClass.CreateOrderRequest request = OrderOuterClass.CreateOrderRequest.newBuilder()
                     .setAccountNumber(acctNumber)
-                    .setItemNumber("1")
+                    .setItemNumber(itemNumber)
                     .setQuantity(1)
-                    .setLocation("1")
+                    .setLocation(location)
                     .build();
             try {
                 // When changed to server-side streaming RPC, createOrder disappeared from futureStub!
