@@ -64,7 +64,7 @@ public class MSFController {
 
     private void init() {
 
-        // TODO: make configurable - maybe add to service.yaml?
+        // TODO: make configurable - maybe add to service.yaml.test?
         boolean embedded = true;
 
         if (embedded) {

@@ -47,7 +47,7 @@ public class OrderServiceClient {
         //String target = "localhost:50052";
         ServiceConfig.ServiceProperties props = ServiceConfig.get("order-service");
         String target = props.getTarget();
-        logger.info("Target from service.yaml " + target);
+        logger.info("Target from service.yaml.test " + target);
 
         // Create a communication channel to the server, known as a Channel. Channels are thread-safe
         // and reusable. It is common to create channels at the beginning of your application and reuse

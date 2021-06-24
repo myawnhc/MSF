@@ -55,7 +55,7 @@ public class AccountServiceClient {
         //String target = "localhost:50051";
         ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
         String target = props.getTarget();
-        logger.info("Target from service.yaml " + target);
+        logger.info("Target from service.yaml.test " + target);
 
         // Create a communication channel to the server, known as a Channel. Channels are thread-safe
         // and reusable. It is common to create channels at the beginning of your application and reuse

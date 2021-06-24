@@ -64,18 +64,22 @@ public class ServiceConfig {
         try {
             URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml");
             YAMLParser parser = yfactory.createParser(yamlFile);
-            System.out.println("Reading config info from " + yamlFile.toExternalForm());
+            System.out.println("ServiceConfig reading config info from " + yamlFile.toExternalForm());
             configInfo = mapper.readValues(parser, ServiceProperties.class);
             while (configInfo.hasNext()) {
                 ServiceProperties sp = configInfo.next();
                 configurations.put(sp.service_name, sp);
+                System.out.println(" -- " + sp.service_name);
             }
+            System.out.println("ServiceConfig loaded " + configurations.size() + " service definitions");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // For testing use only
+    // For testing use only.  Needs service-yaml.test renamed to drop '.test' in order to work.
+    // (Renamed because otherwise it overwrote service-specific files when jar with dependencies built)
     public static void main(String[] args) {
         ServiceConfig serviceConfig = new ServiceConfig();
         ServiceProperties props = serviceConfig.get("test-service-1");
