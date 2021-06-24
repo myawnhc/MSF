@@ -28,7 +28,8 @@
 
     <modules>
         <module>framework</module>
-        <module>account</module>
+        <module>account-protobuf</module>
+        <module>account-java</module>
         <module>order-protobuf</module>
         <module>order-java</module>
         <module>catalog-protobuf</module>
@@ -36,6 +37,7 @@
         <module>TestClient</module>
         <module>inventory-java</module>
         <module>catalog-java</module>
+
     </modules>
 
     <properties>

@@ -1,5 +1,0 @@
-hazelcast-client:
-    cluster-name: account
-    network:
-      cluster-members:
-      - localhost:5701

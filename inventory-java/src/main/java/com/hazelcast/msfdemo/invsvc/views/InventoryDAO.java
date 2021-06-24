@@ -24,6 +24,8 @@ public class InventoryDAO extends DAO<Inventory, String> {
 
     public InventoryDAO() {
         super("inventory");
+        // Create backing table (for MapStore) if not present
+
     }
 
     // Non-inheritable query methods

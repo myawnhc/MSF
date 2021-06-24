@@ -18,8 +18,10 @@
 package com.hazelcast.msfdemo.invsvc.service;
 
 import com.hazelcast.msf.controller.MSFController;
+import com.hazelcast.msfdemo.invsvc.business.CDCPipeline;
 import com.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
 import com.hazelcast.msfdemo.invsvc.views.InventoryDAO;
+import com.hazelcast.msfdemo.invsvc.views.ItemDAO;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -28,12 +30,14 @@ import java.util.concurrent.Executors;
 public class InventoryService {
 
     MSFController controller;
+    ItemDAO itemDAO;
     InventoryDAO inventoryDAO;
     InventoryEventStore eventStore;
 
     private void init() {
         controller = MSFController.getInstance();
         inventoryDAO = new InventoryDAO();
+        itemDAO = new ItemDAO();
 
         // Initialize the EventStore
         eventStore = InventoryEventStore.getInstance();
@@ -41,14 +45,8 @@ public class InventoryService {
 
         // Start the various Jet transaction handler pipelines
         ExecutorService executor = Executors.newCachedThreadPool();
-        // ReserveInventoryPipeline
-        // PullInventoryPipeline
-        // full implementation would have add, remove, move
-        // Probably ATP as a gRPC service because DAO doesn't help for non-local user
-
-//        CreateOrderPipeline orderPipeline = new CreateOrderPipeline(this);
-//        executor.submit(orderPipeline);
-
+        CDCPipeline cdcPipeline = new CDCPipeline();
+        executor.submit(cdcPipeline);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

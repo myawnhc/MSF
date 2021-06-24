@@ -62,7 +62,7 @@ public abstract class DAO<T extends DTO<K>, K> {
     public void insert(K key, T dobj) {
         // Do we need a separate Map (O/R mapping) object?  If so it should
         // be reachable from the DO so shouldn't need additional parameter
-        map.put(key, dobj);
+        map.set(key, dobj); // put here will trigger a db load for prev value that we don't need
     };
     public void delete(T dobj) {
         map.remove(dobj.getKey());

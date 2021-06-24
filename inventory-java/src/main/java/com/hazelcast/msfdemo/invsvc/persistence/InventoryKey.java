@@ -15,17 +15,14 @@
  *
  */
 
-package com.hazelcast.msfdemo.invsvc.views;
+package com.hazelcast.msfdemo.invsvc.persistence;
 
-import com.hazelcast.msf.persistence.DAO;
-import com.hazelcast.msfdemo.invsvc.domain.Item;
-import com.hazelcast.msfdemo.invsvc.persistence.ItemMapStore;
+public class InventoryKey {
+    public String itemNumber;
+    public String locationID;
 
-public class ItemDAO extends DAO<Item,String> {
-
-    public ItemDAO() {
-        super("item");
-        // Creates backing tables (for MapStore) if not present
-        ItemMapStore mapStore = new ItemMapStore();
+    public InventoryKey(String item, String loc) {
+        this.itemNumber = item;
+        this.locationID = loc;
     }
 }

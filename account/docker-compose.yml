@@ -1,7 +1,0 @@
-version: '3'
-
-services:
-  jet:
-    image: hazelcast/hazelcast-jet:4.5
-    ports:
-      - "5701-5703:5701"
