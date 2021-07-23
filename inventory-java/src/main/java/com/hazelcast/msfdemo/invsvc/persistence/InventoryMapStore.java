@@ -52,8 +52,8 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             "create table if not exists location ( " +
                     "location_id    varchar(4) not null, " +
                     "location_type  varchar(2), " +
-                    "geohash        varchar(10) " +
-                    "primary key (location_id)" +
+                    "geohash        varchar(10), " +
+                    "primary key (location_id) " +
                     ")";
 
     private static final String insertInventoryTemplate =
@@ -181,18 +181,27 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                 selectInventoryStatement = conn.prepareStatement(selectInventoryTemplate);
             }
             selectInventoryStatement.setString(1, itemNumber);
-            selectInventoryStatement.setString(1, location);
+            selectInventoryStatement.setString(2, location);
             ResultSet rs = selectInventoryStatement.executeQuery();
             if (rs == null) return null;
             while (rs.next()) {
                 Inventory inv = new Inventory();
                 inv.setItemNumber( rs.getString(1));
                 Item item = readItem(itemNumber);
+                if (item == null) {
+                    System.out.println("No item record for " + itemNumber);
+                    return null;
+                }
                 inv.setDescription(item.getDescription());
                 Location loc = readLocation(location);
-                inv.setLocation(loc.locationID);
-                inv.setLocationType(loc.locationType);
-                inv.setGeohash(loc.geohash);
+                if (loc == null) {
+                    System.out.println("No location record for " + location + " referenced by item " + itemNumber + " " + item.getDescription());
+                    return null;
+                } else {
+                    inv.setLocation(loc.locationID);
+                    inv.setLocationType(loc.locationType);
+                    inv.setGeohash(loc.geohash);
+                }
                 inv.setQuantityOnHand(rs.getInt(3));
                 inv.setQuantityReserved(rs.getInt(4));
                 inv.setAvailableToPromise(rs.getInt(5));
@@ -210,8 +219,9 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                 insertLocationStatement = conn.prepareStatement(insertLocationTemplate);
             insertLocationStatement.setString(1, loc.locationID);
             insertLocationStatement.setString(2, loc.locationType);
-            insertLocationStatement.setString(2, loc.geohash);
+            insertLocationStatement.setString(3, loc.geohash);
             int rowsAffected = insertLocationStatement.executeUpdate();
+            //System.out.println("writeLocation rows " + rowsAffected);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -227,6 +237,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             insertInventoryStatement.setInt(4, inv.getQuantityReserved());
             insertInventoryStatement.setInt(5, inv.getAvailableToPromise());
             int rowsAffected = insertInventoryStatement.executeUpdate();
+            //System.out.println("writeInventory rows " + rowsAffected);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -238,7 +249,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
 
     @Override
     public void store(InventoryKey key, Inventory inv) {
-        System.out.printf("Store %s %s\n", key.itemNumber, key.locationID, inv);
+        //System.out.printf("Store %s %s\n", key.itemNumber, key.locationID, inv);
         // Insert entry into Location table if it does not exist
         Location loc = readLocation(inv.getLocation());
         if (loc == null) {
@@ -278,26 +289,26 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
     @Override
     public Inventory load(InventoryKey key) {
         // Note that writeBehindStore calls load
-        System.out.printf("load %s %s\n", key.itemNumber, key.locationID);
+        //System.out.printf("load %s %s\n", key.itemNumber, key.locationID);
         return readInventory(key.itemNumber, key.locationID);
     }
 
     @Override
     public Map<InventoryKey, Inventory> loadAll(Collection<InventoryKey> collection) {
-        System.out.println("loadAll");
+        //System.out.println("loadAll");
         Map<InventoryKey, Inventory> items = new HashMap<>();
         for (InventoryKey key : collection) {
             Inventory value = load(key);
             if (value != null)
                 items.put(key, value);
         }
-        System.out.println("Loaded " + items.size() + " items from " + collection.size() + " keys");
+        //System.out.println("Loaded " + items.size() + " items from " + collection.size() + " keys");
         return items;
     }
 
     @Override
     public Iterable<InventoryKey> loadAllKeys() {
-        System.out.println("loadAllKeys");
+        //System.out.println("loadAllKeys");
         List<InventoryKey> keys = new ArrayList<>();
         try {
             if (selectItemKeysStatement == null) {
@@ -313,7 +324,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Returning " + keys.size() + " keys from Item table");
+        //System.out.println("Returning " + keys.size() + " keys from Item table");
         return keys;
     }
 }

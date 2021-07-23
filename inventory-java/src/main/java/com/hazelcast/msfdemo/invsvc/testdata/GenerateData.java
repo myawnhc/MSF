@@ -32,11 +32,11 @@ public class GenerateData {
             "Groceries", "Gardening", "Health", "Cosmetics", "Accessories",
             "Jewelry", "Camera & Photo", "Automotive", "Antiques", "Appliances" };
 
-    public static void main(String[] args) {
-        // Generate 1000 items
+    // Categories are build as a side effect
+    public void generateItems(int count) {
         ItemDAO itemDAO = new ItemDAO();
         int initialItemNumber = 10101;
-        for (int i=0; i<1000; i++) {
+        for (int i=0; i<count; i++) {
             Item item = new Item();
             String itemNumber = ""+initialItemNumber++;
             item.setItemNumber(itemNumber);
@@ -47,24 +47,37 @@ public class GenerateData {
             item.setPrice((int) (Math.random()*10000)); // values to .01 to 999.99
             itemDAO.insert(itemNumber, item);
         }
-        System.out.println("Created 1000 items");
+        System.out.printf("Created %d items\n", count);
+        itemDAO.disconnect();
+    }
+    public static void main(String[] args) {
+        // Generate 1000 items
+        int numItems = 1000;
+        GenerateData main = new GenerateData();
+        main.generateItems(numItems);
 
         // Will use 10 warehouses, location ids 00-09
         // Will use 90 stores, location ids 10-99
+        int locations = 100;
+        int warehouses = 10; // must be < locations
+        main.generateInventory(numItems, locations, warehouses);
+        System.exit(0);
+    }
 
+    public void generateInventory(int items, int locations, int warehouses) {
         InventoryDAO inventoryDAO = new InventoryDAO();
         // Generate 100K inventory records
-        for (int i=0; i<1000; i++) {
+        for (int i=0; i<items; i++) {
             String itemNumber = ""+(10101+i);
-            for (int l=0; l<100; l++) {
+            for (int l=0; l<locations; l++) {
                 Inventory inv = new Inventory();
                 inv.setItemNumber(itemNumber);
-                if (l<10) {
+                if (l<warehouses) {
                     inv.setLocation("W" + l);
-                    inv.setLocationType("Warehouse");
+                    inv.setLocationType("WH"); // warehouse
                 } else {
                     inv.setLocation("S" + l);
-                    inv.setLocationType("Store");
+                    inv.setLocationType("ST"); // store
                 }
                 inv.setDescription("Item " + itemNumber);
                 inv.setGeohash("not set");
@@ -75,9 +88,7 @@ public class GenerateData {
                 inventoryDAO.insert(inv.getKey(), inv);
             }
         }
-        System.out.println("Generate data complete");
-        itemDAO.disconnect();
+        System.out.println("Generate inventory data complete");
         inventoryDAO.disconnect();
-        System.exit(0);
     }
 }

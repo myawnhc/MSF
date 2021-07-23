@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rAccount.proto\x12$com.hazelcast.msfdemo.acctsvc.events\"A\n\x12OpenAccountRequest\x12\x13\n\x0b\x61\x63\x63ountName\x18\x01 \x01(\t\x12\x16\n\x0einitialBalance\x18\x02 \x01(\x05\",\n\x13OpenAccountResponse\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"=\n\x14\x41\x64justBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\"+\n\x15\x41\x64justBalanceResponse\x12\x12\n\nnewBalance\x18\x01 \x01(\x05\",\n\x13\x43heckBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"\'\n\x14\x43heckBalanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x05\"Z\n\x14TransferMoneyRequest\x12\x19\n\x11\x66romAccountNumber\x18\x01 \x01(\t\x12\x17\n\x0ftoAccountNumber\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x05\"*\n\x15TransferMoneyResponse\x12\x11\n\tsucceeded\x18\x01 \x01(\x08\x32\xae\x05\n\x07\x41\x63\x63ount\x12}\n\x04Open\x12\x38.com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest\x1a\x39.com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse\"\x00\x12\x84\x01\n\x07\x44\x65posit\x12:.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse\"\x00\x12\x85\x01\n\x08Withdraw\x12:.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse\"\x00\x12\x87\x01\n\x0c\x43heckBalance\x12\x39.com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest\x1a:.com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse\"\x00\x12\x8a\x01\n\rTransferMoney\x12:.com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\rAccount.proto\x12$com.hazelcast.msfdemo.acctsvc.events\"A\n\x12OpenAccountRequest\x12\x13\n\x0b\x61\x63\x63ountName\x18\x01 \x01(\t\x12\x16\n\x0einitialBalance\x18\x02 \x01(\x05\",\n\x13OpenAccountResponse\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"=\n\x14\x41\x64justBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\"+\n\x15\x41\x64justBalanceResponse\x12\x12\n\nnewBalance\x18\x01 \x01(\x05\",\n\x13\x43heckBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"\'\n\x14\x43heckBalanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x05\"Z\n\x14TransferMoneyRequest\x12\x19\n\x11\x66romAccountNumber\x18\x01 \x01(\t\x12\x17\n\x0ftoAccountNumber\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x05\"*\n\x15TransferMoneyResponse\x12\x11\n\tsucceeded\x18\x01 \x01(\x08\"\x14\n\x12\x41llAccountsRequest\",\n\x13\x41llAccountsResponse\x12\x15\n\raccountNumber\x18\x01 \x03(\t\"\x15\n\x13TotalBalanceRequest\",\n\x14TotalBalanceResponse\x12\x14\n\x0ctotalBalance\x18\x01 \x01(\x03\x32\xcd\x07\n\x07\x41\x63\x63ount\x12}\n\x04Open\x12\x38.com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest\x1a\x39.com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse\"\x00\x12\x84\x01\n\x07\x44\x65posit\x12:.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse\"\x00\x12\x85\x01\n\x08Withdraw\x12:.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse\"\x00\x12\x87\x01\n\x0c\x43heckBalance\x12\x39.com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest\x1a:.com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse\"\x00\x12\x8a\x01\n\rTransferMoney\x12:.com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest\x1a;.com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse\"\x00\x12\x8a\x01\n\x11\x41llAccountNumbers\x12\x38.com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest\x1a\x39.com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse\"\x00\x12\x8f\x01\n\x14TotalAccountBalances\x12\x39.com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest\x1a:.com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -308,6 +308,120 @@ _TRANSFERMONEYRESPONSE = _descriptor.Descriptor(
   serialized_end=497,
 )
 
+
+_ALLACCOUNTSREQUEST = _descriptor.Descriptor(
+  name='AllAccountsRequest',
+  full_name='com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=499,
+  serialized_end=519,
+)
+
+
+_ALLACCOUNTSRESPONSE = _descriptor.Descriptor(
+  name='AllAccountsResponse',
+  full_name='com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='accountNumber', full_name='com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse.accountNumber', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=521,
+  serialized_end=565,
+)
+
+
+_TOTALBALANCEREQUEST = _descriptor.Descriptor(
+  name='TotalBalanceRequest',
+  full_name='com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=567,
+  serialized_end=588,
+)
+
+
+_TOTALBALANCERESPONSE = _descriptor.Descriptor(
+  name='TotalBalanceResponse',
+  full_name='com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='totalBalance', full_name='com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse.totalBalance', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=590,
+  serialized_end=634,
+)
+
 DESCRIPTOR.message_types_by_name['OpenAccountRequest'] = _OPENACCOUNTREQUEST
 DESCRIPTOR.message_types_by_name['OpenAccountResponse'] = _OPENACCOUNTRESPONSE
 DESCRIPTOR.message_types_by_name['AdjustBalanceRequest'] = _ADJUSTBALANCEREQUEST
@@ -316,6 +430,10 @@ DESCRIPTOR.message_types_by_name['CheckBalanceRequest'] = _CHECKBALANCEREQUEST
 DESCRIPTOR.message_types_by_name['CheckBalanceResponse'] = _CHECKBALANCERESPONSE
 DESCRIPTOR.message_types_by_name['TransferMoneyRequest'] = _TRANSFERMONEYREQUEST
 DESCRIPTOR.message_types_by_name['TransferMoneyResponse'] = _TRANSFERMONEYRESPONSE
+DESCRIPTOR.message_types_by_name['AllAccountsRequest'] = _ALLACCOUNTSREQUEST
+DESCRIPTOR.message_types_by_name['AllAccountsResponse'] = _ALLACCOUNTSRESPONSE
+DESCRIPTOR.message_types_by_name['TotalBalanceRequest'] = _TOTALBALANCEREQUEST
+DESCRIPTOR.message_types_by_name['TotalBalanceResponse'] = _TOTALBALANCERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OpenAccountRequest = _reflection.GeneratedProtocolMessageType('OpenAccountRequest', (_message.Message,), {
@@ -374,6 +492,34 @@ TransferMoneyResponse = _reflection.GeneratedProtocolMessageType('TransferMoneyR
   })
 _sym_db.RegisterMessage(TransferMoneyResponse)
 
+AllAccountsRequest = _reflection.GeneratedProtocolMessageType('AllAccountsRequest', (_message.Message,), {
+  'DESCRIPTOR' : _ALLACCOUNTSREQUEST,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+  })
+_sym_db.RegisterMessage(AllAccountsRequest)
+
+AllAccountsResponse = _reflection.GeneratedProtocolMessageType('AllAccountsResponse', (_message.Message,), {
+  'DESCRIPTOR' : _ALLACCOUNTSRESPONSE,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+  })
+_sym_db.RegisterMessage(AllAccountsResponse)
+
+TotalBalanceRequest = _reflection.GeneratedProtocolMessageType('TotalBalanceRequest', (_message.Message,), {
+  'DESCRIPTOR' : _TOTALBALANCEREQUEST,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+  })
+_sym_db.RegisterMessage(TotalBalanceRequest)
+
+TotalBalanceResponse = _reflection.GeneratedProtocolMessageType('TotalBalanceResponse', (_message.Message,), {
+  'DESCRIPTOR' : _TOTALBALANCERESPONSE,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+  })
+_sym_db.RegisterMessage(TotalBalanceResponse)
+
 
 
 _ACCOUNT = _descriptor.ServiceDescriptor(
@@ -383,8 +529,8 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=500,
-  serialized_end=1186,
+  serialized_start=637,
+  serialized_end=1610,
   methods=[
   _descriptor.MethodDescriptor(
     name='Open',
@@ -433,6 +579,26 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_TRANSFERMONEYREQUEST,
     output_type=_TRANSFERMONEYRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='AllAccountNumbers',
+    full_name='com.hazelcast.msfdemo.acctsvc.events.Account.AllAccountNumbers',
+    index=5,
+    containing_service=None,
+    input_type=_ALLACCOUNTSREQUEST,
+    output_type=_ALLACCOUNTSRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='TotalAccountBalances',
+    full_name='com.hazelcast.msfdemo.acctsvc.events.Account.TotalAccountBalances',
+    index=6,
+    containing_service=None,
+    input_type=_TOTALBALANCEREQUEST,
+    output_type=_TOTALBALANCERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

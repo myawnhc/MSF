@@ -57,6 +57,6 @@ public class InventoryReserveEvent extends OrderEvent implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + " " + failureReason;
+        return super.toString() + " " + (failureReason == null ? "OK" : failureReason);
     }
 }

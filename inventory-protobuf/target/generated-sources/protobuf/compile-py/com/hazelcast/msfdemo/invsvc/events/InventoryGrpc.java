@@ -138,6 +138,68 @@ public final class InventoryGrpc {
     return getReserveMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> getGetItemCountMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetItemCount",
+      requestType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest.class,
+      responseType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> getGetItemCountMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> getGetItemCountMethod;
+    if ((getGetItemCountMethod = InventoryGrpc.getGetItemCountMethod) == null) {
+      synchronized (InventoryGrpc.class) {
+        if ((getGetItemCountMethod = InventoryGrpc.getGetItemCountMethod) == null) {
+          InventoryGrpc.getGetItemCountMethod = getGetItemCountMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetItemCount"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new InventoryMethodDescriptorSupplier("GetItemCount"))
+              .build();
+        }
+      }
+    }
+    return getGetItemCountMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> getGetInventoryRecordCountMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetInventoryRecordCount",
+      requestType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest.class,
+      responseType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> getGetInventoryRecordCountMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> getGetInventoryRecordCountMethod;
+    if ((getGetInventoryRecordCountMethod = InventoryGrpc.getGetInventoryRecordCountMethod) == null) {
+      synchronized (InventoryGrpc.class) {
+        if ((getGetInventoryRecordCountMethod = InventoryGrpc.getGetInventoryRecordCountMethod) == null) {
+          InventoryGrpc.getGetInventoryRecordCountMethod = getGetInventoryRecordCountMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetInventoryRecordCount"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new InventoryMethodDescriptorSupplier("GetInventoryRecordCount"))
+              .build();
+        }
+      }
+    }
+    return getGetInventoryRecordCountMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -214,6 +276,24 @@ public final class InventoryGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReserveMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * These are more demo oriented than production, used to make sure we don't run
+     * ahead of data generation and order items not yet added
+     * </pre>
+     */
+    public void getItemCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetItemCountMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void getInventoryRecordCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetInventoryRecordCountMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -244,6 +324,20 @@ public final class InventoryGrpc {
                 com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveRequest,
                 com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveResponse>(
                   this, METHODID_RESERVE)))
+          .addMethod(
+            getGetItemCountMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest,
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse>(
+                  this, METHODID_GET_ITEM_COUNT)))
+          .addMethod(
+            getGetInventoryRecordCountMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest,
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse>(
+                  this, METHODID_GET_INVENTORY_RECORD_COUNT)))
           .build();
     }
   }
@@ -293,6 +387,26 @@ public final class InventoryGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getReserveMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * These are more demo oriented than production, used to make sure we don't run
+     * ahead of data generation and order items not yet added
+     * </pre>
+     */
+    public void getItemCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetItemCountMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void getInventoryRecordCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetInventoryRecordCountMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -337,6 +451,24 @@ public final class InventoryGrpc {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReserveMethod(), getCallOptions(), request);
     }
+
+    /**
+     * <pre>
+     * These are more demo oriented than production, used to make sure we don't run
+     * ahead of data generation and order items not yet added
+     * </pre>
+     */
+    public com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse getItemCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetItemCountMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse getInventoryRecordCount(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetInventoryRecordCountMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -376,12 +508,34 @@ public final class InventoryGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getReserveMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * These are more demo oriented than production, used to make sure we don't run
+     * ahead of data generation and order items not yet added
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse> getItemCount(
+        com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetItemCountMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse> getInventoryRecordCount(
+        com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetInventoryRecordCountMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CHECK_AVAILABILITY = 0;
   private static final int METHODID_CHECK_AVAILABILITY_ALL_LOCATIONS = 1;
   private static final int METHODID_SHIP = 2;
   private static final int METHODID_RESERVE = 3;
+  private static final int METHODID_GET_ITEM_COUNT = 4;
+  private static final int METHODID_GET_INVENTORY_RECORD_COUNT = 5;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -415,6 +569,14 @@ public final class InventoryGrpc {
         case METHODID_RESERVE:
           serviceImpl.reserve((com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveResponse>) responseObserver);
+          break;
+        case METHODID_GET_ITEM_COUNT:
+          serviceImpl.getItemCount((com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ItemCountResponse>) responseObserver);
+          break;
+        case METHODID_GET_INVENTORY_RECORD_COUNT:
+          serviceImpl.getInventoryRecordCount((com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryCountResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -481,6 +643,8 @@ public final class InventoryGrpc {
               .addMethod(getCheckAvailabilityAllLocationsMethod())
               .addMethod(getShipMethod())
               .addMethod(getReserveMethod())
+              .addMethod(getGetItemCountMethod())
+              .addMethod(getGetInventoryRecordCountMethod())
               .build();
         }
       }

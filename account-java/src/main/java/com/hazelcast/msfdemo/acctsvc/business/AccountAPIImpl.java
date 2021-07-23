@@ -28,7 +28,10 @@ import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
@@ -233,5 +236,33 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
             responseObserver.onError(e);
         }
 
+    }
+
+    @Override
+    public void allAccountNumbers(AllAccountsRequest request, StreamObserver<AllAccountsResponse> responseObserver) {
+        AccountDAO dao = new AccountDAO();
+        Collection<Account> accounts = dao.getAllAccounts();
+        List<String> accountNumbers = new ArrayList<>();
+        for (Account a : accounts) {
+            accountNumbers.add(a.getAcctNumber());
+        }
+        AllAccountsResponse.Builder responseBuilder = AllAccountsResponse.newBuilder();
+        responseBuilder.addAllAccountNumber(accountNumbers);
+        AllAccountsResponse response = responseBuilder.build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void totalAccountBalances(TotalBalanceRequest request, StreamObserver<TotalBalanceResponse> responseObserver) {
+        AccountDAO dao = new AccountDAO();
+        long total = dao.getTotalAccountBalances();
+
+        TotalBalanceResponse response = TotalBalanceResponse.newBuilder()
+                .setTotalBalance(total)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 }

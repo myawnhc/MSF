@@ -19,15 +19,21 @@ package com.hazelcast.msfdemo.invsvc.views;
 
 import com.hazelcast.msf.persistence.DAO;
 import com.hazelcast.msfdemo.invsvc.domain.Inventory;
+import com.hazelcast.msfdemo.invsvc.persistence.InventoryKey;
+import com.hazelcast.msfdemo.invsvc.persistence.InventoryMapStore;
 
-public class InventoryDAO extends DAO<Inventory, String> {
+public class InventoryDAO extends DAO<Inventory, InventoryKey> {
 
     public InventoryDAO() {
         super("inventory");
         // Create backing table (for MapStore) if not present
+        InventoryMapStore mapStore = new InventoryMapStore();
 
     }
 
     // Non-inheritable query methods
+    public int getInventoryRecordCount() {
+        return getMap().size();
+    }
 
 }

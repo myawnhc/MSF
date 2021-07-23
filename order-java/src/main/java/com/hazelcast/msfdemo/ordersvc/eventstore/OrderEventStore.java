@@ -89,6 +89,7 @@ public class OrderEventStore extends EventStore<Order, String, OrderEvent> {
             if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
                 //System.out.println("Skipping create event");
             } else {
+                System.out.println("Re-processing missed event (happened before handler armed)" + event);
                 handler.handleEvent(event);
             }
         }

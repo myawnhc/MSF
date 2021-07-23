@@ -17,7 +17,9 @@
 
 package com.hazelcast.msfdemo.invsvc.persistence;
 
-public class InventoryKey {
+import java.io.Serializable;
+
+public class InventoryKey implements Serializable {
     public String itemNumber;
     public String locationID;
 

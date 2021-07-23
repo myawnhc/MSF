@@ -37,6 +37,7 @@
         <module>TestClient</module>
         <module>inventory-java</module>
         <module>catalog-java</module>
+        <module>grpc-source</module>
 
     </modules>
 

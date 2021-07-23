@@ -64,7 +64,7 @@ public class ItemMapStore implements MapStore<String, Item> {
                     " values (?, ?)";
 
     private static final String selectItemTemplate =
-            "select item_number, description, category, price from inventory where item_number = ?";
+            "select item_number, description, category, price from item where item_number = ?";
 
     private static final String selectCategoryTemplate =
             "select category_id, description from category where category_id = ?";
@@ -242,26 +242,26 @@ public class ItemMapStore implements MapStore<String, Item> {
     @Override
     public Item load(String s) {
         // Note that writeBehindStore calls load
-        System.out.printf("load %s\n", s);
+        //System.out.printf("load %s\n", s);
         return readItem(s);
     }
 
     @Override
     public Map<String, Item> loadAll(Collection<String> collection) {
-        System.out.println("loadAll");
+        //System.out.println("loadAll");
         Map<String, Item> items = new HashMap<>();
         for (String key : collection) {
             Item value = load(key);
             if (value != null)
                 items.put(key, value);
         }
-        System.out.println("Loaded " + items.size() + " items from " + collection.size() + " keys");
+        //System.out.println("Loaded " + items.size() + " items from " + collection.size() + " keys");
         return items;
     }
 
     @Override
     public Iterable<String> loadAllKeys() {
-        System.out.println("loadAllKeys");
+        //System.out.println("loadAllKeys");
         List<String> keys = new ArrayList<>();
         try {
             if (selectItemKeysStatement == null) {
@@ -276,7 +276,7 @@ public class ItemMapStore implements MapStore<String, Item> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Returning " + keys.size() + " keys from Item table");
+        //System.out.println("Returning " + keys.size() + " keys from Item table");
         return keys;
     }
 }

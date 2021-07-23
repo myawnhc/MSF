@@ -18,10 +18,11 @@
 package com.hazelcast.msfdemo.invsvc.domain;
 
 import com.hazelcast.msf.persistence.DTO;
+import com.hazelcast.msfdemo.invsvc.persistence.InventoryKey;
 
 import java.io.Serializable;
 
-public class Inventory extends DTO<String> implements Serializable {
+public class Inventory extends DTO<InventoryKey> implements Serializable {
     // From ITEM table
     private String itemNumber;
     private String description;
@@ -35,7 +36,7 @@ public class Inventory extends DTO<String> implements Serializable {
     private int    availableToPromise;
 
     @Override
-    public String getKey() { return itemNumber + location; }
+    public InventoryKey getKey() { return new InventoryKey(itemNumber, location); }
 
     public String getItemNumber() {
         return itemNumber;

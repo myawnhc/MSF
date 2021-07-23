@@ -169,6 +169,68 @@ public final class AccountGrpc {
     return getTransferMoneyMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> getAllAccountNumbersMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "AllAccountNumbers",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> getAllAccountNumbersMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> getAllAccountNumbersMethod;
+    if ((getAllAccountNumbersMethod = AccountGrpc.getAllAccountNumbersMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getAllAccountNumbersMethod = AccountGrpc.getAllAccountNumbersMethod) == null) {
+          AccountGrpc.getAllAccountNumbersMethod = getAllAccountNumbersMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "AllAccountNumbers"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("AllAccountNumbers"))
+              .build();
+        }
+      }
+    }
+    return getAllAccountNumbersMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> getTotalAccountBalancesMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "TotalAccountBalances",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> getTotalAccountBalancesMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> getTotalAccountBalancesMethod;
+    if ((getTotalAccountBalancesMethod = AccountGrpc.getTotalAccountBalancesMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getTotalAccountBalancesMethod = AccountGrpc.getTotalAccountBalancesMethod) == null) {
+          AccountGrpc.getTotalAccountBalancesMethod = getTotalAccountBalancesMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "TotalAccountBalances"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("TotalAccountBalances"))
+              .build();
+        }
+      }
+    }
+    return getTotalAccountBalancesMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -252,6 +314,20 @@ public final class AccountGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTransferMoneyMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void allAccountNumbers(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAllAccountNumbersMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void totalAccountBalances(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTotalAccountBalancesMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -289,6 +365,20 @@ public final class AccountGrpc {
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest,
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse>(
                   this, METHODID_TRANSFER_MONEY)))
+          .addMethod(
+            getAllAccountNumbersMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse>(
+                  this, METHODID_ALL_ACCOUNT_NUMBERS)))
+          .addMethod(
+            getTotalAccountBalancesMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>(
+                  this, METHODID_TOTAL_ACCOUNT_BALANCES)))
           .build();
     }
   }
@@ -346,6 +436,22 @@ public final class AccountGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getTransferMoneyMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void allAccountNumbers(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getAllAccountNumbersMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void totalAccountBalances(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getTotalAccountBalancesMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -395,6 +501,20 @@ public final class AccountGrpc {
     public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse transferMoney(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getTransferMoneyMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse allAccountNumbers(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getAllAccountNumbersMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse totalAccountBalances(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getTotalAccountBalancesMethod(), getCallOptions(), request);
     }
   }
 
@@ -451,6 +571,22 @@ public final class AccountGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getTransferMoneyMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse> allAccountNumbers(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getAllAccountNumbersMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse> totalAccountBalances(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getTotalAccountBalancesMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_OPEN = 0;
@@ -458,6 +594,8 @@ public final class AccountGrpc {
   private static final int METHODID_WITHDRAW = 2;
   private static final int METHODID_CHECK_BALANCE = 3;
   private static final int METHODID_TRANSFER_MONEY = 4;
+  private static final int METHODID_ALL_ACCOUNT_NUMBERS = 5;
+  private static final int METHODID_TOTAL_ACCOUNT_BALANCES = 6;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -495,6 +633,14 @@ public final class AccountGrpc {
         case METHODID_TRANSFER_MONEY:
           serviceImpl.transferMoney((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse>) responseObserver);
+          break;
+        case METHODID_ALL_ACCOUNT_NUMBERS:
+          serviceImpl.allAccountNumbers((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse>) responseObserver);
+          break;
+        case METHODID_TOTAL_ACCOUNT_BALANCES:
+          serviceImpl.totalAccountBalances((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -562,6 +708,8 @@ public final class AccountGrpc {
               .addMethod(getWithdrawMethod())
               .addMethod(getCheckBalanceMethod())
               .addMethod(getTransferMoneyMethod())
+              .addMethod(getAllAccountNumbersMethod())
+              .addMethod(getTotalAccountBalancesMethod())
               .build();
         }
       }

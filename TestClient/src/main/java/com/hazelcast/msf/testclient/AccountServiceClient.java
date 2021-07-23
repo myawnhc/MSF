@@ -21,8 +21,7 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
-import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
-import io.grpc.Channel;
+import io.grpc.ConnectivityState;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -37,11 +36,20 @@ import java.util.logging.Logger;
 
 import static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.*;
 
+/** Note that this has morphed into a dual-purpose client
+ *  - When run standalone, it's a test for the Account service, and it tests the service
+ *    by generating test data and then doing a bunch of test transfers.  This is all
+ *    initiated from the main() method.
+ *  - But this is also used to support the OrderServiceClient, and specifically by
+ *    querying the account service to get a list of valid accounts.  This is done via
+ *    the public getAccountNumbers() method.
+ */
 public class AccountServiceClient {
 
     private static final Logger logger = Logger.getLogger(AccountServiceClient.class.getName());
     private final AccountGrpc.AccountBlockingStub blockingStub;
     private final AccountGrpc.AccountFutureStub futureStub;
+    private ManagedChannel channel;
 
     private List<String> accountNumbers = new ArrayList<>();
     private static final int OPEN_THREAD_COUNT = 10;
@@ -49,74 +57,76 @@ public class AccountServiceClient {
     private static final int ACCOUNT_COUNT = 1000;
     private static final int TRANSFER_COUNT = 10000; // 100K will run out of native threads in gRPC
 
-    public static void main(String[] args) throws Exception {
-
-        // Access a service running on the local machine on port 50051
-        //String target = "localhost:50051";
+    private ManagedChannel initChannel() {
         ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
         String target = props.getTarget();
         logger.info("Target from service.yaml.test " + target);
 
-        // Create a communication channel to the server, known as a Channel. Channels are thread-safe
-        // and reusable. It is common to create channels at the beginning of your application and reuse
-        // them until the application shuts down.
-        ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-                // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
-                // needing certificates.
+        channel = ManagedChannelBuilder.forTarget(target)
                 .usePlaintext()
                 .build();
-        AccountDAO accountDAO = new AccountDAO(); // for queries
+
+        return channel;
+    }
+
+    private void shutdownChannel() {
+        try {
+            channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            ;
+        }
+    }
+
+    public void openTestAccounts(int number) {
+        if (channel == null)
+            initChannel();
+
+        List<Thread> openWorkers = new ArrayList<>();
+        int accountsPerThread = number / OPEN_THREAD_COUNT;
+        for (int i=0; i<OPEN_THREAD_COUNT; i++) {
+            Thread t = new Thread(new OpenRunnable("B0" + i, accountsPerThread));
+            openWorkers.add(t);
+            t.start();
+        }
+
+        for (Thread t : openWorkers) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<String> getAllAccountNumbers() {
+        return accountNumbers;
+    }
+
+    public static void main(String[] args) throws Exception {
+        //ManagedChannel channel = initChannel();
+        AccountServiceClient accountServiceClient = new AccountServiceClient();
 
         try {
-            AccountServiceClient accountServiceClient = new AccountServiceClient(channel);
-
             // Open 1000 accounts
             logger.info("Opening 1000 accounts using " + OPEN_THREAD_COUNT + " threads");
             long start = System.currentTimeMillis();
-            List<Thread> openWorkers = new ArrayList<>();
-            for (int i=0; i<OPEN_THREAD_COUNT; i++) {
-                Thread t = new Thread(accountServiceClient.new OpenRunnable("B0" + i));
-                openWorkers.add(t);
-                t.start();
-            }
-            for (Thread t : openWorkers)
-                t.join();
+            accountServiceClient.openTestAccounts(ACCOUNT_COUNT);
             long elapsed = System.currentTimeMillis() - start;
             logger.info("Opened accounts multi threaded non-blocking in " + elapsed + "ms");
             logger.info("Number of account numbers opened : " + accountServiceClient.accountNumbers.size());
-            long totalBalanceAfterOpens = accountDAO.getTotalAccountBalances();
-            logger.info("Total balance across accounts: " + totalBalanceAfterOpens);
 
-
+            long totalBalanceAfterOpens =  accountServiceClient.getTotalBalances();
+            logger.info("Total balance across accounts: " + accountServiceClient.getTotalBalances());
 
             // Test transfer money between accounts
             logger.info("Performing transfers");
             start = System.currentTimeMillis();
-
-            // 1. Blocking, single threaded
-//            for (int i=0; i<10_000; i++) {
-//                int fromIndex = Double.valueOf(Math.random()*100).intValue();
-//                if (fromIndex < 0 || fromIndex > 99) System.out.println("BAD VALUUE " + fromIndex);
-//                int toIndex = Double.valueOf(Math.random()*100).intValue();
-//                if (toIndex < 0 || toIndex > 99) System.out.println("BAD VALUUE " + toIndex);
-//                String fromAcct = accountServiceClient.accountNumbers.get(fromIndex);
-//                String toAcct = accountServiceClient.accountNumbers.get(toIndex);
-//                accountServiceClient.transfer(fromAcct, toAcct, 1000);
-//            }
-//            elapsed = System.currentTimeMillis() - start;
-//            logger.info("Finished transfers using single-threaded blocking in " + elapsed + "ms");
-
-            // 2. Non-blocking, single threaded
-            int successCount = accountServiceClient.nonBlockingTransfer("A");
+            // Non-blocking, single threaded
+            int successCount = accountServiceClient.nonBlockingTransfer("A", TRANSFER_COUNT);
             elapsed = System.currentTimeMillis() - start;
             logger.info("Finished " + successCount + " transfers using single-threaded non-blocking in " + elapsed + "ms");
 
-//            // 3. Non-blocking, multi threaded
-//            //logger.info(successCount + " transfer requests reported success");
-//            elapsed = System.currentTimeMillis() - start;
-//            logger.info("Finished transfers using multi-threaded non-blocking in " + elapsed + "ms");
-
-            long totalBalanceAfterTransfers = accountDAO.getTotalAccountBalances();
+            long totalBalanceAfterTransfers =  accountServiceClient.getTotalBalances();
             logger.info("Total balance across accounts : " + totalBalanceAfterTransfers);
             if (totalBalanceAfterOpens == totalBalanceAfterTransfers)
                 logger.info("It's all good.");
@@ -128,38 +138,20 @@ public class AccountServiceClient {
             // ManagedChannels use resources like threads and TCP connections. To prevent leaking these
             // resources the channel should be shut down when it will no longer be used. If it may be used
             // again leave it running.
-            channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
-            accountDAO.disconnect();
+            accountServiceClient.shutdownChannel();
         }
     }
 
-    void deadCode() {
-        // Tests deposit, withdrawal - verified working, not needed for prototype
-//            String acctNumber = accountServiceClient.accountNumbers.get(0);
-//            int balance = accountServiceClient.checkBalance(acctNumber);
-//            System.out.printf("Account %s initial balance %d\n", acctNumber, balance);
-//            logger.info("Crediting account " + acctNumber);
-//            accountServiceClient.adjust(acctNumber, 200);
-//            logger.info("Debiting one account");
-//            accountServiceClient.adjust(acctNumber, -25);
-//            logger.info("Finished, disconnecting");
-
-        // First transfer attempts
-        //            for (int i=0; i<10_000; i++) {
-//                int fromIndex = Double.valueOf(Math.random()*100).intValue();
-//                if (fromIndex < 0 || fromIndex > 99) System.out.println("BAD VALUUE " + fromIndex);
-//                int toIndex = Double.valueOf(Math.random()*100).intValue();
-//                if (toIndex < 0 || toIndex > 99) System.out.println("BAD VALUUE " + toIndex);
-//                String fromAcct = accountServiceClient.accountNumbers.get(fromIndex);
-//                String toAcct = accountServiceClient.accountNumbers.get(toIndex);
-//                accountServiceClient.transfer(fromAcct, toAcct, 1000);
-//            }
+    public long getTotalBalances() {
+        TotalBalanceRequest request = TotalBalanceRequest.newBuilder().build();
+        long totalBalance = blockingStub.totalAccountBalances(request).getTotalBalance();
+        return totalBalance;
     }
 
+
     /** Construct client for accessing server using the existing channel. */
-    public AccountServiceClient(Channel channel) {
-        // 'channel' here is a Channel, not a ManagedChannel, so it is not this code's responsibility to
-        // shut it down.
+    public AccountServiceClient() {
+        channel = initChannel();
 
         // Passing Channels to code makes code easier to test and makes it easier to reuse Channels.
         blockingStub = AccountGrpc.newBlockingStub(channel);
@@ -187,21 +179,39 @@ public class AccountServiceClient {
     /* Non-blocking runnable uses prefix so account names don't repeat between threads */
     class OpenRunnable implements Runnable {
         final String prefix;
-        public OpenRunnable(String prefix) { this.prefix = prefix; }
+        final int accountsToOpen;
+        public OpenRunnable(String prefix, int accounts) {
+            this.prefix = prefix;
+            this.accountsToOpen = accounts;
+        }
         @Override
         public void run() {
-            List<String> openedAccounts = nonBlockingOpen(prefix);
+            List<String> openedAccounts = nonBlockingOpen(prefix, accountsToOpen);
             accountNumbers.addAll(openedAccounts);
             //System.out.println("Open worker " + prefix + " finished opening " + openedAccounts.size() + " accounts");
         }
     }
 
-    public List<String> nonBlockingOpen(String prefix)  {
-        //logger.info("Opening account");
-        int n = ACCOUNT_COUNT / TRANSFER_THREAD_COUNT;
+    public List<String> nonBlockingOpen(String prefix, int accountsToOpen)  {
+
+        // This should probably be implemented on all services, but since this is the
+        // first thing we call just putting it here for now.
+        ConnectivityState state = channel.getState(true);
+        // Can treat IDLE, CONNECTING, READY as good to go
+        while( state != ConnectivityState.READY) {
+            try {
+                Thread.sleep(10_000);
+                logger.info("Waiting on acctsvc to be ready, channel state " + state.toString());
+                state = channel.getState(true);
+
+            } catch (InterruptedException e) {
+                // OK
+            }
+        }
+        //logger.info("*** Connected to account service");
 
         List<ListenableFuture<OpenAccountResponse>> futures = new ArrayList<>();
-        for (int i=0; i<n; i++) {
+        for (int i=0; i<accountsToOpen; i++) {
             String name = "Acct " + prefix + i;
             int balance = Double.valueOf(Math.random()*10000).intValue()*100;
             OpenAccountRequest request = OpenAccountRequest.newBuilder()
@@ -292,22 +302,25 @@ public class AccountServiceClient {
     /* Non-blocking runnable uses prefix so account names don't repeat between threads */
     class TransferRunnable implements Runnable {
         final String prefix;
-        public TransferRunnable(String prefix) { this.prefix = prefix; }
+        final int numTransfers;
+        public TransferRunnable(String prefix, int numTransfers) {
+            this.prefix = prefix;
+            this.numTransfers = numTransfers;
+        }
         @Override
         public void run() {
-            int transfersCompleted = nonBlockingTransfer(prefix);
+            int transfersCompleted = nonBlockingTransfer(prefix, numTransfers);
             logger.info("Transfer worker " + prefix + " finished " + transfersCompleted + " transfers");
         }
     }
 
     // Returns the number of successful transfers
-    public int nonBlockingTransfer(String prefix) {
-        int n = TRANSFER_COUNT / TRANSFER_THREAD_COUNT;
-        logger.info("Transfer handler " + prefix + " initiating " + n + " transfers");
+    public int nonBlockingTransfer(String prefix, int numTransfers) {
+        logger.info("Transfer handler " + prefix + " initiating " + numTransfers + " transfers");
 
         List<ListenableFuture<TransferMoneyResponse>> futures = new ArrayList<>();
 
-        for (int i=0; i<n; i++) {
+        for (int i=0; i<numTransfers; i++) {
             int fromIndex = Double.valueOf(Math.random()*100).intValue();
             if (fromIndex < 0 || fromIndex > 99) System.out.println("BAD VALUE " + fromIndex);
             int toIndex = Double.valueOf(Math.random()*100).intValue();

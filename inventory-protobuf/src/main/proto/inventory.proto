@@ -8,6 +8,11 @@ service Inventory {
   rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
   rpc Ship (ShipRequest) returns (ShipResponse) {}
   rpc Reserve (ReserveRequest) returns (ReserveResponse) {}
+
+  // These are more demo oriented than production, used to make sure we don't run
+  // ahead of data generation and order items not yet added
+  rpc GetItemCount (ItemCountRequest) returns (ItemCountResponse) {}
+  rpc GetInventoryRecordCount (InventoryCountRequest) returns (InventoryCountResponse) {}
   // Additional APIs including add / move not required for initial demo use case
 }
 
@@ -41,4 +46,14 @@ message ReserveRequest {
 message ReserveResponse {
   bool success = 1;
   string reason = 2;
+}
+
+message ItemCountRequest {}
+message ItemCountResponse {
+  int32 count = 1;
+}
+
+message InventoryCountRequest {}
+message InventoryCountResponse {
+  int32 count = 1;
 }

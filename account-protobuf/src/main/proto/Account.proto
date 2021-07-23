@@ -7,6 +7,8 @@ service Account {
     rpc Withdraw (AdjustBalanceRequest) returns (AdjustBalanceResponse) {}
     rpc CheckBalance (CheckBalanceRequest) returns (CheckBalanceResponse) {}
     rpc TransferMoney (TransferMoneyRequest) returns (TransferMoneyResponse) {}
+    rpc AllAccountNumbers (AllAccountsRequest) returns (AllAccountsResponse) {}
+    rpc TotalAccountBalances (TotalBalanceRequest) returns (TotalBalanceResponse) {}
 }
 
 message OpenAccountRequest {
@@ -43,4 +45,14 @@ message TransferMoneyRequest {
 
 message TransferMoneyResponse {
     bool succeeded = 1;
+}
+
+message AllAccountsRequest {}
+message AllAccountsResponse {
+    repeated string accountNumber = 1;
+}
+
+message TotalBalanceRequest {}
+message TotalBalanceResponse {
+    int64 totalBalance = 1;
 }

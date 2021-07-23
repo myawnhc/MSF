@@ -42,7 +42,9 @@ public class InventoryDB {
 
     public static final String JDBC_PROTOCOL="mysql";
     public static final String JDBC_DB_NAME="InventoryDB";
-    public static final String JDBC_HOST="127.0.0.1";
+    //public static final String JDBC_HOST="127.0.0.1";     //when running bare metal (laptop)
+    public static final String JDBC_HOST="invdb";           // docker container name
+
     public static final String JDBC_PORT="3306";
     // Need username and password here that can be used BEFORE we create the db-specific user
     public static final String JDBC_USER="root";

@@ -115,33 +115,35 @@ public class InventoryReservePipeline implements Runnable {
                     // Rather than restructure the pipeline to handle failure to
                     // reserve, we'll set a -1 quantity on failure and handle it
                     // accordingly downstream.
+                    //InventoryReserveEvent reserve = new InventoryReserveEvent();
                     return service.call(request)
                             .thenApply(response -> {
                                 // Get incoming event, will copy over fields that aren't changed.
                                 // Might be better to get from DAO so we don't need to have
                                 // full item content carried along with every event
-                                System.out.println("Received response from inventory reserve API: " + response.getSuccess());
+                                //System.out.println("Received response from inventory reserve API: " + response.getSuccess());
+                                // Looking for possibility of CCE here ..
                                 PriceLookupEvent lookup = (PriceLookupEvent) eventEntry.getValue();
                                 InventoryReserveEvent reserve = new InventoryReserveEvent();
                                 reserve.setItemNumber(request.getItemNumber());
                                 reserve.setLocation(request.getLocation());
-                                // TODO: what is the desired behavior here?  Log event with zero
+                                // TODO: what is the desired behavior on failure?  Log event with zero
                                 //  quantity, log nothing (which short-circuits remaining stages?)
                                 //  Will revisit, but leaning toward log nothing, skip down to sending
                                 //  API response to client who can decide to retry, etc.
-                                if (response.getSuccess())
+                                if (response.getSuccess()) {
                                     reserve.setQuantity(request.getQuantity());
-                                else {
+                                    //System.out.println("Service call to reserve inventory for " + lookup.getOrderNumber() + " success");
+                                } else {
                                     reserve.setQuantity(-1);
                                     reserve.setFailureReason(response.getReason());
+                                    System.out.println("Service call to reserve inventory for " + lookup.getOrderNumber() + " failed becuase " + response.getReason());
                                 }
                                 // Non-request-specific fields carried over from last event
                                 reserve.setOrderNumber(lookup.getOrderNumber());
                                 reserve.setAccountNumber(lookup.getAccountNumber());
                                 reserve.setExtendedPrice(lookup.getExtendedPrice());
-                                System.out.println("Lookup " + lookup.getOrderNumber() + " now priced " + lookup.getExtendedPrice());
                                 return tuple2(eventEntry.getKey(), reserve);
-
                             });
                 });
 
@@ -155,7 +157,6 @@ public class InventoryReservePipeline implements Runnable {
 
         lookupStream.mapUsingService(eventStoreServiceFactory, (store, entry) -> {
             store.append(entry.getValue());
-            System.out.println("InventoryReserveEvent persisted to event store");
             return entry;
         }).setName("Persist InventoryReserveEvent to event store")
 

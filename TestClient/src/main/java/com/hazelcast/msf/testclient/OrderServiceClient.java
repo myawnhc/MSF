@@ -18,8 +18,6 @@
 package com.hazelcast.msf.testclient;
 
 import com.hazelcast.msf.configuration.ServiceConfig;
-import com.hazelcast.msfdemo.acctsvc.domain.Account;
-import com.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 import com.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
 import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass;
 import io.grpc.Channel;
@@ -28,8 +26,6 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,10 +33,10 @@ import java.util.logging.Logger;
 public class OrderServiceClient {
     private static final Logger logger = Logger.getLogger(OrderServiceClient.class.getName());
     private final OrderGrpc.OrderBlockingStub blockingStub; // unused
-    private final OrderGrpc.OrderFutureStub futureStub;
-    private final OrderGrpc.OrderStub asyncStub; // unused
+    private final OrderGrpc.OrderFutureStub futureStub;     // unused
+    private final OrderGrpc.OrderStub asyncStub;
 
-    private List<Account> validAccounts;
+    private List<String> validAccounts;
 
     public static void main(String[] args) {
         // Access a service running on the local machine on port 50052
@@ -64,6 +60,19 @@ public class OrderServiceClient {
         } finally {
 
         }
+
+        // Could wait for all orders to be fully processed and then exit (perhaps
+        // by incrementing a counter in OrderEventResponseProcessor.onCompleted() and
+        // exiting when it equals number of orders placed).  For now, we just hold
+        // until interrupted.
+        while (true) {
+            try {
+                Thread.sleep(60_000);
+            } catch (InterruptedException e) {
+
+            }
+        }
+
     }
 
     /** Construct client for accessing server using the existing channel. */
@@ -76,9 +85,24 @@ public class OrderServiceClient {
         futureStub = OrderGrpc.newFutureStub(channel);
         asyncStub = OrderGrpc.newStub(channel);
 
-        Collection<Account> ac = new AccountDAO().getAllAccounts();
-        validAccounts = new ArrayList(ac);
-        System.out.println("Retrieved " + validAccounts.size() + " accounts from AccountDAO");
+        AccountServiceClient asc = new AccountServiceClient();
+        // Expect no accounts initially, but check in case we later make account info
+        // persistent.
+        try {
+            validAccounts = asc.getAllAccountNumbers();
+            if (validAccounts.size() == 0) {
+                logger.info("Initializing 1000 test accounts");
+                asc.openTestAccounts(1000);
+                validAccounts = asc.getAllAccountNumbers();
+                logger.info("After test data init, have " + validAccounts.size() + " accounts");
+            }
+        } catch (io.grpc.StatusRuntimeException e) {
+            try {
+                logger.info("Waiting for acctsvc to become ready");
+                Thread.sleep(1000);
+            } catch (InterruptedException interruptedException) {
+            }
+        }
     }
 
     private static class OrderEventResponseProcessor implements StreamObserver<OrderOuterClass.OrderEventResponse> {
@@ -107,13 +131,27 @@ public class OrderServiceClient {
     }
 
     public void nonBlockingOrder()  {
-        //ExecutorService pool = Executors.newCachedThreadPool() ;
-        //List<ListenableFuture<OrderOuterClass.CreateOrderResponse>> futures = new ArrayList<>();
+        logger.info("Starting OSC.nonBlockingOrder");
+
+        // Data generation for inventory might be happening concurrently with the
+        // client sending in orders; we'd like to avoid sending orders for items
+        // whose inventory records have not yet been created.  Since we generate
+        // them sequentially, we can use the size of the inventory map to know
+        // what the maximum 'safe' item number is.  When we scale this up, we
+        // should periodically refresh the invRecordCount until it reaches
+        // max (items * locations, currently 100K)
+
+        // TODO: getInventoryCount belongs in an InventoryServiceClient
+        InventoryServiceClient iclient = new InventoryServiceClient();
+        int invRecordCount = iclient.getInventoryRecordCount();
+        System.out.println("Inventory record count " + invRecordCount);
+        int NUM_LOCATIONS = 100;
+        int maxSafeItem = invRecordCount / NUM_LOCATIONS;
         for (int i=0; i<10; i++) {
             int index = (int)(Math.random()*validAccounts.size()+1);
-            String acctNumber = validAccounts.get(index).getAcctNumber();
-            int itemOffset = (int)(Math.random()*1000+1);
-            int locationNum = (int)(Math.random()*100+1);
+            String acctNumber = validAccounts.get(index);
+            int itemOffset = (int)(Math.random()*maxSafeItem+1);
+            int locationNum = (int)(Math.random()*NUM_LOCATIONS+1);
             String itemNumber = ""+(10101+itemOffset);
             String location = locationNum < 10 ? "W" + locationNum : "S" + locationNum;
             //System.out.println("Account at index " + index + " is " + acctNumber);
@@ -127,7 +165,7 @@ public class OrderServiceClient {
                 // When changed to server-side streaming RPC, createOrder disappeared from futureStub!
                 //ListenableFuture<OrderOuterClass.OrderEventResponse> future = futureStub.createOrder(request);
                 asyncStub.createOrder(request, new OrderEventResponseProcessor());
-
+                logger.info("Placed order " + i);
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
                 return;

@@ -23,15 +23,17 @@ import com.hazelcast.msfdemo.invsvc.domain.Inventory;
 import com.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
 import com.hazelcast.msfdemo.invsvc.events.InventoryGrpc;
 import com.hazelcast.msfdemo.invsvc.events.ReserveInventoryEvent;
+import com.hazelcast.msfdemo.invsvc.persistence.InventoryKey;
 import com.hazelcast.msfdemo.invsvc.views.InventoryDAO;
+import com.hazelcast.msfdemo.invsvc.views.ItemDAO;
 import io.grpc.stub.StreamObserver;
 
-import static com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveRequest;
-import static com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveResponse;
+import static com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.*;
 
 public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
-    InventoryDAO dao = new InventoryDAO();
+    InventoryDAO inventoryDAO = new InventoryDAO();
+    ItemDAO itemDAO = new ItemDAO();
 
     @Override
     public void reserve(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
@@ -41,8 +43,8 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         System.out.println("Reserve request " + itemNumber + " " + location + " " + quantity);
 
         // Get ATP from DAO, if not available we fail fast
-        String invKey = itemNumber + location;
-        Inventory inv = dao.findByKey(invKey);
+        InventoryKey invKey = new InventoryKey(itemNumber, location);
+        Inventory inv = inventoryDAO.findByKey(invKey);
         if (inv == null) {
             ReserveResponse nomatch = ReserveResponse.newBuilder()
                     .setSuccess(false)
@@ -77,8 +79,8 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         store.append(event);
 
         // Apply changes to DAO
-        IMap<String,Inventory> invmap = dao.getMap();
-        invmap.executeOnKey(invKey, (EntryProcessor<String, Inventory, Object>) entry -> {
+        IMap<InventoryKey,Inventory> invmap = inventoryDAO.getMap();
+        invmap.executeOnKey(invKey, (EntryProcessor<InventoryKey, Inventory, Object>) entry -> {
             Inventory iview = entry.getValue();
             iview.setQuantityReserved(iview.getQuantityReserved() + request.getQuantity());
             iview.setAvailableToPromise(iview.getAvailableToPromise() - request.getQuantity());
@@ -96,46 +98,23 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         responseObserver.onCompleted();
     }
 
-//    @Override
-//    public void reserve(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
-//        // Unique ID used to pair up requests with responses
-//        long uniqueID = controller.getUniqueMessageID();
-//
-//        // Get listener to result map armed before we trigger the pipeline
-//        UUID listenerID = reservePipelineOutput.addEntryListener((EntryAddedListener<Long, APIResponse<InventoryEvent>>) entryEvent -> {
-//            //System.out.println("OPEN completion listener fired for ID " + uniqueID);
-//            APIResponse<InventoryEvent> apiResponse = entryEvent.getValue();
-//            if (apiResponse.getStatus() == APIResponse.Status.SUCCESS) {
-//                // Should specifically be an InventoryReserveEvent
-//                InventoryEvent event = apiResponse.getResultValue();
-//                ReserveResponse grpcResponse =
-//                        ReserveResponse.newBuilder()
-//                                .setSuccess(true)
-//                                .build();
-//                responseObserver.onNext(grpcResponse);
-//            } else {
-//                responseObserver.onError(apiResponse.getError());
-//            }
-//
-//
-//            responseObserver.onCompleted();
-//            reservePipelineOutput.remove(uniqueID);
-//            reservePipelineInput.remove(uniqueID);
-//            // Remove ourself as a listener.  Have to do this indirection of getting from map because
-//            // otherwise we get 'listenerID may not have been initialized'.
-//            UUID myID = listenersByRequestID.remove(uniqueID);
-//            if (myID == null) {
-//                System.out.println("InventoryAPIImpl.reserve handler - listener for " + uniqueID + " was already removed");
-//            } else {
-//                reservePipelineOutput.removeEntryListener(myID);
-//            }
-//
-//        }, Predicates.sql("__key=" + uniqueID), true);
-//
-//        UUID oldID = listenersByRequestID.put(uniqueID, listenerID);
-//        if (oldID != null)
-//            System.out.println("ERROR: Multiple requests with same ID! " + oldID + " (seen in reserve)");
-//        // Pass the request into the ReserveInventoryHandler pipeline
-//        reservePipelineInput.set(uniqueID, request);
-//    }
+    @Override
+    public void getItemCount(ItemCountRequest request, StreamObserver<ItemCountResponse> responseObserver) {
+        // Request is empty so ignore it
+        ItemCountResponse response = ItemCountResponse.newBuilder()
+            .setCount(itemDAO.getItemCount())
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getInventoryRecordCount(InventoryCountRequest request, StreamObserver<InventoryCountResponse> responseObserver) {
+        // Request is empty so ignore it
+        InventoryCountResponse response = InventoryCountResponse.newBuilder()
+                .setCount(inventoryDAO.getInventoryRecordCount())
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 }

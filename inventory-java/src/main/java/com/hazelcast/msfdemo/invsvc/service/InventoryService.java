@@ -20,6 +20,7 @@ package com.hazelcast.msfdemo.invsvc.service;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msfdemo.invsvc.business.CDCPipeline;
 import com.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
+import com.hazelcast.msfdemo.invsvc.testdata.GenerateData;
 import com.hazelcast.msfdemo.invsvc.views.InventoryDAO;
 import com.hazelcast.msfdemo.invsvc.views.ItemDAO;
 
@@ -47,6 +48,19 @@ public class InventoryService {
         ExecutorService executor = Executors.newCachedThreadPool();
         CDCPipeline cdcPipeline = new CDCPipeline();
         executor.submit(cdcPipeline);
+
+        // Item and Inventory data is persistent, but if we're running the first time
+        // after pulling a new DB image we'll need to generate our test data
+        executor.submit(() -> {
+            GenerateData generator = new GenerateData();
+            if (itemDAO.getItemCount() == 0) {
+                generator.generateItems(1000);
+            }
+            if (inventoryDAO.getInventoryRecordCount() == 0) {
+                generator.generateInventory(1000, 100, 10);
+            }
+        });
+
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

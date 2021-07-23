@@ -18,6 +18,7 @@
 package com.hazelcast.msf.persistence;
 
 import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.cluster.Member;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.sql.SqlService;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /* T = domain object type
    K = key type
@@ -50,6 +52,11 @@ public abstract class DAO<T extends DTO<K>, K> {
         //clientConfig.getNetworkConfig().addAddress("172.17.0.2:5701");
         //clientConfig.setClusterName("dev"); // dev when embedded, jet when client-server
         HazelcastInstance client = HazelcastClient.newHazelcastClient();
+        // Debugging issue where DAO may connect to a non-service cluster
+        Set<Member> memberSet = client.getCluster().getMembers();
+        for (Member member : memberSet) {
+            System.out.println("Connected to member at " + member.getAddress().toString());
+        }
         return client;
     }
 

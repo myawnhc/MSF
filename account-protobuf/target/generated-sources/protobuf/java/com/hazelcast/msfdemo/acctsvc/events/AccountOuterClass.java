@@ -4679,6 +4679,1969 @@ public final class AccountOuterClass {
 
   }
 
+  public interface AllAccountsRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest}
+   */
+  public static final class AllAccountsRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+      AllAccountsRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AllAccountsRequest.newBuilder() to construct.
+    private AllAccountsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AllAccountsRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AllAccountsRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AllAccountsRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AllAccountsRequest>
+        PARSER = new com.google.protobuf.AbstractParser<AllAccountsRequest>() {
+      @java.lang.Override
+      public AllAccountsRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AllAccountsRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AllAccountsRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AllAccountsRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AllAccountsResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @return A list containing the accountNumber.
+     */
+    java.util.List<java.lang.String>
+        getAccountNumberList();
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @return The count of accountNumber.
+     */
+    int getAccountNumberCount();
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @param index The index of the element to return.
+     * @return The accountNumber at the given index.
+     */
+    java.lang.String getAccountNumber(int index);
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the accountNumber at the given index.
+     */
+    com.google.protobuf.ByteString
+        getAccountNumberBytes(int index);
+  }
+  /**
+   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse}
+   */
+  public static final class AllAccountsResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+      AllAccountsResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AllAccountsResponse.newBuilder() to construct.
+    private AllAccountsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AllAccountsResponse() {
+      accountNumber_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AllAccountsResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AllAccountsResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                accountNumber_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              accountNumber_.add(s);
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+          accountNumber_ = accountNumber_.getUnmodifiableView();
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.Builder.class);
+    }
+
+    public static final int ACCOUNTNUMBER_FIELD_NUMBER = 1;
+    private com.google.protobuf.LazyStringList accountNumber_;
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @return A list containing the accountNumber.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getAccountNumberList() {
+      return accountNumber_;
+    }
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @return The count of accountNumber.
+     */
+    public int getAccountNumberCount() {
+      return accountNumber_.size();
+    }
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @param index The index of the element to return.
+     * @return The accountNumber at the given index.
+     */
+    public java.lang.String getAccountNumber(int index) {
+      return accountNumber_.get(index);
+    }
+    /**
+     * <code>repeated string accountNumber = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the accountNumber at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getAccountNumberBytes(int index) {
+      return accountNumber_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < accountNumber_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accountNumber_.getRaw(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int i = 0; i < accountNumber_.size(); i++) {
+          dataSize += computeStringSizeNoTag(accountNumber_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getAccountNumberList().size();
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse) obj;
+
+      if (!getAccountNumberList()
+          .equals(other.getAccountNumberList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getAccountNumberCount() > 0) {
+        hash = (37 * hash) + ACCOUNTNUMBER_FIELD_NUMBER;
+        hash = (53 * hash) + getAccountNumberList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        accountNumber_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse(this);
+        int from_bitField0_ = bitField0_;
+        if (((bitField0_ & 0x00000001) != 0)) {
+          accountNumber_ = accountNumber_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.accountNumber_ = accountNumber_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.getDefaultInstance()) return this;
+        if (!other.accountNumber_.isEmpty()) {
+          if (accountNumber_.isEmpty()) {
+            accountNumber_ = other.accountNumber_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureAccountNumberIsMutable();
+            accountNumber_.addAll(other.accountNumber_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private com.google.protobuf.LazyStringList accountNumber_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureAccountNumberIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          accountNumber_ = new com.google.protobuf.LazyStringArrayList(accountNumber_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @return A list containing the accountNumber.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getAccountNumberList() {
+        return accountNumber_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @return The count of accountNumber.
+       */
+      public int getAccountNumberCount() {
+        return accountNumber_.size();
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param index The index of the element to return.
+       * @return The accountNumber at the given index.
+       */
+      public java.lang.String getAccountNumber(int index) {
+        return accountNumber_.get(index);
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the accountNumber at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getAccountNumberBytes(int index) {
+        return accountNumber_.getByteString(index);
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param index The index to set the value at.
+       * @param value The accountNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNumber(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAccountNumberIsMutable();
+        accountNumber_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param value The accountNumber to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAccountNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAccountNumberIsMutable();
+        accountNumber_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param values The accountNumber to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllAccountNumber(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureAccountNumberIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, accountNumber_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAccountNumber() {
+        accountNumber_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string accountNumber = 1;</code>
+       * @param value The bytes of the accountNumber to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAccountNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureAccountNumberIsMutable();
+        accountNumber_.add(value);
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AllAccountsResponse>
+        PARSER = new com.google.protobuf.AbstractParser<AllAccountsResponse>() {
+      @java.lang.Override
+      public AllAccountsResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AllAccountsResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AllAccountsResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AllAccountsResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TotalBalanceRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest}
+   */
+  public static final class TotalBalanceRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+      TotalBalanceRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TotalBalanceRequest.newBuilder() to construct.
+    private TotalBalanceRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TotalBalanceRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TotalBalanceRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TotalBalanceRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TotalBalanceRequest>
+        PARSER = new com.google.protobuf.AbstractParser<TotalBalanceRequest>() {
+      @java.lang.Override
+      public TotalBalanceRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TotalBalanceRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TotalBalanceRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TotalBalanceRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface TotalBalanceResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 totalBalance = 1;</code>
+     * @return The totalBalance.
+     */
+    long getTotalBalance();
+  }
+  /**
+   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse}
+   */
+  public static final class TotalBalanceResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+      TotalBalanceResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use TotalBalanceResponse.newBuilder() to construct.
+    private TotalBalanceResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private TotalBalanceResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new TotalBalanceResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TotalBalanceResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              totalBalance_ = input.readInt64();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.Builder.class);
+    }
+
+    public static final int TOTALBALANCE_FIELD_NUMBER = 1;
+    private long totalBalance_;
+    /**
+     * <code>int64 totalBalance = 1;</code>
+     * @return The totalBalance.
+     */
+    @java.lang.Override
+    public long getTotalBalance() {
+      return totalBalance_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (totalBalance_ != 0L) {
+        output.writeInt64(1, totalBalance_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (totalBalance_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, totalBalance_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse) obj;
+
+      if (getTotalBalance()
+          != other.getTotalBalance()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TOTALBALANCE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTotalBalance());
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        totalBalance_ = 0L;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse(this);
+        result.totalBalance_ = totalBalance_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.getDefaultInstance()) return this;
+        if (other.getTotalBalance() != 0L) {
+          setTotalBalance(other.getTotalBalance());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private long totalBalance_ ;
+      /**
+       * <code>int64 totalBalance = 1;</code>
+       * @return The totalBalance.
+       */
+      @java.lang.Override
+      public long getTotalBalance() {
+        return totalBalance_;
+      }
+      /**
+       * <code>int64 totalBalance = 1;</code>
+       * @param value The totalBalance to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTotalBalance(long value) {
+        
+        totalBalance_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 totalBalance = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTotalBalance() {
+        
+        totalBalance_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<TotalBalanceResponse>
+        PARSER = new com.google.protobuf.AbstractParser<TotalBalanceResponse>() {
+      @java.lang.Override
+      public TotalBalanceResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TotalBalanceResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<TotalBalanceResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TotalBalanceResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor;
   private static final 
@@ -4719,6 +6682,26 @@ public final class AccountOuterClass {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4740,24 +6723,35 @@ public final class AccountOuterClass {
       "\005\"Z\n\024TransferMoneyRequest\022\031\n\021fromAccount" +
       "Number\030\001 \001(\t\022\027\n\017toAccountNumber\030\002 \001(\t\022\016\n" +
       "\006amount\030\003 \001(\005\"*\n\025TransferMoneyResponse\022\021" +
-      "\n\tsucceeded\030\001 \001(\0102\256\005\n\007Account\022}\n\004Open\0228." +
-      "com.hazelcast.msfdemo.acctsvc.events.Ope" +
-      "nAccountRequest\0329.com.hazelcast.msfdemo." +
-      "acctsvc.events.OpenAccountResponse\"\000\022\204\001\n" +
-      "\007Deposit\022:.com.hazelcast.msfdemo.acctsvc" +
-      ".events.AdjustBalanceRequest\032;.com.hazel" +
-      "cast.msfdemo.acctsvc.events.AdjustBalanc" +
-      "eResponse\"\000\022\205\001\n\010Withdraw\022:.com.hazelcast" +
-      ".msfdemo.acctsvc.events.AdjustBalanceReq" +
-      "uest\032;.com.hazelcast.msfdemo.acctsvc.eve" +
-      "nts.AdjustBalanceResponse\"\000\022\207\001\n\014CheckBal" +
-      "ance\0229.com.hazelcast.msfdemo.acctsvc.eve" +
-      "nts.CheckBalanceRequest\032:.com.hazelcast." +
-      "msfdemo.acctsvc.events.CheckBalanceRespo" +
-      "nse\"\000\022\212\001\n\rTransferMoney\022:.com.hazelcast." +
-      "msfdemo.acctsvc.events.TransferMoneyRequ" +
-      "est\032;.com.hazelcast.msfdemo.acctsvc.even" +
-      "ts.TransferMoneyResponse\"\000b\006proto3"
+      "\n\tsucceeded\030\001 \001(\010\"\024\n\022AllAccountsRequest\"" +
+      ",\n\023AllAccountsResponse\022\025\n\raccountNumber\030" +
+      "\001 \003(\t\"\025\n\023TotalBalanceRequest\",\n\024TotalBal" +
+      "anceResponse\022\024\n\014totalBalance\030\001 \001(\0032\315\007\n\007A" +
+      "ccount\022}\n\004Open\0228.com.hazelcast.msfdemo.a" +
+      "cctsvc.events.OpenAccountRequest\0329.com.h" +
+      "azelcast.msfdemo.acctsvc.events.OpenAcco" +
+      "untResponse\"\000\022\204\001\n\007Deposit\022:.com.hazelcas" +
+      "t.msfdemo.acctsvc.events.AdjustBalanceRe" +
+      "quest\032;.com.hazelcast.msfdemo.acctsvc.ev" +
+      "ents.AdjustBalanceResponse\"\000\022\205\001\n\010Withdra" +
+      "w\022:.com.hazelcast.msfdemo.acctsvc.events" +
+      ".AdjustBalanceRequest\032;.com.hazelcast.ms" +
+      "fdemo.acctsvc.events.AdjustBalanceRespon" +
+      "se\"\000\022\207\001\n\014CheckBalance\0229.com.hazelcast.ms" +
+      "fdemo.acctsvc.events.CheckBalanceRequest" +
+      "\032:.com.hazelcast.msfdemo.acctsvc.events." +
+      "CheckBalanceResponse\"\000\022\212\001\n\rTransferMoney" +
+      "\022:.com.hazelcast.msfdemo.acctsvc.events." +
+      "TransferMoneyRequest\032;.com.hazelcast.msf" +
+      "demo.acctsvc.events.TransferMoneyRespons" +
+      "e\"\000\022\212\001\n\021AllAccountNumbers\0228.com.hazelcas" +
+      "t.msfdemo.acctsvc.events.AllAccountsRequ" +
+      "est\0329.com.hazelcast.msfdemo.acctsvc.even" +
+      "ts.AllAccountsResponse\"\000\022\217\001\n\024TotalAccoun" +
+      "tBalances\0229.com.hazelcast.msfdemo.acctsv" +
+      "c.events.TotalBalanceRequest\032:.com.hazel" +
+      "cast.msfdemo.acctsvc.events.TotalBalance" +
+      "Response\"\000b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -4811,6 +6805,30 @@ public final class AccountOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor,
         new java.lang.String[] { "Succeeded", });
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor,
+        new java.lang.String[] { "AccountNumber", });
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor,
+        new java.lang.String[] { "TotalBalance", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

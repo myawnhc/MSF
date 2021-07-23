@@ -62,7 +62,7 @@ public class CDCPipeline implements Runnable {
         p.readFrom(
                 // Name needs to be unique so using service rather than db; passed to Kafka
                 mysql("invservice")
-                        .setDatabaseAddress("127.0.0.1")
+                        .setDatabaseAddress("invdb")
                         .setDatabasePort(3306)
                         .setDatabaseUser("invuser")
                         .setDatabasePassword("invpass")
@@ -71,6 +71,8 @@ public class CDCPipeline implements Runnable {
                         .setReconnectBehavior(new Retry3Strategy())
                         .build())
                 .withNativeTimestamps(0)
+                // TODO: bogus filter just to cut down output volume, come back and make a real one
+                .filter(changeRecord -> { return changeRecord.key().equals("10101"); })
                 .writeTo(Sinks.logger());
         return p;
     }

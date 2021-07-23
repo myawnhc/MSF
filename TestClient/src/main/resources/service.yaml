@@ -1,8 +1,12 @@
 ---
 service_name: account-service
-hostname: localhost
+hostname: acctsvc
 port: 50051
 ---
 service_name: order-service
-hostname: localhost
+hostname: ordersvc
 port: 50052
+---
+service_name: inventory-service
+hostname: invsvc
+port: 50053

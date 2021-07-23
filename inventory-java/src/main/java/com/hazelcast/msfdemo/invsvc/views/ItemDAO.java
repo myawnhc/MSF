@@ -28,4 +28,8 @@ public class ItemDAO extends DAO<Item,String> {
         // Creates backing tables (for MapStore) if not present
         ItemMapStore mapStore = new ItemMapStore();
     }
+
+    public int getItemCount() {
+        return getMap().size();
+    }
 }

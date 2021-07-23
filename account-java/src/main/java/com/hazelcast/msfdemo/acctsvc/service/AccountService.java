@@ -63,15 +63,15 @@ public class AccountService {
     }
 
 
-    // Obsolete: An example of doing transfer without the framework
-    public void transfer(String fromAccount, String toAccount, int amount) {
-        Account from = accountDAO.findByKey(fromAccount);
-        Account to = accountDAO.findByKey(toAccount);
-        from.debit(amount);
-        to.credit(amount);
-        accountDAO.update(from);
-        accountDAO.update(to);
-    }
+//    // Obsolete: An example of doing transfer without the framework
+//    public void transfer(String fromAccount, String toAccount, int amount) {
+//        Account from = accountDAO.findByKey(fromAccount);
+//        Account to = accountDAO.findByKey(toAccount);
+//        from.debit(amount);
+//        to.credit(amount);
+//        accountDAO.update(from);
+//        accountDAO.update(to);
+//    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         AccountService acctService = new AccountService();
