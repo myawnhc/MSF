@@ -35,9 +35,6 @@
         <!-- Environment variables -->
         <my.main.class>com.hazelcast.msfdemo.catalogsvc.service.CatalogService</my.main.class>
 
-        <!-- Versions -->
-        <hazelcast-jet.version>4.5</hazelcast-jet.version>
-
         <!-- Plugins -->
         <java.version>11</java.version>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
@@ -174,9 +171,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.hazelcast.jet</groupId>
-            <artifactId>hazelcast-jet</artifactId>
-            <version>${hazelcast-jet.version}</version>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+            <version>${hazelcast-platform-version}</version>
         </dependency>
         <dependency>
             <groupId>com.hazelcast</groupId>

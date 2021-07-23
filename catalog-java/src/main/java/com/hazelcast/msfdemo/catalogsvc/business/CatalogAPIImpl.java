@@ -27,9 +27,12 @@ public class CatalogAPIImpl extends CatalogGrpc.CatalogImplBase {
     @Override
     public void priceLookup(CatalogOuterClass.PriceLookupRequest request, StreamObserver<PriceLookupResponse> responseObserver) {
         // This is intended to be a non-Java service, so not doing Jet pipelines.
-        // For now we just mock the service
+        // -- although if we can do a Jet pipeline in streaming SQL we should go that route.
+        // For now we just mock the service; this was mocked before the InventoryDB was
+        // in place, we could now look up actual price from the Item table.
         String itemNumber = request.getItemNumber();
 
+        System.out.println("Performing priceLookup for item " + itemNumber);
         PriceLookupResponse grpcResponse =
                 PriceLookupResponse.newBuilder()
                         .setPrice(1000)

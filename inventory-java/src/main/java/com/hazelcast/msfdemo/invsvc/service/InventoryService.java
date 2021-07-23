@@ -54,9 +54,11 @@ public class InventoryService {
         executor.submit(() -> {
             GenerateData generator = new GenerateData();
             if (itemDAO.getItemCount() == 0) {
+                System.out.println("InventoryService - items empty, generating");
                 generator.generateItems(1000);
             }
             if (inventoryDAO.getInventoryRecordCount() == 0) {
+                System.out.println("InventoryService - inventory empty, generating");
                 generator.generateInventory(1000, 100, 10);
             }
         });

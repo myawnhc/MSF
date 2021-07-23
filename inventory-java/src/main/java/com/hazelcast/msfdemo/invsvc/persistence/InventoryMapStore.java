@@ -315,8 +315,8 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                 selectItemKeysStatement = conn.prepareStatement(selectKeysString);
             }
             ResultSet rs = selectItemKeysStatement.executeQuery();
-
             if (rs == null) return null;
+            System.out.println("Generating inventory keys for " + rs.getFetchSize() + " items");
             while (rs.next()) {
                 InventoryKey key = new InventoryKey(rs.getString(1), rs.getString(2));
                 keys.add(key);
@@ -324,7 +324,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //System.out.println("Returning " + keys.size() + " keys from Item table");
+        System.out.println("Returning " + keys.size() + " keys from Inventory table");
         return keys;
     }
 }

@@ -17,18 +17,20 @@
 
 package com.hazelcast.msf.controller;
 
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
+import com.hazelcast.client.config.YamlClientConfigBuilder;
 import com.hazelcast.collection.IList;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.IndexConfig;
 import com.hazelcast.config.IndexType;
 import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.YamlConfigBuilder;
+import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.IAtomicLong;
 import com.hazelcast.cp.ICountDownLatch;
 import com.hazelcast.flakeidgen.FlakeIdGenerator;
-import com.hazelcast.jet.Jet;
-import com.hazelcast.jet.JetInstance;
-import com.hazelcast.jet.Job;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.map.IMap;
@@ -46,10 +48,7 @@ import java.util.Collection;
 public class MSFController {
 
     private HazelcastInstance hazelcast;
-    private JetInstance jet;
     private FlakeIdGenerator messageID;
-    //private Map<String, FlakeIdGenerator> idGenerators = new HashMap<>();
-    //private List<Job> runningJobs = new ArrayList<>();
 
     private MultiMap<String, String> servicesStarted;
 
@@ -68,15 +67,15 @@ public class MSFController {
         boolean embedded = true;
 
         if (embedded) {
-            //JetConfig jetConfig = new JetConfig();
-            System.out.println("MSFController starting embedded Jet with config from classpath");
-            jet = Jet.newJetInstance();
+            Config config = new YamlConfigBuilder().build();
+            config.getJetConfig().setEnabled(true);
+            System.out.println("MSFController starting Hazelcast Platform embedded instance with config from classpath");
+            hazelcast = Hazelcast.newHazelcastInstance(config);
         } else {
-            //JetClientConfig clientConfig = new JetClientConfig();
-            System.out.println("MSFController starting Jet client with config from classpath");
-            jet = Jet.newJetClient();
+            ClientConfig config = new YamlClientConfigBuilder().build();
+            System.out.println("MSFController starting Hazelcast Platform client with config from classpath");
+            hazelcast = HazelcastClient.newHazelcastClient(config);
         }
-        hazelcast = jet.getHazelcastInstance();
         messageID = hazelcast.getFlakeIdGenerator("messageID");
         servicesStarted = hazelcast.getMultiMap("servicesRunning");
     }
@@ -124,7 +123,7 @@ public class MSFController {
     public void stopService(String service) {
         Collection<String> jobsRunning = servicesStarted.get(service);
         for (String job : jobsRunning) {
-            jet.getJob(job).cancel();
+            hazelcast.getJet().getJob(job).cancel();
         }
         servicesStarted.remove(service);
         // TODO: use logger
@@ -148,8 +147,7 @@ public class MSFController {
 
         System.out.println("MSFController starting job " + jobName);
         try {
-            Job j = jet.newJobIfAbsent(p, jconfig);
-            //runningJobs.add(j); // Maybe key by service so stopservice can cancel it?
+            hazelcast.getJet().newJobIfAbsent(p, jconfig);
             servicesStarted.put(service, jobName);
             System.out.println(servicesStarted.get(service).size() + " jobs now running for " + service);
         } catch (Throwable t) {

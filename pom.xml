@@ -44,6 +44,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <hazelcast-platform-version>5.0-BETA-1</hazelcast-platform-version>
     </properties>
 
 </project>

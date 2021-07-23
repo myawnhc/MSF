@@ -141,13 +141,13 @@ public class OrderServiceClient {
         // should periodically refresh the invRecordCount until it reaches
         // max (items * locations, currently 100K)
 
-        // TODO: getInventoryCount belongs in an InventoryServiceClient
         InventoryServiceClient iclient = new InventoryServiceClient();
         int invRecordCount = iclient.getInventoryRecordCount();
         System.out.println("Inventory record count " + invRecordCount);
         int NUM_LOCATIONS = 100;
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
-        for (int i=0; i<10; i++) {
+        // Bumping order count from 10 to 1K
+        for (int i=0; i<1000; i++) {
             int index = (int)(Math.random()*validAccounts.size()+1);
             String acctNumber = validAccounts.get(index);
             int itemOffset = (int)(Math.random()*maxSafeItem+1);

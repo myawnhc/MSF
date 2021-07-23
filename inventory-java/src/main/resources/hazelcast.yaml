@@ -28,6 +28,6 @@ hazelcast:
         enabled: true
         initial-mode: LAZY
         class-name: com.hazelcast.msfdemo.invsvc.persistence.InventoryMapStore
-        write-delay-seconds: 30
+        write-delay-seconds: 5
         write-batch-size: 1000
         write-coalescing: true

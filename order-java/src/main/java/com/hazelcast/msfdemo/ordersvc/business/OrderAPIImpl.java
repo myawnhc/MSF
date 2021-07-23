@@ -56,6 +56,7 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
     public void createOrder(CreateOrderRequest request, StreamObserver<OrderEventResponse> responseObserver) {
         // Unique ID used to pair up requests with responses
         long uniqueID = controller.getUniqueMessageID();
+//        ((ServerCallStreamObserver)responseObserver).setOnCancelHandler(() -> System.out.println("Setting nop cancel handler on orderCreate"));
 
         // Get listener to result map armed before we trigger the pipeline
         UUID listenerID = orderPipelineOutput.addEntryListener((EntryAddedListener<Long, APIResponse<OrderEvent>>) entryEvent -> {
@@ -109,6 +110,9 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
         private UUID listenerID;
 
         public EventHandler(String orderNumber, StreamObserver<OrderEventResponse> observer) {
+//            if (observer instanceof ServerCallStreamObserver) {
+//                ((ServerCallStreamObserver) observer).setOnCancelHandler(() -> System.out.println("Order Event Observer: Stream has been canceled"));
+//            }
             this.responseObserver = observer;
             this.eventStore = OrderEventStore.getInstance();
             this.listenerID = eventStore.registerEventHandler(orderNumber, this);

@@ -33,6 +33,7 @@ public class InventoryDAO extends DAO<Inventory, InventoryKey> {
 
     // Non-inheritable query methods
     public int getInventoryRecordCount() {
+        System.out.println("InventoryDAO.getInventoryRecordCount getting map size - MapLoader should bel LAZY but throws!");
         return getMap().size();
     }
 
