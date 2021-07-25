@@ -17,6 +17,12 @@ The technology stack used includes
 
 The intent is to make this a polyglot demo, featuring Java, C#, Python, Go, and Node.js, but the original prototype is all in Java.  After initial prototype version of services are validated they can be reimplemented in the chosen target language.
 
+# Completed Steps
+
+* Basic prototype implementations of all 4 microservices
+* Upgrade dependencies from Jet 4.5 to Hazelcast Platform 5.0 Beta 1 
+** Appears everything still working as expected after the ugprade
+
 # Next Steps
 
 Proposing this as a candidate for the Platform 5.0 Hackathon; for purposes of that event here is a summary of work that could be done to help build out the demo.   Which of these tasks are done is primarily a function of who joins the team.
