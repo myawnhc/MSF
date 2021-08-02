@@ -1,7 +1,9 @@
 com/hazelcast/msf/controller/MSFController$Singleton.class
 com/hazelcast/msf/configuration/ServiceConfig$ServiceProperties.class
+com/hazelcast/msf/messaging/EventMsgListener.class
 com/hazelcast/msf/persistence/DTO.class
 com/hazelcast/msf/configuration/MSFConfig.class
+com/hazelcast/msf/eventstore/SubscriptionManager.class
 com/hazelcast/msf/messaging/APIResponse.class
 com/hazelcast/msf/configuration/ConfigUtil.class
 com/hazelcast/msf/eventstore/SequencedEvent.class
@@ -13,3 +15,4 @@ com/hazelcast/msf/controller/MSFController.class
 com/hazelcast/msf/transactions/TxnMessage.class
 com/hazelcast/msf/persistence/DAO.class
 com/hazelcast/msf/configuration/ServiceConfig.class
+com/hazelcast/msf/messaging/StreamObserverToIMapAdapter.class

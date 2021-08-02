@@ -21,10 +21,10 @@ import com.hazelcast.map.IMap;
 import com.hazelcast.map.listener.EntryAddedListener;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.messaging.APIResponse;
+import com.hazelcast.msfdemo.ordersvc.events.CreateOrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
 import com.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
-import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
 
@@ -32,8 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest;
-import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse;
+import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.*;
 
 /** Server-side implementation of the OrderService API
  *  Takes requests and puts them to API-specific IMaps that trigger Jet pipelines
@@ -53,10 +52,9 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
 
 
     @Override
-    public void createOrder(CreateOrderRequest request, StreamObserver<OrderEventResponse> responseObserver) {
+    public void createOrder(CreateOrderRequest request, StreamObserver<CreateOrderResponse> responseObserver) {
         // Unique ID used to pair up requests with responses
         long uniqueID = controller.getUniqueMessageID();
-//        ((ServerCallStreamObserver)responseObserver).setOnCancelHandler(() -> System.out.println("Setting nop cancel handler on orderCreate"));
 
         // Get listener to result map armed before we trigger the pipeline
         UUID listenerID = orderPipelineOutput.addEntryListener((EntryAddedListener<Long, APIResponse<OrderEvent>>) entryEvent -> {
@@ -64,26 +62,21 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
             APIResponse<OrderEvent> apiResponse = entryEvent.getValue();
             if (apiResponse.getStatus() == APIResponse.Status.SUCCESS) {
                 OrderEvent event = apiResponse.getResultValue();
-                OrderEventResponse grpcResponse =
-                        OrderEventResponse.newBuilder()
+                CreateOrderResponse grpcResponse =
+                        CreateOrderResponse.newBuilder()
                                 .setOrderNumber(event.getOrderNumber())
-                                .setAccountNumber(event.getAccountNumber())
-                                .setItemNumber(event.getItemNumber())
-                                .setLocation(event.getLocation())
-                                .setQuantity(event.getQuantity())
-                                .setEventName(event.getEventName())
                                 .build();
-                //System.out.println("OrderAPIImpl sending first response from APIResponse");
+                //System.out.println("OrderAPIImpl sending create order response from APIResponse");
                 responseObserver.onNext(grpcResponse);
                 // Handle additional events for the order
-                new EventHandler(event.getOrderNumber(), responseObserver);
+                //new EventHandler(event.getOrderNumber(), responseObserver);
             } else {
                 responseObserver.onError(apiResponse.getError());
             }
             // TODO: may send a stream of responses, in which case we do not want to
             // mark completed until the order actually ships ...
 
-            //responseObserver.onCompleted();
+            responseObserver.onCompleted();
             orderPipelineOutput.remove(uniqueID);
             orderPipelineInput.remove(uniqueID);
             // Remove ourself as a listener.  Have to do this indirection of getting from map because
@@ -104,40 +97,45 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
         orderPipelineInput.set(uniqueID, request);
     }
 
-    public static class EventHandler {
-        private StreamObserver<OrderEventResponse> responseObserver;
-        private OrderEventStore eventStore;
-        private UUID listenerID;
-
-        public EventHandler(String orderNumber, StreamObserver<OrderEventResponse> observer) {
-//            if (observer instanceof ServerCallStreamObserver) {
-//                ((ServerCallStreamObserver) observer).setOnCancelHandler(() -> System.out.println("Order Event Observer: Stream has been canceled"));
-//            }
-            this.responseObserver = observer;
-            this.eventStore = OrderEventStore.getInstance();
-            this.listenerID = eventStore.registerEventHandler(orderNumber, this);
-            //System.out.println("Registered handler for subsequent events on order " + orderNumber);
-        }
-
-        // Needs responseStream in order to respond!
-        public void handleEvent(OrderEvent event) {
-            System.out.println("New event : " + event);
-            OrderEventResponse grpcResponse =
-                    OrderEventResponse.newBuilder()
-                            .setOrderNumber(event.getOrderNumber())
-                            .setAccountNumber(event.getAccountNumber())
-                            .setItemNumber(event.getItemNumber())
-                            .setLocation(event.getLocation())
-                            .setQuantity(event.getQuantity())
-                            .setExtendedPrice(event.getExtendedPrice())
-                            .setEventName(event.getEventName())
-                            .build();
-            responseObserver.onNext(grpcResponse);
-            if (event.isTerminal()) {
-                System.out.println("Terminal event, calling onCompleted");
-                responseObserver.onCompleted();
-                eventStore.removeEventListener(listenerID);
-            }
-        }
+    //rpc SubscribeToOrderCreated (SubscribeRequest) returns (stream OrderCreated) {}
+    @Override
+    public void subscribeToOrderCreated(SubscribeRequest request,
+                                        StreamObserver<OrderCreated> responseObserver) {
+        // request is an empty type
+        CreateOrderEvent.subscribe(responseObserver);
     }
+
+//    public static class EventHandler {
+//        private StreamObserver<OrderEventResponse> responseObserver;
+//        private OrderEventStore eventStore;
+//        private UUID listenerID;
+//
+//        public EventHandler(String orderNumber, StreamObserver<OrderEventResponse> observer) {
+//            this.responseObserver = observer;
+//            this.eventStore = OrderEventStore.getInstance();
+//            this.listenerID = eventStore.registerEventHandler(orderNumber, this);
+//            //System.out.println("Registered handler for subsequent events on order " + orderNumber);
+//        }
+//
+//        // Needs responseStream in order to respond!
+//        public void handleEvent(OrderEvent event) {
+//            System.out.println("New event : " + event);
+//            OrderEventResponse grpcResponse =
+//                    OrderEventResponse.newBuilder()
+//                            .setOrderNumber(event.getOrderNumber())
+//                            .setAccountNumber(event.getAccountNumber())
+//                            .setItemNumber(event.getItemNumber())
+//                            .setLocation(event.getLocation())
+//                            .setQuantity(event.getQuantity())
+//                            .setExtendedPrice(event.getExtendedPrice())
+//                            .setEventName(event.getEventName())
+//                            .build();
+//            responseObserver.onNext(grpcResponse);
+//            if (event.isTerminal()) {
+//                System.out.println("Terminal event, calling onCompleted");
+//                responseObserver.onCompleted();
+//                eventStore.removeEventListener(listenerID);
+//            }
+//        }
+//    }
 }

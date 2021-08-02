@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n%com.hazelcast.msfdemo.ordersvc.events',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0border.proto\x12\x05order\"c\n\x12\x43reateOrderRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x10\n\x08quantity\x18\x02 \x01(\x05\x12\x12\n\nitemNumber\x18\x03 \x01(\t\x12\x10\n\x08location\x18\x04 \x01(\t\"\xa2\x01\n\x12OrderEventResponse\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\x12\x15\n\raccountNumber\x18\x02 \x01(\t\x12\x12\n\nitemNumber\x18\x03 \x01(\t\x12\x10\n\x08location\x18\x04 \x01(\t\x12\x10\n\x08quantity\x18\x05 \x01(\x05\x12\x15\n\rextendedPrice\x18\x06 \x01(\x05\x12\x11\n\teventName\x18\x07 \x01(\t2P\n\x05Order\x12G\n\x0b\x43reateOrder\x12\x19.order.CreateOrderRequest\x1a\x19.order.OrderEventResponse\"\x00\x30\x01\x42\'\n%com.hazelcast.msfdemo.ordersvc.eventsb\x06proto3'
+  serialized_pb=b'\n\x0border.proto\x12\x05order\"c\n\x12\x43reateOrderRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x10\n\x08quantity\x18\x02 \x01(\x05\x12\x12\n\nitemNumber\x18\x03 \x01(\t\x12\x10\n\x08location\x18\x04 \x01(\t\"*\n\x13\x43reateOrderResponse\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\"\xa2\x01\n\x12OrderEventResponse\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\x12\x15\n\raccountNumber\x18\x02 \x01(\t\x12\x12\n\nitemNumber\x18\x03 \x01(\t\x12\x10\n\x08location\x18\x04 \x01(\t\x12\x10\n\x08quantity\x18\x05 \x01(\x05\x12\x15\n\rextendedPrice\x18\x06 \x01(\x05\x12\x11\n\teventName\x18\x07 \x01(\t\"\x12\n\x10SubscribeRequest\"r\n\x0cOrderCreated\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\x12\x15\n\raccountNumber\x18\x02 \x01(\t\x12\x12\n\nitemNumber\x18\x03 \x01(\t\x12\x10\n\x08location\x18\x04 \x01(\t\x12\x10\n\x08quantity\x18\x05 \x01(\x05\"9\n\x0bOrderPriced\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\x12\x15\n\rextendedPrice\x18\x02 \x01(\x05\"B\n\x11InventoryReserved\x12\x13\n\x0borderNumber\x18\x01 \x01(\t\x12\x18\n\x10quantityReserved\x18\x02 \x01(\x05\x32\xbe\x02\n\x05Order\x12\x46\n\x0b\x43reateOrder\x12\x19.order.CreateOrderRequest\x1a\x1a.order.CreateOrderResponse\"\x00\x12K\n\x17SubscribeToOrderCreated\x12\x17.order.SubscribeRequest\x1a\x13.order.OrderCreated\"\x00\x30\x01\x12I\n\x16SubscribeToOrderPriced\x12\x17.order.SubscribeRequest\x1a\x12.order.OrderPriced\"\x00\x30\x01\x12U\n\x1cSubscribeToInventoryReserved\x12\x17.order.SubscribeRequest\x1a\x18.order.InventoryReserved\"\x00\x30\x01\x42\'\n%com.hazelcast.msfdemo.ordersvc.eventsb\x06proto3'
 )
 
 
@@ -75,6 +75,38 @@ _CREATEORDERREQUEST = _descriptor.Descriptor(
   ],
   serialized_start=22,
   serialized_end=121,
+)
+
+
+_CREATEORDERRESPONSE = _descriptor.Descriptor(
+  name='CreateOrderResponse',
+  full_name='order.CreateOrderResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='orderNumber', full_name='order.CreateOrderResponse.orderNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=123,
+  serialized_end=165,
 )
 
 
@@ -147,12 +179,180 @@ _ORDEREVENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=124,
-  serialized_end=286,
+  serialized_start=168,
+  serialized_end=330,
+)
+
+
+_SUBSCRIBEREQUEST = _descriptor.Descriptor(
+  name='SubscribeRequest',
+  full_name='order.SubscribeRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=332,
+  serialized_end=350,
+)
+
+
+_ORDERCREATED = _descriptor.Descriptor(
+  name='OrderCreated',
+  full_name='order.OrderCreated',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='orderNumber', full_name='order.OrderCreated.orderNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='accountNumber', full_name='order.OrderCreated.accountNumber', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='itemNumber', full_name='order.OrderCreated.itemNumber', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='location', full_name='order.OrderCreated.location', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='quantity', full_name='order.OrderCreated.quantity', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=352,
+  serialized_end=466,
+)
+
+
+_ORDERPRICED = _descriptor.Descriptor(
+  name='OrderPriced',
+  full_name='order.OrderPriced',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='orderNumber', full_name='order.OrderPriced.orderNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='extendedPrice', full_name='order.OrderPriced.extendedPrice', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=468,
+  serialized_end=525,
+)
+
+
+_INVENTORYRESERVED = _descriptor.Descriptor(
+  name='InventoryReserved',
+  full_name='order.InventoryReserved',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='orderNumber', full_name='order.InventoryReserved.orderNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='quantityReserved', full_name='order.InventoryReserved.quantityReserved', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=527,
+  serialized_end=593,
 )
 
 DESCRIPTOR.message_types_by_name['CreateOrderRequest'] = _CREATEORDERREQUEST
+DESCRIPTOR.message_types_by_name['CreateOrderResponse'] = _CREATEORDERRESPONSE
 DESCRIPTOR.message_types_by_name['OrderEventResponse'] = _ORDEREVENTRESPONSE
+DESCRIPTOR.message_types_by_name['SubscribeRequest'] = _SUBSCRIBEREQUEST
+DESCRIPTOR.message_types_by_name['OrderCreated'] = _ORDERCREATED
+DESCRIPTOR.message_types_by_name['OrderPriced'] = _ORDERPRICED
+DESCRIPTOR.message_types_by_name['InventoryReserved'] = _INVENTORYRESERVED
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CreateOrderRequest = _reflection.GeneratedProtocolMessageType('CreateOrderRequest', (_message.Message,), {
@@ -162,12 +362,47 @@ CreateOrderRequest = _reflection.GeneratedProtocolMessageType('CreateOrderReques
   })
 _sym_db.RegisterMessage(CreateOrderRequest)
 
+CreateOrderResponse = _reflection.GeneratedProtocolMessageType('CreateOrderResponse', (_message.Message,), {
+  'DESCRIPTOR' : _CREATEORDERRESPONSE,
+  '__module__' : 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.CreateOrderResponse)
+  })
+_sym_db.RegisterMessage(CreateOrderResponse)
+
 OrderEventResponse = _reflection.GeneratedProtocolMessageType('OrderEventResponse', (_message.Message,), {
   'DESCRIPTOR' : _ORDEREVENTRESPONSE,
   '__module__' : 'order_pb2'
   # @@protoc_insertion_point(class_scope:order.OrderEventResponse)
   })
 _sym_db.RegisterMessage(OrderEventResponse)
+
+SubscribeRequest = _reflection.GeneratedProtocolMessageType('SubscribeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _SUBSCRIBEREQUEST,
+  '__module__' : 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.SubscribeRequest)
+  })
+_sym_db.RegisterMessage(SubscribeRequest)
+
+OrderCreated = _reflection.GeneratedProtocolMessageType('OrderCreated', (_message.Message,), {
+  'DESCRIPTOR' : _ORDERCREATED,
+  '__module__' : 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.OrderCreated)
+  })
+_sym_db.RegisterMessage(OrderCreated)
+
+OrderPriced = _reflection.GeneratedProtocolMessageType('OrderPriced', (_message.Message,), {
+  'DESCRIPTOR' : _ORDERPRICED,
+  '__module__' : 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.OrderPriced)
+  })
+_sym_db.RegisterMessage(OrderPriced)
+
+InventoryReserved = _reflection.GeneratedProtocolMessageType('InventoryReserved', (_message.Message,), {
+  'DESCRIPTOR' : _INVENTORYRESERVED,
+  '__module__' : 'order_pb2'
+  # @@protoc_insertion_point(class_scope:order.InventoryReserved)
+  })
+_sym_db.RegisterMessage(InventoryReserved)
 
 
 DESCRIPTOR._options = None
@@ -179,8 +414,8 @@ _ORDER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=288,
-  serialized_end=368,
+  serialized_start=596,
+  serialized_end=914,
   methods=[
   _descriptor.MethodDescriptor(
     name='CreateOrder',
@@ -188,7 +423,37 @@ _ORDER = _descriptor.ServiceDescriptor(
     index=0,
     containing_service=None,
     input_type=_CREATEORDERREQUEST,
-    output_type=_ORDEREVENTRESPONSE,
+    output_type=_CREATEORDERRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SubscribeToOrderCreated',
+    full_name='order.Order.SubscribeToOrderCreated',
+    index=1,
+    containing_service=None,
+    input_type=_SUBSCRIBEREQUEST,
+    output_type=_ORDERCREATED,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SubscribeToOrderPriced',
+    full_name='order.Order.SubscribeToOrderPriced',
+    index=2,
+    containing_service=None,
+    input_type=_SUBSCRIBEREQUEST,
+    output_type=_ORDERPRICED,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SubscribeToInventoryReserved',
+    full_name='order.Order.SubscribeToInventoryReserved',
+    index=3,
+    containing_service=None,
+    input_type=_SUBSCRIBEREQUEST,
+    output_type=_INVENTORYRESERVED,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

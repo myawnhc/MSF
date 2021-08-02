@@ -37,6 +37,11 @@ public class CompactionEvent extends AccountEvent implements Serializable,
         return "COMPACT account " + accountNumber + " with carry-forward balance " + amount;
     }
 
+    @Override
+    public void publish() {
+        System.out.println("****** CompactionEvent.publish unimplemented!");
+    }
+
     @Override // UnaryOperator<Account>
     public Account apply(Account account) {
         account.setAcctNumber(super.getAccountNumber());

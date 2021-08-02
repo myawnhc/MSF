@@ -25,25 +25,39 @@ import java.util.function.UnaryOperator;
 public class CompactionEvent extends OrderEvent implements Serializable,
         UnaryOperator<Order> {
 
+    private String accountNumber;
+    private String itemNumber;
+    private int    quantity;
+    private String location;
+    private int    extendedPrice;
+
     public CompactionEvent(String orderNumber, String acctNumber, String itemNumber,
                            String location, int quantity, int price) {
-        super(OrderEventTypes.COMPACTION, orderNumber, acctNumber, itemNumber,
-                location, quantity);
-        super.extendedPrice = price;
+        super(orderNumber);
+        this.accountNumber = acctNumber;
+        this.itemNumber = itemNumber;
+        this.location = location;
+        this.quantity = quantity;
+        this.extendedPrice = price;
     }
 
     public String toString() {
         return "COMPACT order " + orderNumber;
     }
 
+    @Override    // Abstract method from SequencedEvent
+    public void publish() {
+        System.out.println("No implementation for CompactionEvent.publish in order service");
+    }
+
     @Override // UnaryOperator<Account>
     public Order apply(Order order) {
-        order.setOrderNumber(super.orderNumber);
-        order.setAcctNumber(super.accountNumber);
-        order.setItemNumber(super.itemNumber);
-        order.setLocation(super.location);
-        order.setQuantity(super.quantity);
-        order.setExtendedPrice(super.extendedPrice);
+        // Potentially changes everything except the account number
+        order.setAcctNumber(accountNumber);
+        order.setItemNumber(itemNumber);
+        order.setLocation(location);
+        order.setQuantity(quantity);
+        order.setExtendedPrice(extendedPrice);
         return order;
     }
 }

@@ -17,7 +17,10 @@
 
 package com.hazelcast.msfdemo.acctsvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
+import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.function.UnaryOperator;
@@ -27,6 +30,13 @@ public class OpenAccountEvent extends AccountEvent implements Serializable,
 
     private String accountName;
 
+    private static SubscriptionManager<AccountOpened> subscriptionManager;
+
+    static {
+        subscriptionManager = new SubscriptionManager<>(AccountOpened.getDescriptor().getFullName());
+        subscriptionManager.setVerbose(false);
+    }
+
     public OpenAccountEvent(String accountNumber, String accountName, int openingBalance) {
         super(AccountEventTypes.OPEN, accountNumber, openingBalance);
         this.accountName = accountName;
@@ -35,6 +45,21 @@ public class OpenAccountEvent extends AccountEvent implements Serializable,
     public String getAccountName() { return accountName; }
     public String toString() {
         return "OPEN account " + accountNumber + " with initial balance " + amount;
+    }
+
+    // Because this is static we can't make it part of SequencedEvent API
+    public static void subscribe(StreamObserver<AccountOpened> observer) {
+        subscriptionManager.subscribe(observer, 0);
+    }
+
+    @Override
+    public void publish() {
+        AccountOpened event = AccountOpened.newBuilder()
+                .setAccountNumber(accountNumber)
+                .setAccountName(accountName)
+                .setInitalBalance(amount)
+                .build();
+        subscriptionManager.publish(event, toString());
     }
 
     @Override // UnaryOperator<Account>

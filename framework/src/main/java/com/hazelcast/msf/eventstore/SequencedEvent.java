@@ -23,15 +23,11 @@ import java.util.function.UnaryOperator;
 // concrete subclass must implement apply(T) for materialization
 public abstract class SequencedEvent<T> implements UnaryOperator<T> {
 
-    // Now that all sequencing is back in the EventStore rather than here,
-    // we could could rename this, but Event is so overloaded I'd rather
-    // not add to the confusion.
-
-//    private long sequence;
-
-//    public void setSequence(Long sequence) {
-//        this.sequence =  sequence;
-//    }
-//    public long getSequence() { return sequence; }
+    public String getEventName() {
+        return this.getClass().getSimpleName();
+    };
+    // The published event is not of type T but an associated gRPC type
+    abstract public void publish();
+    // subscribe method is static on subclasses so can't define it here
 
 }

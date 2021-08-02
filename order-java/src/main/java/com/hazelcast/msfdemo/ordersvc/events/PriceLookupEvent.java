@@ -17,29 +17,56 @@
 
 package com.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.EnumSet;
 
+import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced;
+
 public class PriceLookupEvent extends OrderEvent implements Serializable {
 
-    public PriceLookupEvent(String orderNumber, String accountNumber, String itemNumber, String location, int quantity, int price) {
-        super(OrderEventTypes.PRICE_CALCULATED, orderNumber, accountNumber, itemNumber, location, quantity);
-        super.extendedPrice = price;
+    private int extendedPrice;
+    private String itemNumber;
+    private String location;
+    private int quantity;
+
+    private static SubscriptionManager<OrderPriced> subscriptionManager = new SubscriptionManager<>(OrderPriced.getDescriptor().getFullName());
+
+    public PriceLookupEvent(String orderNumber, String itemNumber, String location, int quantity, int price) {
+        super(orderNumber);
+        this.itemNumber = itemNumber;
+        extendedPrice = price;
+        this.location = location;
+        this.quantity = quantity;
     }
 
     public void setExtendedPrice(int price) { this.extendedPrice = price; }
+    public int getExtendedPrice() { return extendedPrice; }
+
+    public static void subscribe(StreamObserver<OrderPriced> observer) {
+        subscriptionManager.subscribe(observer, 0);
+    }
+    @Override
+    public void publish() {
+        OrderPriced event = OrderPriced.newBuilder()
+                .setOrderNumber(orderNumber)
+                .setExtendedPrice(extendedPrice)
+                .build();
+        String description = "OrderPriced: Order " + orderNumber + " ExtendedPrice: " + extendedPrice;
+        subscriptionManager.publish(event, description);
+    }
 
     @Override
     public Order apply(Order order) {
         order.setOrderNumber(super.orderNumber);
-        order.setAcctNumber(super.accountNumber);
-        order.setItemNumber(super.itemNumber);
-        order.setLocation(super.location);
-        order.setQuantity(super.quantity);
-        order.setExtendedPrice(super.extendedPrice);
+        order.setItemNumber(itemNumber);
+        order.setLocation(location);
+        order.setQuantity(quantity);
+        order.setExtendedPrice(extendedPrice);
         order.setWaitingOn(EnumSet.of(WaitingOn.CREDIT_CHECK, WaitingOn.RESERVE_INVENTORY));
         return order;
     }

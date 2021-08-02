@@ -1,7 +1,7 @@
 ---
 service_name: account-service
-hostname: localhost
-port: 50051
+grpc_hostname: localhost
+grpc_port: 50051
 # Will add additional fields as needed for cloud deployments
 #  apis:
 #    - api: open

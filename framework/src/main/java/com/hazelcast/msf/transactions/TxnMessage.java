@@ -22,6 +22,7 @@ import com.hazelcast.msf.controller.MSFController;
 
 import java.io.Serializable;
 
+@Deprecated // along with MessageBroker in favor of gRPC plus maybe ReliableTopic
 public class TxnMessage implements Serializable {
     // Track these so we can clear them from the map when fully processed
     private long messageID;

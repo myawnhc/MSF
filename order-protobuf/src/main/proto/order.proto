@@ -1,10 +1,12 @@
 syntax = "proto3";
 package order;
-
 option java_package = "com.hazelcast.msfdemo.ordersvc.events";
 
 service Order {
-  rpc CreateOrder (CreateOrderRequest) returns (stream OrderEventResponse) {}
+  rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}
+  rpc SubscribeToOrderCreated (SubscribeRequest) returns (stream OrderCreated) {}
+  rpc SubscribeToOrderPriced (SubscribeRequest) returns (stream OrderPriced) {}
+  rpc SubscribeToInventoryReserved (SubscribeRequest) returns (stream InventoryReserved) {}
 }
 
 message CreateOrderRequest {
@@ -14,6 +16,12 @@ message CreateOrderRequest {
   string location = 4;
 }
 
+// This will be new return type for CreateOrder
+message CreateOrderResponse {
+  string orderNumber = 1;
+}
+
+// Deprecated in favor of specific event types
 message OrderEventResponse {
   string orderNumber = 1;
   string accountNumber = 2;
@@ -22,4 +30,24 @@ message OrderEventResponse {
   int32 quantity = 5;
   int32 extendedPrice = 6;
   string eventName = 7;
+}
+
+message SubscribeRequest {}
+
+message OrderCreated {
+  string orderNumber = 1;
+  string accountNumber = 2;
+  string itemNumber = 3;
+  string location = 4;
+  int32 quantity = 5;
+}
+
+message OrderPriced {
+  string orderNumber = 1;
+  int32 extendedPrice = 2;
+}
+
+message InventoryReserved {
+  string orderNumber = 1;
+  int32 quantityReserved = 2;
 }

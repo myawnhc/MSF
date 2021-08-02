@@ -952,6 +952,582 @@ public final class OrderOuterClass {
 
   }
 
+  public interface CreateOrderResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:order.CreateOrderResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    java.lang.String getOrderNumber();
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    com.google.protobuf.ByteString
+        getOrderNumberBytes();
+  }
+  /**
+   * <pre>
+   * This will be new return type for CreateOrder
+   * </pre>
+   *
+   * Protobuf type {@code order.CreateOrderResponse}
+   */
+  public static final class CreateOrderResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:order.CreateOrderResponse)
+      CreateOrderResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CreateOrderResponse.newBuilder() to construct.
+    private CreateOrderResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CreateOrderResponse() {
+      orderNumber_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new CreateOrderResponse();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private CreateOrderResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              orderNumber_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_CreateOrderResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_CreateOrderResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.Builder.class);
+    }
+
+    public static final int ORDERNUMBER_FIELD_NUMBER = 1;
+    private volatile java.lang.Object orderNumber_;
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getOrderNumber() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        orderNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getOrderNumberBytes() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        orderNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getOrderNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, orderNumber_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getOrderNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, orderNumber_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse other = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse) obj;
+
+      if (!getOrderNumber()
+          .equals(other.getOrderNumber())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ORDERNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getOrderNumber().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * This will be new return type for CreateOrder
+     * </pre>
+     *
+     * Protobuf type {@code order.CreateOrderResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:order.CreateOrderResponse)
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_CreateOrderResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_CreateOrderResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        orderNumber_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_CreateOrderResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse build() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse buildPartial() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse result = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse(this);
+        result.orderNumber_ = orderNumber_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse) {
+          return mergeFrom((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse other) {
+        if (other == com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.getDefaultInstance()) return this;
+        if (!other.getOrderNumber().isEmpty()) {
+          orderNumber_ = other.orderNumber_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object orderNumber_ = "";
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The orderNumber.
+       */
+      public java.lang.String getOrderNumber() {
+        java.lang.Object ref = orderNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          orderNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The bytes for orderNumber.
+       */
+      public com.google.protobuf.ByteString
+          getOrderNumberBytes() {
+        java.lang.Object ref = orderNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          orderNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOrderNumber() {
+        
+        orderNumber_ = getDefaultInstance().getOrderNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The bytes for orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:order.CreateOrderResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:order.CreateOrderResponse)
+    private static final com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse();
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<CreateOrderResponse>
+        PARSER = new com.google.protobuf.AbstractParser<CreateOrderResponse>() {
+      @java.lang.Override
+      public CreateOrderResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CreateOrderResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<CreateOrderResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CreateOrderResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface OrderEventResponseOrBuilder extends
       // @@protoc_insertion_point(interface_extends:order.OrderEventResponse)
       com.google.protobuf.MessageOrBuilder {
@@ -1029,6 +1605,10 @@ public final class OrderOuterClass {
         getEventNameBytes();
   }
   /**
+   * <pre>
+   * Deprecated in favor of specific event types
+   * </pre>
+   *
    * Protobuf type {@code order.OrderEventResponse}
    */
   public static final class OrderEventResponse extends
@@ -1579,6 +2159,10 @@ public final class OrderOuterClass {
       return builder;
     }
     /**
+     * <pre>
+     * Deprecated in favor of specific event types
+     * </pre>
+     *
      * Protobuf type {@code order.OrderEventResponse}
      */
     public static final class Builder extends
@@ -2260,16 +2844,2823 @@ public final class OrderOuterClass {
 
   }
 
+  public interface SubscribeRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:order.SubscribeRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code order.SubscribeRequest}
+   */
+  public static final class SubscribeRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:order.SubscribeRequest)
+      SubscribeRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SubscribeRequest.newBuilder() to construct.
+    private SubscribeRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SubscribeRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SubscribeRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SubscribeRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_SubscribeRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_SubscribeRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest other = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code order.SubscribeRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:order.SubscribeRequest)
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_SubscribeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_SubscribeRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_SubscribeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest build() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest buildPartial() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest result = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) {
+          return mergeFrom((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest other) {
+        if (other == com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:order.SubscribeRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:order.SubscribeRequest)
+    private static final com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest();
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SubscribeRequest>
+        PARSER = new com.google.protobuf.AbstractParser<SubscribeRequest>() {
+      @java.lang.Override
+      public SubscribeRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SubscribeRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SubscribeRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SubscribeRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OrderCreatedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:order.OrderCreated)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    java.lang.String getOrderNumber();
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    com.google.protobuf.ByteString
+        getOrderNumberBytes();
+
+    /**
+     * <code>string accountNumber = 2;</code>
+     * @return The accountNumber.
+     */
+    java.lang.String getAccountNumber();
+    /**
+     * <code>string accountNumber = 2;</code>
+     * @return The bytes for accountNumber.
+     */
+    com.google.protobuf.ByteString
+        getAccountNumberBytes();
+
+    /**
+     * <code>string itemNumber = 3;</code>
+     * @return The itemNumber.
+     */
+    java.lang.String getItemNumber();
+    /**
+     * <code>string itemNumber = 3;</code>
+     * @return The bytes for itemNumber.
+     */
+    com.google.protobuf.ByteString
+        getItemNumberBytes();
+
+    /**
+     * <code>string location = 4;</code>
+     * @return The location.
+     */
+    java.lang.String getLocation();
+    /**
+     * <code>string location = 4;</code>
+     * @return The bytes for location.
+     */
+    com.google.protobuf.ByteString
+        getLocationBytes();
+
+    /**
+     * <code>int32 quantity = 5;</code>
+     * @return The quantity.
+     */
+    int getQuantity();
+  }
+  /**
+   * Protobuf type {@code order.OrderCreated}
+   */
+  public static final class OrderCreated extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:order.OrderCreated)
+      OrderCreatedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OrderCreated.newBuilder() to construct.
+    private OrderCreated(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OrderCreated() {
+      orderNumber_ = "";
+      accountNumber_ = "";
+      itemNumber_ = "";
+      location_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new OrderCreated();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OrderCreated(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              orderNumber_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              accountNumber_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              itemNumber_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              location_ = s;
+              break;
+            }
+            case 40: {
+
+              quantity_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderCreated_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderCreated_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.Builder.class);
+    }
+
+    public static final int ORDERNUMBER_FIELD_NUMBER = 1;
+    private volatile java.lang.Object orderNumber_;
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getOrderNumber() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        orderNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getOrderNumberBytes() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        orderNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ACCOUNTNUMBER_FIELD_NUMBER = 2;
+    private volatile java.lang.Object accountNumber_;
+    /**
+     * <code>string accountNumber = 2;</code>
+     * @return The accountNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getAccountNumber() {
+      java.lang.Object ref = accountNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        accountNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string accountNumber = 2;</code>
+     * @return The bytes for accountNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getAccountNumberBytes() {
+      java.lang.Object ref = accountNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        accountNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ITEMNUMBER_FIELD_NUMBER = 3;
+    private volatile java.lang.Object itemNumber_;
+    /**
+     * <code>string itemNumber = 3;</code>
+     * @return The itemNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getItemNumber() {
+      java.lang.Object ref = itemNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        itemNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string itemNumber = 3;</code>
+     * @return The bytes for itemNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getItemNumberBytes() {
+      java.lang.Object ref = itemNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        itemNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LOCATION_FIELD_NUMBER = 4;
+    private volatile java.lang.Object location_;
+    /**
+     * <code>string location = 4;</code>
+     * @return The location.
+     */
+    @java.lang.Override
+    public java.lang.String getLocation() {
+      java.lang.Object ref = location_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        location_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string location = 4;</code>
+     * @return The bytes for location.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getLocationBytes() {
+      java.lang.Object ref = location_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        location_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int QUANTITY_FIELD_NUMBER = 5;
+    private int quantity_;
+    /**
+     * <code>int32 quantity = 5;</code>
+     * @return The quantity.
+     */
+    @java.lang.Override
+    public int getQuantity() {
+      return quantity_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getOrderNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, orderNumber_);
+      }
+      if (!getAccountNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, accountNumber_);
+      }
+      if (!getItemNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, itemNumber_);
+      }
+      if (!getLocationBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, location_);
+      }
+      if (quantity_ != 0) {
+        output.writeInt32(5, quantity_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getOrderNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, orderNumber_);
+      }
+      if (!getAccountNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, accountNumber_);
+      }
+      if (!getItemNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, itemNumber_);
+      }
+      if (!getLocationBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, location_);
+      }
+      if (quantity_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, quantity_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated other = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated) obj;
+
+      if (!getOrderNumber()
+          .equals(other.getOrderNumber())) return false;
+      if (!getAccountNumber()
+          .equals(other.getAccountNumber())) return false;
+      if (!getItemNumber()
+          .equals(other.getItemNumber())) return false;
+      if (!getLocation()
+          .equals(other.getLocation())) return false;
+      if (getQuantity()
+          != other.getQuantity()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ORDERNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getOrderNumber().hashCode();
+      hash = (37 * hash) + ACCOUNTNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getAccountNumber().hashCode();
+      hash = (37 * hash) + ITEMNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getItemNumber().hashCode();
+      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getLocation().hashCode();
+      hash = (37 * hash) + QUANTITY_FIELD_NUMBER;
+      hash = (53 * hash) + getQuantity();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code order.OrderCreated}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:order.OrderCreated)
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreatedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderCreated_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderCreated_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        orderNumber_ = "";
+
+        accountNumber_ = "";
+
+        itemNumber_ = "";
+
+        location_ = "";
+
+        quantity_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderCreated_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated build() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated buildPartial() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated result = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated(this);
+        result.orderNumber_ = orderNumber_;
+        result.accountNumber_ = accountNumber_;
+        result.itemNumber_ = itemNumber_;
+        result.location_ = location_;
+        result.quantity_ = quantity_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated) {
+          return mergeFrom((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated other) {
+        if (other == com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.getDefaultInstance()) return this;
+        if (!other.getOrderNumber().isEmpty()) {
+          orderNumber_ = other.orderNumber_;
+          onChanged();
+        }
+        if (!other.getAccountNumber().isEmpty()) {
+          accountNumber_ = other.accountNumber_;
+          onChanged();
+        }
+        if (!other.getItemNumber().isEmpty()) {
+          itemNumber_ = other.itemNumber_;
+          onChanged();
+        }
+        if (!other.getLocation().isEmpty()) {
+          location_ = other.location_;
+          onChanged();
+        }
+        if (other.getQuantity() != 0) {
+          setQuantity(other.getQuantity());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object orderNumber_ = "";
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The orderNumber.
+       */
+      public java.lang.String getOrderNumber() {
+        java.lang.Object ref = orderNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          orderNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The bytes for orderNumber.
+       */
+      public com.google.protobuf.ByteString
+          getOrderNumberBytes() {
+        java.lang.Object ref = orderNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          orderNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOrderNumber() {
+        
+        orderNumber_ = getDefaultInstance().getOrderNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The bytes for orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object accountNumber_ = "";
+      /**
+       * <code>string accountNumber = 2;</code>
+       * @return The accountNumber.
+       */
+      public java.lang.String getAccountNumber() {
+        java.lang.Object ref = accountNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          accountNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string accountNumber = 2;</code>
+       * @return The bytes for accountNumber.
+       */
+      public com.google.protobuf.ByteString
+          getAccountNumberBytes() {
+        java.lang.Object ref = accountNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          accountNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string accountNumber = 2;</code>
+       * @param value The accountNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        accountNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountNumber = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAccountNumber() {
+        
+        accountNumber_ = getDefaultInstance().getAccountNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountNumber = 2;</code>
+       * @param value The bytes for accountNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        accountNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object itemNumber_ = "";
+      /**
+       * <code>string itemNumber = 3;</code>
+       * @return The itemNumber.
+       */
+      public java.lang.String getItemNumber() {
+        java.lang.Object ref = itemNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          itemNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string itemNumber = 3;</code>
+       * @return The bytes for itemNumber.
+       */
+      public com.google.protobuf.ByteString
+          getItemNumberBytes() {
+        java.lang.Object ref = itemNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          itemNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string itemNumber = 3;</code>
+       * @param value The itemNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setItemNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        itemNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string itemNumber = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearItemNumber() {
+        
+        itemNumber_ = getDefaultInstance().getItemNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string itemNumber = 3;</code>
+       * @param value The bytes for itemNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setItemNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        itemNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object location_ = "";
+      /**
+       * <code>string location = 4;</code>
+       * @return The location.
+       */
+      public java.lang.String getLocation() {
+        java.lang.Object ref = location_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          location_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string location = 4;</code>
+       * @return The bytes for location.
+       */
+      public com.google.protobuf.ByteString
+          getLocationBytes() {
+        java.lang.Object ref = location_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          location_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string location = 4;</code>
+       * @param value The location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocation(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        location_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string location = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLocation() {
+        
+        location_ = getDefaultInstance().getLocation();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string location = 4;</code>
+       * @param value The bytes for location to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocationBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        location_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int quantity_ ;
+      /**
+       * <code>int32 quantity = 5;</code>
+       * @return The quantity.
+       */
+      @java.lang.Override
+      public int getQuantity() {
+        return quantity_;
+      }
+      /**
+       * <code>int32 quantity = 5;</code>
+       * @param value The quantity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuantity(int value) {
+        
+        quantity_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 quantity = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearQuantity() {
+        
+        quantity_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:order.OrderCreated)
+    }
+
+    // @@protoc_insertion_point(class_scope:order.OrderCreated)
+    private static final com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated();
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OrderCreated>
+        PARSER = new com.google.protobuf.AbstractParser<OrderCreated>() {
+      @java.lang.Override
+      public OrderCreated parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new OrderCreated(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OrderCreated> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OrderCreated> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OrderPricedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:order.OrderPriced)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    java.lang.String getOrderNumber();
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    com.google.protobuf.ByteString
+        getOrderNumberBytes();
+
+    /**
+     * <code>int32 extendedPrice = 2;</code>
+     * @return The extendedPrice.
+     */
+    int getExtendedPrice();
+  }
+  /**
+   * Protobuf type {@code order.OrderPriced}
+   */
+  public static final class OrderPriced extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:order.OrderPriced)
+      OrderPricedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use OrderPriced.newBuilder() to construct.
+    private OrderPriced(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OrderPriced() {
+      orderNumber_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new OrderPriced();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private OrderPriced(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              orderNumber_ = s;
+              break;
+            }
+            case 16: {
+
+              extendedPrice_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderPriced_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderPriced_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.Builder.class);
+    }
+
+    public static final int ORDERNUMBER_FIELD_NUMBER = 1;
+    private volatile java.lang.Object orderNumber_;
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getOrderNumber() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        orderNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getOrderNumberBytes() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        orderNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int EXTENDEDPRICE_FIELD_NUMBER = 2;
+    private int extendedPrice_;
+    /**
+     * <code>int32 extendedPrice = 2;</code>
+     * @return The extendedPrice.
+     */
+    @java.lang.Override
+    public int getExtendedPrice() {
+      return extendedPrice_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getOrderNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, orderNumber_);
+      }
+      if (extendedPrice_ != 0) {
+        output.writeInt32(2, extendedPrice_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getOrderNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, orderNumber_);
+      }
+      if (extendedPrice_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, extendedPrice_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced other = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced) obj;
+
+      if (!getOrderNumber()
+          .equals(other.getOrderNumber())) return false;
+      if (getExtendedPrice()
+          != other.getExtendedPrice()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ORDERNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getOrderNumber().hashCode();
+      hash = (37 * hash) + EXTENDEDPRICE_FIELD_NUMBER;
+      hash = (53 * hash) + getExtendedPrice();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code order.OrderPriced}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:order.OrderPriced)
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPricedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderPriced_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderPriced_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        orderNumber_ = "";
+
+        extendedPrice_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_OrderPriced_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced build() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced buildPartial() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced result = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced(this);
+        result.orderNumber_ = orderNumber_;
+        result.extendedPrice_ = extendedPrice_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced) {
+          return mergeFrom((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced other) {
+        if (other == com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.getDefaultInstance()) return this;
+        if (!other.getOrderNumber().isEmpty()) {
+          orderNumber_ = other.orderNumber_;
+          onChanged();
+        }
+        if (other.getExtendedPrice() != 0) {
+          setExtendedPrice(other.getExtendedPrice());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object orderNumber_ = "";
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The orderNumber.
+       */
+      public java.lang.String getOrderNumber() {
+        java.lang.Object ref = orderNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          orderNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The bytes for orderNumber.
+       */
+      public com.google.protobuf.ByteString
+          getOrderNumberBytes() {
+        java.lang.Object ref = orderNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          orderNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOrderNumber() {
+        
+        orderNumber_ = getDefaultInstance().getOrderNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The bytes for orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int extendedPrice_ ;
+      /**
+       * <code>int32 extendedPrice = 2;</code>
+       * @return The extendedPrice.
+       */
+      @java.lang.Override
+      public int getExtendedPrice() {
+        return extendedPrice_;
+      }
+      /**
+       * <code>int32 extendedPrice = 2;</code>
+       * @param value The extendedPrice to set.
+       * @return This builder for chaining.
+       */
+      public Builder setExtendedPrice(int value) {
+        
+        extendedPrice_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 extendedPrice = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearExtendedPrice() {
+        
+        extendedPrice_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:order.OrderPriced)
+    }
+
+    // @@protoc_insertion_point(class_scope:order.OrderPriced)
+    private static final com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced();
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OrderPriced>
+        PARSER = new com.google.protobuf.AbstractParser<OrderPriced>() {
+      @java.lang.Override
+      public OrderPriced parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new OrderPriced(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OrderPriced> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OrderPriced> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface InventoryReservedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:order.InventoryReserved)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    java.lang.String getOrderNumber();
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    com.google.protobuf.ByteString
+        getOrderNumberBytes();
+
+    /**
+     * <code>int32 quantityReserved = 2;</code>
+     * @return The quantityReserved.
+     */
+    int getQuantityReserved();
+  }
+  /**
+   * Protobuf type {@code order.InventoryReserved}
+   */
+  public static final class InventoryReserved extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:order.InventoryReserved)
+      InventoryReservedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use InventoryReserved.newBuilder() to construct.
+    private InventoryReserved(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private InventoryReserved() {
+      orderNumber_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new InventoryReserved();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private InventoryReserved(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              orderNumber_ = s;
+              break;
+            }
+            case 16: {
+
+              quantityReserved_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_InventoryReserved_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_InventoryReserved_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.Builder.class);
+    }
+
+    public static final int ORDERNUMBER_FIELD_NUMBER = 1;
+    private volatile java.lang.Object orderNumber_;
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The orderNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getOrderNumber() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        orderNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string orderNumber = 1;</code>
+     * @return The bytes for orderNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getOrderNumberBytes() {
+      java.lang.Object ref = orderNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        orderNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int QUANTITYRESERVED_FIELD_NUMBER = 2;
+    private int quantityReserved_;
+    /**
+     * <code>int32 quantityReserved = 2;</code>
+     * @return The quantityReserved.
+     */
+    @java.lang.Override
+    public int getQuantityReserved() {
+      return quantityReserved_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getOrderNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, orderNumber_);
+      }
+      if (quantityReserved_ != 0) {
+        output.writeInt32(2, quantityReserved_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getOrderNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, orderNumber_);
+      }
+      if (quantityReserved_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, quantityReserved_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved other = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved) obj;
+
+      if (!getOrderNumber()
+          .equals(other.getOrderNumber())) return false;
+      if (getQuantityReserved()
+          != other.getQuantityReserved()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ORDERNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getOrderNumber().hashCode();
+      hash = (37 * hash) + QUANTITYRESERVED_FIELD_NUMBER;
+      hash = (53 * hash) + getQuantityReserved();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code order.InventoryReserved}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:order.InventoryReserved)
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReservedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_InventoryReserved_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_InventoryReserved_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.class, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        orderNumber_ = "";
+
+        quantityReserved_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.internal_static_order_InventoryReserved_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved build() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved buildPartial() {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved result = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved(this);
+        result.orderNumber_ = orderNumber_;
+        result.quantityReserved_ = quantityReserved_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved) {
+          return mergeFrom((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved other) {
+        if (other == com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.getDefaultInstance()) return this;
+        if (!other.getOrderNumber().isEmpty()) {
+          orderNumber_ = other.orderNumber_;
+          onChanged();
+        }
+        if (other.getQuantityReserved() != 0) {
+          setQuantityReserved(other.getQuantityReserved());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object orderNumber_ = "";
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The orderNumber.
+       */
+      public java.lang.String getOrderNumber() {
+        java.lang.Object ref = orderNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          orderNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return The bytes for orderNumber.
+       */
+      public com.google.protobuf.ByteString
+          getOrderNumberBytes() {
+        java.lang.Object ref = orderNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          orderNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOrderNumber() {
+        
+        orderNumber_ = getDefaultInstance().getOrderNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string orderNumber = 1;</code>
+       * @param value The bytes for orderNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOrderNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        orderNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int quantityReserved_ ;
+      /**
+       * <code>int32 quantityReserved = 2;</code>
+       * @return The quantityReserved.
+       */
+      @java.lang.Override
+      public int getQuantityReserved() {
+        return quantityReserved_;
+      }
+      /**
+       * <code>int32 quantityReserved = 2;</code>
+       * @param value The quantityReserved to set.
+       * @return This builder for chaining.
+       */
+      public Builder setQuantityReserved(int value) {
+        
+        quantityReserved_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 quantityReserved = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearQuantityReserved() {
+        
+        quantityReserved_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:order.InventoryReserved)
+    }
+
+    // @@protoc_insertion_point(class_scope:order.InventoryReserved)
+    private static final com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved();
+    }
+
+    public static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<InventoryReserved>
+        PARSER = new com.google.protobuf.AbstractParser<InventoryReserved>() {
+      @java.lang.Override
+      public InventoryReserved parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new InventoryReserved(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<InventoryReserved> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<InventoryReserved> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_order_CreateOrderRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_order_CreateOrderRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_order_CreateOrderResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_order_CreateOrderResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_order_OrderEventResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_order_OrderEventResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_order_SubscribeRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_order_SubscribeRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_order_OrderCreated_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_order_OrderCreated_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_order_OrderPriced_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_order_OrderPriced_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_order_InventoryReserved_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_order_InventoryReserved_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2282,14 +5673,28 @@ public final class OrderOuterClass {
       "\n\013order.proto\022\005order\"c\n\022CreateOrderReque" +
       "st\022\025\n\raccountNumber\030\001 \001(\t\022\020\n\010quantity\030\002 " +
       "\001(\005\022\022\n\nitemNumber\030\003 \001(\t\022\020\n\010location\030\004 \001(" +
-      "\t\"\242\001\n\022OrderEventResponse\022\023\n\013orderNumber\030" +
-      "\001 \001(\t\022\025\n\raccountNumber\030\002 \001(\t\022\022\n\nitemNumb" +
-      "er\030\003 \001(\t\022\020\n\010location\030\004 \001(\t\022\020\n\010quantity\030\005" +
-      " \001(\005\022\025\n\rextendedPrice\030\006 \001(\005\022\021\n\teventName" +
-      "\030\007 \001(\t2P\n\005Order\022G\n\013CreateOrder\022\031.order.C" +
-      "reateOrderRequest\032\031.order.OrderEventResp" +
-      "onse\"\0000\001B\'\n%com.hazelcast.msfdemo.orders" +
-      "vc.eventsb\006proto3"
+      "\t\"*\n\023CreateOrderResponse\022\023\n\013orderNumber\030" +
+      "\001 \001(\t\"\242\001\n\022OrderEventResponse\022\023\n\013orderNum" +
+      "ber\030\001 \001(\t\022\025\n\raccountNumber\030\002 \001(\t\022\022\n\nitem" +
+      "Number\030\003 \001(\t\022\020\n\010location\030\004 \001(\t\022\020\n\010quanti" +
+      "ty\030\005 \001(\005\022\025\n\rextendedPrice\030\006 \001(\005\022\021\n\tevent" +
+      "Name\030\007 \001(\t\"\022\n\020SubscribeRequest\"r\n\014OrderC" +
+      "reated\022\023\n\013orderNumber\030\001 \001(\t\022\025\n\raccountNu" +
+      "mber\030\002 \001(\t\022\022\n\nitemNumber\030\003 \001(\t\022\020\n\010locati" +
+      "on\030\004 \001(\t\022\020\n\010quantity\030\005 \001(\005\"9\n\013OrderPrice" +
+      "d\022\023\n\013orderNumber\030\001 \001(\t\022\025\n\rextendedPrice\030" +
+      "\002 \001(\005\"B\n\021InventoryReserved\022\023\n\013orderNumbe" +
+      "r\030\001 \001(\t\022\030\n\020quantityReserved\030\002 \001(\0052\276\002\n\005Or" +
+      "der\022F\n\013CreateOrder\022\031.order.CreateOrderRe" +
+      "quest\032\032.order.CreateOrderResponse\"\000\022K\n\027S" +
+      "ubscribeToOrderCreated\022\027.order.Subscribe" +
+      "Request\032\023.order.OrderCreated\"\0000\001\022I\n\026Subs" +
+      "cribeToOrderPriced\022\027.order.SubscribeRequ" +
+      "est\032\022.order.OrderPriced\"\0000\001\022U\n\034Subscribe" +
+      "ToInventoryReserved\022\027.order.SubscribeReq" +
+      "uest\032\030.order.InventoryReserved\"\0000\001B\'\n%co" +
+      "m.hazelcast.msfdemo.ordersvc.eventsb\006pro" +
+      "to3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2301,12 +5706,42 @@ public final class OrderOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_order_CreateOrderRequest_descriptor,
         new java.lang.String[] { "AccountNumber", "Quantity", "ItemNumber", "Location", });
-    internal_static_order_OrderEventResponse_descriptor =
+    internal_static_order_CreateOrderResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_order_CreateOrderResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_order_CreateOrderResponse_descriptor,
+        new java.lang.String[] { "OrderNumber", });
+    internal_static_order_OrderEventResponse_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_order_OrderEventResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_order_OrderEventResponse_descriptor,
         new java.lang.String[] { "OrderNumber", "AccountNumber", "ItemNumber", "Location", "Quantity", "ExtendedPrice", "EventName", });
+    internal_static_order_SubscribeRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_order_SubscribeRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_order_SubscribeRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_order_OrderCreated_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_order_OrderCreated_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_order_OrderCreated_descriptor,
+        new java.lang.String[] { "OrderNumber", "AccountNumber", "ItemNumber", "Location", "Quantity", });
+    internal_static_order_OrderPriced_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_order_OrderPriced_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_order_OrderPriced_descriptor,
+        new java.lang.String[] { "OrderNumber", "ExtendedPrice", });
+    internal_static_order_InventoryReserved_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_order_InventoryReserved_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_order_InventoryReserved_descriptor,
+        new java.lang.String[] { "OrderNumber", "QuantityReserved", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

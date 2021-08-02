@@ -17,21 +17,11 @@
 
 package com.hazelcast.msfdemo.ordersvc.eventstore;
 
-import com.hazelcast.core.EntryEvent;
-import com.hazelcast.map.listener.EntryAddedListener;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.eventstore.EventStore;
-import com.hazelcast.msfdemo.ordersvc.business.OrderAPIImpl;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.events.CompactionEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEvent;
-import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
-import com.hazelcast.query.Predicates;
-
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Consumer;
 
 public class OrderEventStore extends EventStore<Order, String, OrderEvent> {
 
@@ -55,46 +45,46 @@ public class OrderEventStore extends EventStore<Order, String, OrderEvent> {
     // Callback is the state machine, driven by OrderStatus field of the OrderEvent
     // There may be an overloaded version that filters on specific state changes
     // (maybe via EnumSet)
-    public UUID registerEventListener(String orderNumber, Consumer<OrderEvent>
-            callback) {
-        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
-            @Override
-            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
-                OrderEvent event = entryEvent.getValue();
-                callback.accept(event);
-            }
-        }, Predicates.sql("orderNumber=" + orderNumber), true);
-        return id;
-    }
+//    public UUID registerEventListener(String orderNumber, Consumer<OrderEvent>
+//            callback) {
+//        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
+//            @Override
+//            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
+//                OrderEvent event = entryEvent.getValue();
+//                callback.accept(event);
+//            }
+//        }, Predicates.sql("orderNumber=" + orderNumber), true);
+//        return id;
+//    }
 
-    public void removeEventListener(UUID id) {
-        eventMap.removeEntryListener(id);
-    }
-
-    public UUID registerEventHandler(String orderNumber, OrderAPIImpl.EventHandler handler) {
-
-        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
-            @Override
-            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
-                OrderEvent event = entryEvent.getValue();
-                handler.handleEvent(event);
-            }
-        }, Predicates.sql("orderNumber=" + orderNumber), true);
-
-        // There is a lag in registering handlers - pick events we've missed
-        Set<Map.Entry<Long,OrderEvent>> missedEvents = eventMap.entrySet(Predicates.sql("orderNumber=" + orderNumber));
-        //System.out.println("Re-processing " + missedEvents.size() + " missed events");
-        for (Map.Entry<Long,OrderEvent> mapEntry : missedEvents) {
-            OrderEvent event = mapEntry.getValue();
-            if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
-                //System.out.println("Skipping create event");
-            } else {
-                System.out.println("Re-processing missed event (happened before handler armed)" + event);
-                handler.handleEvent(event);
-            }
-        }
-        return id;
-    }
+//    public void removeEventListener(UUID id) {
+//        eventMap.removeEntryListener(id);
+//    }
+//
+//    public UUID registerEventHandler(String orderNumber, OrderAPIImpl.EventHandler handler) {
+//
+//        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
+//            @Override
+//            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
+//                OrderEvent event = entryEvent.getValue();
+//                handler.handleEvent(event);
+//            }
+//        }, Predicates.sql("orderNumber=" + orderNumber), true);
+//
+//        // There is a lag in registering handlers - pick events we've missed
+//        Set<Map.Entry<Long,OrderEvent>> missedEvents = eventMap.entrySet(Predicates.sql("orderNumber=" + orderNumber));
+//        //System.out.println("Re-processing " + missedEvents.size() + " missed events");
+//        for (Map.Entry<Long,OrderEvent> mapEntry : missedEvents) {
+//            OrderEvent event = mapEntry.getValue();
+//            if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
+//                //System.out.println("Skipping create event");
+//            } else {
+//                System.out.println("Re-processing missed event (happened before handler armed)" + event);
+//                handler.handleEvent(event);
+//            }
+//        }
+//        return id;
+//    }
 
     // Materialize method generified and moved to EventStore base class
 

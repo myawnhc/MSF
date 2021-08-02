@@ -15,34 +15,127 @@ public final class OrderGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> getCreateOrderMethod;
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> getCreateOrderMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "CreateOrder",
       requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest.class,
-      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> getCreateOrderMethod() {
-    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> getCreateOrderMethod;
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> getCreateOrderMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> getCreateOrderMethod;
     if ((getCreateOrderMethod = OrderGrpc.getCreateOrderMethod) == null) {
       synchronized (OrderGrpc.class) {
         if ((getCreateOrderMethod = OrderGrpc.getCreateOrderMethod) == null) {
           OrderGrpc.getCreateOrderMethod = getCreateOrderMethod =
-              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateOrder"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse.getDefaultInstance()))
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse.getDefaultInstance()))
               .setSchemaDescriptor(new OrderMethodDescriptorSupplier("CreateOrder"))
               .build();
         }
       }
     }
     return getCreateOrderMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> getSubscribeToOrderCreatedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToOrderCreated",
+      requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> getSubscribeToOrderCreatedMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> getSubscribeToOrderCreatedMethod;
+    if ((getSubscribeToOrderCreatedMethod = OrderGrpc.getSubscribeToOrderCreatedMethod) == null) {
+      synchronized (OrderGrpc.class) {
+        if ((getSubscribeToOrderCreatedMethod = OrderGrpc.getSubscribeToOrderCreatedMethod) == null) {
+          OrderGrpc.getSubscribeToOrderCreatedMethod = getSubscribeToOrderCreatedMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToOrderCreated"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated.getDefaultInstance()))
+              .setSchemaDescriptor(new OrderMethodDescriptorSupplier("SubscribeToOrderCreated"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToOrderCreatedMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> getSubscribeToOrderPricedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToOrderPriced",
+      requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> getSubscribeToOrderPricedMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> getSubscribeToOrderPricedMethod;
+    if ((getSubscribeToOrderPricedMethod = OrderGrpc.getSubscribeToOrderPricedMethod) == null) {
+      synchronized (OrderGrpc.class) {
+        if ((getSubscribeToOrderPricedMethod = OrderGrpc.getSubscribeToOrderPricedMethod) == null) {
+          OrderGrpc.getSubscribeToOrderPricedMethod = getSubscribeToOrderPricedMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToOrderPriced"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced.getDefaultInstance()))
+              .setSchemaDescriptor(new OrderMethodDescriptorSupplier("SubscribeToOrderPriced"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToOrderPricedMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> getSubscribeToInventoryReservedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToInventoryReserved",
+      requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> getSubscribeToInventoryReservedMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> getSubscribeToInventoryReservedMethod;
+    if ((getSubscribeToInventoryReservedMethod = OrderGrpc.getSubscribeToInventoryReservedMethod) == null) {
+      synchronized (OrderGrpc.class) {
+        if ((getSubscribeToInventoryReservedMethod = OrderGrpc.getSubscribeToInventoryReservedMethod) == null) {
+          OrderGrpc.getSubscribeToInventoryReservedMethod = getSubscribeToInventoryReservedMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToInventoryReserved"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved.getDefaultInstance()))
+              .setSchemaDescriptor(new OrderMethodDescriptorSupplier("SubscribeToInventoryReserved"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToInventoryReservedMethod;
   }
 
   /**
@@ -96,19 +189,61 @@ public final class OrderGrpc {
     /**
      */
     public void createOrder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> responseObserver) {
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateOrderMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToOrderCreated(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToOrderCreatedMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToOrderPriced(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToOrderPricedMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToInventoryReserved(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToInventoryReservedMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getCreateOrderMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest,
-                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse>(
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse>(
                   this, METHODID_CREATE_ORDER)))
+          .addMethod(
+            getSubscribeToOrderCreatedMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated>(
+                  this, METHODID_SUBSCRIBE_TO_ORDER_CREATED)))
+          .addMethod(
+            getSubscribeToOrderPricedMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced>(
+                  this, METHODID_SUBSCRIBE_TO_ORDER_PRICED)))
+          .addMethod(
+            getSubscribeToInventoryReservedMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved>(
+                  this, METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED)))
           .build();
     }
   }
@@ -130,9 +265,33 @@ public final class OrderGrpc {
     /**
      */
     public void createOrder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getCreateOrderMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToOrderCreated(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getSubscribeToOrderCreatedMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToOrderPriced(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getSubscribeToOrderPricedMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToInventoryReserved(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getSubscribeToInventoryReservedMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -152,10 +311,33 @@ public final class OrderGrpc {
 
     /**
      */
-    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse> createOrder(
-        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest request) {
-      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+    public com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse createOrder(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCreateOrderMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated> subscribeToOrderCreated(
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getSubscribeToOrderCreatedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced> subscribeToOrderPriced(
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getSubscribeToOrderPricedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved> subscribeToInventoryReserved(
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getSubscribeToInventoryReservedMethod(), getCallOptions(), request);
     }
   }
 
@@ -172,9 +354,20 @@ public final class OrderGrpc {
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new OrderFutureStub(channel, callOptions);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse> createOrder(
+        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getCreateOrderMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_ORDER = 0;
+  private static final int METHODID_SUBSCRIBE_TO_ORDER_CREATED = 1;
+  private static final int METHODID_SUBSCRIBE_TO_ORDER_PRICED = 2;
+  private static final int METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -195,7 +388,19 @@ public final class OrderGrpc {
       switch (methodId) {
         case METHODID_CREATE_ORDER:
           serviceImpl.createOrder((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderRequest) request,
-              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderEventResponse>) responseObserver);
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreateOrderResponse>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_ORDER_CREATED:
+          serviceImpl.subscribeToOrderCreated((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_ORDER_PRICED:
+          serviceImpl.subscribeToOrderPriced((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED:
+          serviceImpl.subscribeToInventoryReserved((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -259,6 +464,9 @@ public final class OrderGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new OrderFileDescriptorSupplier())
               .addMethod(getCreateOrderMethod())
+              .addMethod(getSubscribeToOrderCreatedMethod())
+              .addMethod(getSubscribeToOrderPricedMethod())
+              .addMethod(getSubscribeToInventoryReservedMethod())
               .build();
         }
       }

@@ -1,4 +1,4 @@
 ---
 service_name: inventory-service
-hostname: localhost
-port: 50053
+grpc_hostname: localhost
+grpc_port: 50053

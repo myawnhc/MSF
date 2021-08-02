@@ -32,20 +32,28 @@ public class ServiceConfig {
 
     public static class ServiceProperties {
         public String service_name;
-        public String hostname;
-        public String port; // actually numeric
+        public String grpc_hostname;
+        public String grpc_port; // actually numeric
+
+        // NOPE.  Decided to abandon these in favor of service-specific
+        // hazelcast-client-<service>.yaml files, in case we need ot leverage
+        // various discovery mechanisms in a future revision.
+//        public String hazelcast_hostname;
+//        public String hazelcast_port;
+//        public String hazelcast_cluster_name;
+//        public String hazelcast_cloud__discovery_token;
         // additional fields will be needed for cloud deployments
         // List of API details can go here but not needed for first prototype
 
         // Format used by gRPC ManagedChannelBuilder.forTarget()
         public String getTarget() {
-            return hostname + ":" + port;
+            return grpc_hostname + ":" + grpc_port;
         }
 
-        public String getHostname() { return hostname; }
+        public String getGrpcHostname() { return grpc_hostname; }
 
-        public int getPort() {
-            return Integer.parseInt(port);
+        public int getGrpcPort() {
+            return Integer.parseInt(grpc_port);
         }
     }
 
@@ -83,8 +91,8 @@ public class ServiceConfig {
     public static void main(String[] args) {
         ServiceConfig serviceConfig = new ServiceConfig();
         ServiceProperties props = serviceConfig.get("test-service-1");
-        System.out.println("Test service 1 can be found at " + props.hostname + ":" + props.port);
+        System.out.println("Test service 1 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
         props = serviceConfig.get("test-service-2");
-        System.out.println("Test service 2 can be found at " + props.hostname + ":" + props.port);
+        System.out.println("Test service 2 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
     }
 }

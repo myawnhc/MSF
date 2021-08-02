@@ -22,7 +22,7 @@ import com.hazelcast.msfdemo.invsvc.domain.Item;
 
 import java.io.Serializable;
 
-public class InventoryEvent extends SequencedEvent<Item> implements Serializable {
+public abstract class InventoryEvent extends SequencedEvent<Item> implements Serializable {
 
     // Fields common to all InventoryEvents
     private String itemNumber;

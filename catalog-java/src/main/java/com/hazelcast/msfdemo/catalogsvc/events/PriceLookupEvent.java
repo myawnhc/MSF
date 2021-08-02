@@ -26,4 +26,9 @@ public class PriceLookupEvent extends CatalogEvent implements Serializable {
     public Item apply(Item i) {
         return i;
     }
+
+    @Override
+    public void publish() {
+        System.out.println("****** PriceLookupEvent.publish unimplemented!");
+    }
 }

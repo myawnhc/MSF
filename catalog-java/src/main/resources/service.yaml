@@ -1,4 +1,4 @@
 ---
 service_name: catalog-service
-hostname: localhost
-port: 50054
+grpc_hostname: localhost
+grpc_port: 50054

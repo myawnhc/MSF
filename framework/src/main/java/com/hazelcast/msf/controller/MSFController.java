@@ -34,12 +34,18 @@ import com.hazelcast.flakeidgen.FlakeIdGenerator;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.map.IMap;
+import com.hazelcast.msf.eventstore.SequencedEvent;
+import com.hazelcast.msf.messaging.EventMsgListener;
 import com.hazelcast.multimap.MultiMap;
+import com.hazelcast.ringbuffer.Ringbuffer;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.topic.ITopic;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Controller class to serve as central point-of-management for Hazelcast; will be responsible for
  *  configuration, starting and stopping the cluster, and providing an interface to Hazelcast
@@ -51,6 +57,9 @@ public class MSFController {
     private FlakeIdGenerator messageID;
 
     private MultiMap<String, String> servicesStarted;
+
+    // Key is service name
+    private Map<String, HazelcastInstance> remoteHazelcasts = new HashMap<>();
 
     // Singleton implementation
     private MSFController() { this.init(); }
@@ -84,11 +93,54 @@ public class MSFController {
     // be some configuration we'd do here around eviction, TTL, etc. that
     // would be managed by the framework and not the individual clients.
     public IMap getMap(String name) { return hazelcast.getMap(name); }
-    public ITopic getTopic(String name) { return hazelcast.getReliableTopic(name); }
     public long getUniqueMessageID() { return messageID.newId(); }
     public IList getList(String name) { return hazelcast.getList(name); }
     public ICountDownLatch getCountDownLatch(String name) { return hazelcast.getCPSubsystem().getCountDownLatch(name); }
 
+    // Event pub-sub support
+    public Ringbuffer getRingbuffer(String name) {
+        return hazelcast.getRingbuffer(name);
+    }
+
+    /** Publish will always be called by the 'local' service so we can use the
+     * hazelcastInstance to retrieve it
+     * @param topicName By convention, topic name is the name of the Event class
+     * @param event the event to publish
+     */
+    public void publish(String topicName, SequencedEvent event) {
+       ITopic topic = hazelcast.getReliableTopic(topicName);
+       topic.publish(event);
+       System.out.println("Published " + event + " to " + topicName);
+    }
+
+    /** Subscribe will usually be called for a remote service, so we need to open
+     * a client connection to it.   We can cache these by service name.
+     * @param serviceName
+     * @param topic
+     * @param listener
+     */
+    public void subscribe(String serviceName, String topic, EventMsgListener listener) {
+        HazelcastInstance hz = remoteHazelcasts.get(serviceName);
+
+        if (hz == null) {
+            try {
+                String cfgFile = "hazelcast-client-" + serviceName + ".yaml";
+                ClientConfig remoteConfig = new YamlClientConfigBuilder(cfgFile).build();
+                hz = HazelcastClient.newHazelcastClient(remoteConfig);
+                remoteHazelcasts.put(serviceName, hz);
+                System.out.println("Successful client connection to " + serviceName);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                System.out.println("Subscribe to " + serviceName + " failed.");
+                return;
+            }
+        }
+
+        ITopic t = hz.getReliableTopic(topic);
+        t.addMessageListener(listener);
+        System.out.println("Subscribed to " + topic);
+
+    }
     // Might move this to EventStore base class
     public IMap createEventStore(String mapName, String keyFieldName) {
         Config config = new Config();

@@ -17,29 +17,87 @@
 
 package com.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderCreated;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.EnumSet;
 
 public class CreateOrderEvent extends OrderEvent implements Serializable  {
 
+    private String accountNumber;
+    private String itemNumber;
+    private int    quantity;
+    private String location;
+
+    static SubscriptionManager<OrderCreated> subscriptionManager = new SubscriptionManager<>(OrderCreated.getDescriptor().getFullName());
 
     public CreateOrderEvent(String orderNumber, String acctNumber, String itemNumber, String location,
                             int quantity) {
-        super(OrderEventTypes.CREATE, orderNumber, acctNumber, itemNumber, location, quantity);
-        this.terminal = false;
+        super(orderNumber);
+        this.accountNumber = acctNumber;
+        this.itemNumber = itemNumber;
+        this.location = location;
+        this.quantity = quantity;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
+        this.itemNumber = itemNumber;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public static void subscribe(StreamObserver<OrderCreated> observer) {
+        subscriptionManager.subscribe(observer, 0);
+    }
+
+    public void publish() {
+        OrderCreated grpcEvent = OrderCreated.newBuilder()
+                .setOrderNumber(this.orderNumber)
+                .setItemNumber(this.itemNumber)
+                .setAccountNumber(this.accountNumber)
+                .setQuantity(this.quantity)
+                .setLocation(this.location)
+                .build();
+        subscriptionManager.publish(grpcEvent);
     }
 
     @Override
     public Order apply(Order order) {
         order.setOrderNumber(super.orderNumber);
-        order.setAcctNumber(super.accountNumber);
-        order.setItemNumber(super.itemNumber);
-        order.setLocation(super.location);
-        order.setQuantity(super.quantity);
-        order.setExtendedPrice(super.extendedPrice);
+        order.setAcctNumber(accountNumber);
+        order.setItemNumber(itemNumber);
+        order.setLocation(location);
+        order.setQuantity(quantity);
         order.setWaitingOn(EnumSet.of(WaitingOn.PRICE_LOOKUP));
         return order;
     }

@@ -35,7 +35,7 @@ public class GrpcServer {
         ServiceConfig.ServiceProperties props = ServiceConfig.get("order-service");
 
         /* The port on which the server should run */
-        int port = props.getPort();
+        int port = props.getGrpcPort();
         server = ServerBuilder.forPort(port)
                 .addService(new OrderAPIImpl())
                 .build()

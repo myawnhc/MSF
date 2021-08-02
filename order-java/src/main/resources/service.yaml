@@ -1,16 +1,25 @@
 ---
 service_name: order-service
-hostname: ordersvc
-port: 50052
+grpc_hostname: ordersvc
+grpc_port: 50052
 ---
 service_name: catalog-service
-hostname: catalogsvc
-port: 50054
+grpc_hostname: catalogsvc
+grpc_port: 50054
+#hazelcast_hostname: catalogsvc
+#hazelcast_port: 5731
+#hazelcast_cluster_name: catalog
 ---
 service_name: inventory-service
-hostname: invsvc
-port: 50053
+grpc_hostname: invsvc
+grpc_port: 50053
+#hazelcast_hostname: invsvc
+#hazelcast_port: 5721
+#hazelcast_cluster_name: inventory
 ---
 service_name: account-service
-hostname: acctsvc
-port: 50051
+grpc_hostname: acctsvc
+grpc_port: 50051
+#hazelcast_hostname: acctsvc
+#hazelcast_port: 5701
+#hazelcast_cluster_name: account

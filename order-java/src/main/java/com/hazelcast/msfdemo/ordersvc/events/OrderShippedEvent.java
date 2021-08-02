@@ -25,21 +25,25 @@ import java.util.EnumSet;
 
 public class OrderShippedEvent extends OrderEvent implements Serializable {
 
-    public OrderShippedEvent(String orderNumber, String acctNumber, String itemNumber, String location,
+    private int quantityShipped;
+    private String itemNumber;
+
+    public OrderShippedEvent(String orderNumber, String itemNumber, String location,
                             int quantity, int extendedPrice) {
-        super(OrderEventTypes.COMPLETE, orderNumber, acctNumber, itemNumber, location, quantity);
-        this.extendedPrice = extendedPrice;
-        this.terminal = true;
+        super(orderNumber);
+        this.quantityShipped = quantity;
+    }
+
+    @Override
+    public void publish() {
+        System.out.println("****** OrderShippedEvent.publish unimplemented!");
     }
 
     @Override
     public Order apply(Order order) {
         order.setOrderNumber(super.orderNumber);
-        order.setAcctNumber(super.accountNumber);
-        order.setItemNumber(super.itemNumber);
-        order.setLocation(super.location);
-        order.setQuantity(super.quantity);
-        order.setExtendedPrice(super.extendedPrice);
+        order.setItemNumber(itemNumber);
+        order.setQuantity(quantityShipped);
         order.setWaitingOn(EnumSet.of(WaitingOn.NOTHING));
         return order;    }
 }

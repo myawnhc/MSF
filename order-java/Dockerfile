@@ -1,7 +1,6 @@
 FROM library/openjdk:11-jre-slim
 
 # add config files
-COPY target/classes/hazelcast-jet.yaml hazelcast-jet.yaml
 COPY target/classes/hazelcast.yaml     hazelcast.yaml
 COPY target/classes/service.yaml       service.yaml
 

@@ -17,23 +17,28 @@
 
 package com.hazelcast.msf.testclient;
 
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
-import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass;
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.*;
 
 public class OrderServiceClient {
     private static final Logger logger = Logger.getLogger(OrderServiceClient.class.getName());
     private final OrderGrpc.OrderBlockingStub blockingStub; // unused
-    private final OrderGrpc.OrderFutureStub futureStub;     // unused
+    private final OrderGrpc.OrderFutureStub futureStub;
     private final OrderGrpc.OrderStub asyncStub;
 
     private List<String> validAccounts;
@@ -105,11 +110,11 @@ public class OrderServiceClient {
         }
     }
 
-    private static class OrderEventResponseProcessor implements StreamObserver<OrderOuterClass.OrderEventResponse> {
+    private static class OrderEventResponseProcessor implements StreamObserver<OrderEventResponse> {
 
         @Override
-        public void onNext(OrderOuterClass.OrderEventResponse orderEventResponse) {
-            System.out.println(formatResponse(orderEventResponse));
+        public void onNext(OrderEventResponse orderEventResponse) {
+            System.out.println("Received response: " + formatResponse(orderEventResponse));
         }
 
         @Override
@@ -121,7 +126,7 @@ public class OrderServiceClient {
         public void onCompleted() { }
     }
 
-    static String formatResponse(OrderOuterClass.OrderEventResponse response) {
+    static String formatResponse(OrderEventResponse response) {
         return response.getEventName() + " O:" + response.getOrderNumber() +
                 " A:" + response.getAccountNumber() +
                 " I: " + response.getItemNumber() +
@@ -131,7 +136,7 @@ public class OrderServiceClient {
     }
 
     public void nonBlockingOrder()  {
-        logger.info("Starting OSC.nonBlockingOrder");
+        //logger.info("Starting OSC.nonBlockingOrder");
 
         // Data generation for inventory might be happening concurrently with the
         // client sending in orders; we'd like to avoid sending orders for items
@@ -140,6 +145,7 @@ public class OrderServiceClient {
         // what the maximum 'safe' item number is.  When we scale this up, we
         // should periodically refresh the invRecordCount until it reaches
         // max (items * locations, currently 100K)
+        List<ListenableFuture<CreateOrderResponse>> futures = new ArrayList<>();
 
         InventoryServiceClient iclient = new InventoryServiceClient();
         int invRecordCount = iclient.getInventoryRecordCount();
@@ -148,28 +154,41 @@ public class OrderServiceClient {
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
         // Bumping order count from 10 to 1K
         for (int i=0; i<1000; i++) {
-            int index = (int)(Math.random()*validAccounts.size()+1);
+            int index = (int)(Math.random()*validAccounts.size());
             String acctNumber = validAccounts.get(index);
             int itemOffset = (int)(Math.random()*maxSafeItem+1);
             int locationNum = (int)(Math.random()*NUM_LOCATIONS+1);
             String itemNumber = ""+(10101+itemOffset);
             String location = locationNum < 10 ? "W" + locationNum : "S" + locationNum;
             //System.out.println("Account at index " + index + " is " + acctNumber);
-             OrderOuterClass.CreateOrderRequest request = OrderOuterClass.CreateOrderRequest.newBuilder()
+             CreateOrderRequest request = CreateOrderRequest.newBuilder()
                     .setAccountNumber(acctNumber)
                     .setItemNumber(itemNumber)
                     .setQuantity(1)
                     .setLocation(location)
                     .build();
             try {
+                futures.add(futureStub.createOrder(request));
+
                 // When changed to server-side streaming RPC, createOrder disappeared from futureStub!
-                //ListenableFuture<OrderOuterClass.OrderEventResponse> future = futureStub.createOrder(request);
-                asyncStub.createOrder(request, new OrderEventResponseProcessor());
-                logger.info("Placed order " + i);
+                //asyncStub.createOrder(request, new OrderEventResponseProcessor());
+                System.out.println("Placed order " + i);
             } catch (StatusRuntimeException e) {
                 logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
                 return;
             }
+        }
+        // await all
+        // TODO: should do this more incrementally, not wait for everything.
+        ListenableFuture<List<CreateOrderResponse>> lf = Futures.allAsList(futures);
+        List<CreateOrderResponse> responses;
+        try {
+            responses = lf.get();
+            for (CreateOrderResponse response : responses) {
+                System.out.println("Order created: " + response.getOrderNumber());
+            }
+        } catch(InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
 
         return;

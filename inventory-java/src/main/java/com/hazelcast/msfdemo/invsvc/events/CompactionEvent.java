@@ -30,6 +30,11 @@ public class CompactionEvent extends InventoryEvent implements Serializable, Una
         // TODO: Set all fields
     }
 
+    @Override
+    public void publish() {
+        System.out.println("****** CompactionEvent.publish unimplemented!");
+    }
+
      @Override // UnaryOperator<Account>
     public Item apply(Item item) {
         // TODO: set all fields
@@ -38,5 +43,4 @@ public class CompactionEvent extends InventoryEvent implements Serializable, Una
 //         item.setBalance(super.getAmount());
         return item;
     }
-
 }

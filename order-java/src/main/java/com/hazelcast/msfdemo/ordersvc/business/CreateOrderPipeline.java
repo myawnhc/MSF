@@ -17,7 +17,6 @@
 
 package com.hazelcast.msfdemo.ordersvc.business;
 
-import com.hazelcast.jet.aggregate.AggregateOperations;
 import com.hazelcast.jet.datamodel.Tuple2;
 import com.hazelcast.jet.pipeline.JournalInitialPosition;
 import com.hazelcast.jet.pipeline.Pipeline;
@@ -95,10 +94,10 @@ public class CreateOrderPipeline implements Runnable {
                 .setName("Create OrderEvent.CREATE");
 
         // Peek in on progress
-        tupleStream.window(oneSecond)
-                .aggregate(AggregateOperations.counting())
-                .setName("Count operations per second")
-                .writeTo(Sinks.logger(count -> "OrderEvent.CREATE count " + count));
+//        tupleStream.window(oneSecond)
+//                .aggregate(AggregateOperations.counting())
+//                .setName("Count operations per second")
+//                .writeTo(Sinks.logger(count -> "OrderEvent.CREATE count " + count));
 
         // Persist to Event Store and Materialized View
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
@@ -125,7 +124,7 @@ public class CreateOrderPipeline implements Runnable {
             o.setItemNumber(orderEvent.getItemNumber());
             o.setLocation(orderEvent.getLocation());
             o.setQuantity(orderEvent.getQuantity());
-            o.setExtendedPrice(orderEvent.getExtendedPrice());
+            o.setExtendedPrice(0);
             o.setWaitingOn(EnumSet.of(WaitingOn.PRICE_LOOKUP));
             viewMap.put(orderEvent.getOrderNumber(), o);
             //System.out.println("View object created and published");

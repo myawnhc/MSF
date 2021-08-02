@@ -74,6 +74,9 @@ public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> 
     public void append(T event) {
         Long sequence = getNextSequence();
         eventMap.set(sequence, event);
+//        String topic = event.getEventName();
+//        MSFController.getInstance().publish(topic, event);
+        event.publish();
     }
 
     /** Materialize a domain object from the event store.  In normal operation this isn't

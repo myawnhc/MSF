@@ -35,6 +35,11 @@ public class AdjustBalanceEvent extends AccountEvent implements Serializable,
         return account;
     }
 
+    @Override
+    public void publish() {
+        System.out.println("****** AdjustBalanceEvent.publish unimplemented!");
+    }
+
     public String toString() {
         return "ADJUST account " + accountNumber + " change by: " + amount;
     }

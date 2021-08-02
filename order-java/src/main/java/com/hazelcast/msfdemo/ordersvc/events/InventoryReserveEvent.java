@@ -17,18 +17,58 @@
 
 package com.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.EnumSet;
 
 public class InventoryReserveEvent extends OrderEvent implements Serializable {
 
+    private String accountNumber;
+    private String itemNumber;
+    private int quantity;
+    private String location;
     private String failureReason;
+    private static SubscriptionManager<InventoryReserved> subscriptionManager = new SubscriptionManager<>(InventoryReserved.getDescriptor().getFullName());
 
-    public InventoryReserveEvent() {
-        super(OrderEventTypes.INV_RESERVED);
+    public InventoryReserveEvent(String orderNumber) {
+        super(orderNumber);
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
+        this.itemNumber = itemNumber;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getFailureReason() {
@@ -39,13 +79,25 @@ public class InventoryReserveEvent extends OrderEvent implements Serializable {
         this.failureReason = failureReason;
     }
 
+    public static void subscribe(StreamObserver<InventoryReserved> observer) {
+        subscriptionManager.subscribe(observer, 0);
+    }
+
+    @Override
+    public void publish() {
+        InventoryReserved event = InventoryReserved.newBuilder()
+                .setOrderNumber(orderNumber)
+                .setQuantityReserved(quantity)
+                .build();
+        String description = "order.InventoryReserved Quantity: " + quantity + " for Order: " + orderNumber;
+        subscriptionManager.publish(event, description);
+    }
+
+
     public Order apply(Order order) {
-        order.setOrderNumber(super.orderNumber);
-        order.setAcctNumber(super.accountNumber);
-        order.setItemNumber(super.itemNumber);
-        order.setLocation(super.location);
-        order.setQuantity(super.quantity);
-        order.setExtendedPrice(super.extendedPrice);
+        // May in some future implementation alter quantity, for partial ship,
+        // but we're not doing that currently.
+        order.setQuantity(quantity);
         EnumSet<WaitingOn> waits = order.getWaitingOn();
         waits.remove(WaitingOn.RESERVE_INVENTORY);
         if (waits.isEmpty()) {
@@ -60,3 +112,5 @@ public class InventoryReserveEvent extends OrderEvent implements Serializable {
         return super.toString() + " " + (failureReason == null ? "OK" : failureReason);
     }
 }
+
+
