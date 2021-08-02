@@ -27,9 +27,20 @@ The intent is to make this a polyglot demo, featuring Java, C#, Python, Go, and 
 
 Proposing this as a candidate for the Platform 5.0 Hackathon; for purposes of that event here is a summary of work that could be done to help build out the demo.   Which of these tasks are done is primarily a function of who joins the team.
 
-### TODO: Messaging Improvements
+### TODO: Additional process steps
 
-Currently, event notifications between services is done via MapListeners; doesn't work well because by the time a service registers as a listener, it may have already missed events it needs to see.  Proposal: Have a single MapListener created when the service starts, it will take events and publish them to one or more Reliable Topics.  Subscribers will subscribe to the topics of interest rather than register as Map listeners.  Each event type will get a dedicated Topic, but it's possible there may be aggregated topics as well (all Order events, for example).
+Currently only 3 of seven steps needed to fully process an order are implemented:
+- Order creation
+- Price Lookup
+- Inventory Reservation
+
+Focus is on getting these cleanly implemented as other steps will highly leverage design choices made in these steps -- it will be far costlier to rework design choices as the number of processing stages increases.
+
+But as soon as design looks solid, will implement these additional stages:
+- Credit Approval
+- Charge Customer Account
+- Pull Inventory (and clear reservation)
+- Ship order 
 
 ### TODO: Polyglot
 
