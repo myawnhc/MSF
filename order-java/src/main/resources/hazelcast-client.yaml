@@ -2,4 +2,4 @@ hazelcast-client:
   cluster-name: order
   network:
     cluster-members:
-      - localhost:5711
+      - ordersvc:5711

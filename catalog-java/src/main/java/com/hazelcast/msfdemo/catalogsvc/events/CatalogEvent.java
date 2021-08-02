@@ -25,4 +25,5 @@ import java.io.Serializable;
 public abstract class CatalogEvent extends SequencedEvent<Item> implements Serializable {
 
     protected String itemNumber;
+
 }

@@ -1,5 +1,6 @@
 syntax = "proto3";
-package com.hazelcast.msfdemo.acctsvc.events;
+package account;
+option java_package = "com.hazelcast.msfdemo.acctsvc.events";
 
 service Account {
     rpc Open (OpenAccountRequest) returns (OpenAccountResponse) {}
@@ -9,6 +10,9 @@ service Account {
     rpc TransferMoney (TransferMoneyRequest) returns (TransferMoneyResponse) {}
     rpc AllAccountNumbers (AllAccountsRequest) returns (AllAccountsResponse) {}
     rpc TotalAccountBalances (TotalBalanceRequest) returns (TotalBalanceResponse) {}
+
+    // NOT IMPLEMENTED YET:
+    rpc SubscribeToAccountOpened (SubscribeRequest) returns (AccountOpened) {}
 }
 
 message OpenAccountRequest {
@@ -55,4 +59,11 @@ message AllAccountsResponse {
 message TotalBalanceRequest {}
 message TotalBalanceResponse {
     int64 totalBalance = 1;
+}
+
+message SubscribeRequest {}
+message AccountOpened {
+    string accountNumber = 1;
+    string accountName = 2;
+    int32 initalBalance = 3;
 }

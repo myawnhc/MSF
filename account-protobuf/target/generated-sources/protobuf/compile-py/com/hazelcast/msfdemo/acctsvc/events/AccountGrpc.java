@@ -11,7 +11,7 @@ public final class AccountGrpc {
 
   private AccountGrpc() {}
 
-  public static final String SERVICE_NAME = "com.hazelcast.msfdemo.acctsvc.events.Account";
+  public static final String SERVICE_NAME = "account.Account";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest,
@@ -231,6 +231,37 @@ public final class AccountGrpc {
     return getTotalAccountBalancesMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> getSubscribeToAccountOpenedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToAccountOpened",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> getSubscribeToAccountOpenedMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> getSubscribeToAccountOpenedMethod;
+    if ((getSubscribeToAccountOpenedMethod = AccountGrpc.getSubscribeToAccountOpenedMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getSubscribeToAccountOpenedMethod = AccountGrpc.getSubscribeToAccountOpenedMethod) == null) {
+          AccountGrpc.getSubscribeToAccountOpenedMethod = getSubscribeToAccountOpenedMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToAccountOpened"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("SubscribeToAccountOpened"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToAccountOpenedMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -328,6 +359,16 @@ public final class AccountGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTotalAccountBalancesMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * NOT IMPLEMENTED YET:
+     * </pre>
+     */
+    public void subscribeToAccountOpened(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToAccountOpenedMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -379,6 +420,13 @@ public final class AccountGrpc {
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest,
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>(
                   this, METHODID_TOTAL_ACCOUNT_BALANCES)))
+          .addMethod(
+            getSubscribeToAccountOpenedMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened>(
+                  this, METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED)))
           .build();
     }
   }
@@ -452,6 +500,17 @@ public final class AccountGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getTotalAccountBalancesMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * NOT IMPLEMENTED YET:
+     * </pre>
+     */
+    public void subscribeToAccountOpened(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSubscribeToAccountOpenedMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -515,6 +574,16 @@ public final class AccountGrpc {
     public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse totalAccountBalances(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getTotalAccountBalancesMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * NOT IMPLEMENTED YET:
+     * </pre>
+     */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened subscribeToAccountOpened(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSubscribeToAccountOpenedMethod(), getCallOptions(), request);
     }
   }
 
@@ -587,6 +656,17 @@ public final class AccountGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getTotalAccountBalancesMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * NOT IMPLEMENTED YET:
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> subscribeToAccountOpened(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSubscribeToAccountOpenedMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_OPEN = 0;
@@ -596,6 +676,7 @@ public final class AccountGrpc {
   private static final int METHODID_TRANSFER_MONEY = 4;
   private static final int METHODID_ALL_ACCOUNT_NUMBERS = 5;
   private static final int METHODID_TOTAL_ACCOUNT_BALANCES = 6;
+  private static final int METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED = 7;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -641,6 +722,10 @@ public final class AccountGrpc {
         case METHODID_TOTAL_ACCOUNT_BALANCES:
           serviceImpl.totalAccountBalances((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED:
+          serviceImpl.subscribeToAccountOpened((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -710,6 +795,7 @@ public final class AccountGrpc {
               .addMethod(getTransferMoneyMethod())
               .addMethod(getAllAccountNumbersMethod())
               .addMethod(getTotalAccountBalancesMethod())
+              .addMethod(getSubscribeToAccountOpenedMethod())
               .build();
         }
       }

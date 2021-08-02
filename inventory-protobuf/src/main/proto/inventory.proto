@@ -1,6 +1,5 @@
 syntax = "proto3";
 package inventory;
-
 option java_package = "com.hazelcast.msfdemo.invsvc.events";
 
 service Inventory {
@@ -14,6 +13,8 @@ service Inventory {
   rpc GetItemCount (ItemCountRequest) returns (ItemCountResponse) {}
   rpc GetInventoryRecordCount (InventoryCountRequest) returns (InventoryCountResponse) {}
   // Additional APIs including add / move not required for initial demo use case
+
+  rpc SubscribeToInventoryReserved (SubscribeRequest) returns (stream InventoryReserved)  {}
 }
 
 message ATPRequest {
@@ -56,4 +57,12 @@ message ItemCountResponse {
 message InventoryCountRequest {}
 message InventoryCountResponse {
   int32 count = 1;
+}
+
+message SubscribeRequest {}
+
+message InventoryReserved {
+  string orderNumber = 1;
+  string location = 2;
+  int32 quantityReserved = 3;
 }

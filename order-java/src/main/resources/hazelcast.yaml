@@ -11,6 +11,11 @@ hazelcast:
         capacity: 100000
       indexes:
       # Sorted index on key (sequence)
-        - type: SORTED
-          attributes:
-            - "__key"
+      - type: SORTED
+        attributes:
+          - "__key"
+
+    JRN.*:
+      event-journal:
+        enabled: true
+

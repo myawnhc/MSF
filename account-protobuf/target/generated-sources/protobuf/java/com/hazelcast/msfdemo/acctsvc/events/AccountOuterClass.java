@@ -15,7 +15,7 @@ public final class AccountOuterClass {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface OpenAccountRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest)
+      // @@protoc_insertion_point(interface_extends:account.OpenAccountRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -37,11 +37,11 @@ public final class AccountOuterClass {
     int getInitialBalance();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest}
+   * Protobuf type {@code account.OpenAccountRequest}
    */
   public static final class OpenAccountRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest)
+      // @@protoc_insertion_point(message_implements:account.OpenAccountRequest)
       OpenAccountRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use OpenAccountRequest.newBuilder() to construct.
@@ -114,13 +114,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest.Builder.class);
     }
@@ -340,21 +340,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest}
+     * Protobuf type {@code account.OpenAccountRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest)
+        // @@protoc_insertion_point(builder_implements:account.OpenAccountRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest.Builder.class);
       }
@@ -387,7 +387,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountRequest_descriptor;
       }
 
       @java.lang.Override
@@ -612,10 +612,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest)
+      // @@protoc_insertion_point(builder_scope:account.OpenAccountRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.OpenAccountRequest)
+    // @@protoc_insertion_point(class_scope:account.OpenAccountRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountRequest();
@@ -653,7 +653,7 @@ public final class AccountOuterClass {
   }
 
   public interface OpenAccountResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse)
+      // @@protoc_insertion_point(interface_extends:account.OpenAccountResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -669,11 +669,11 @@ public final class AccountOuterClass {
         getAccountNumberBytes();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse}
+   * Protobuf type {@code account.OpenAccountResponse}
    */
   public static final class OpenAccountResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse)
+      // @@protoc_insertion_point(message_implements:account.OpenAccountResponse)
       OpenAccountResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use OpenAccountResponse.newBuilder() to construct.
@@ -741,13 +741,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse.Builder.class);
     }
@@ -945,21 +945,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse}
+     * Protobuf type {@code account.OpenAccountResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse)
+        // @@protoc_insertion_point(builder_implements:account.OpenAccountResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse.Builder.class);
       }
@@ -990,7 +990,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_OpenAccountResponse_descriptor;
       }
 
       @java.lang.Override
@@ -1180,10 +1180,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse)
+      // @@protoc_insertion_point(builder_scope:account.OpenAccountResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.OpenAccountResponse)
+    // @@protoc_insertion_point(class_scope:account.OpenAccountResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.OpenAccountResponse();
@@ -1221,7 +1221,7 @@ public final class AccountOuterClass {
   }
 
   public interface AdjustBalanceRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest)
+      // @@protoc_insertion_point(interface_extends:account.AdjustBalanceRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1243,11 +1243,11 @@ public final class AccountOuterClass {
     int getAmount();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest}
+   * Protobuf type {@code account.AdjustBalanceRequest}
    */
   public static final class AdjustBalanceRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest)
+      // @@protoc_insertion_point(message_implements:account.AdjustBalanceRequest)
       AdjustBalanceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use AdjustBalanceRequest.newBuilder() to construct.
@@ -1320,13 +1320,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.Builder.class);
     }
@@ -1546,21 +1546,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest}
+     * Protobuf type {@code account.AdjustBalanceRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest)
+        // @@protoc_insertion_point(builder_implements:account.AdjustBalanceRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.Builder.class);
       }
@@ -1593,7 +1593,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceRequest_descriptor;
       }
 
       @java.lang.Override
@@ -1818,10 +1818,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest)
+      // @@protoc_insertion_point(builder_scope:account.AdjustBalanceRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceRequest)
+    // @@protoc_insertion_point(class_scope:account.AdjustBalanceRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest();
@@ -1859,7 +1859,7 @@ public final class AccountOuterClass {
   }
 
   public interface AdjustBalanceResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse)
+      // @@protoc_insertion_point(interface_extends:account.AdjustBalanceResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1869,11 +1869,11 @@ public final class AccountOuterClass {
     int getNewBalance();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse}
+   * Protobuf type {@code account.AdjustBalanceResponse}
    */
   public static final class AdjustBalanceResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse)
+      // @@protoc_insertion_point(message_implements:account.AdjustBalanceResponse)
       AdjustBalanceResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use AdjustBalanceResponse.newBuilder() to construct.
@@ -1939,13 +1939,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.Builder.class);
     }
@@ -2117,21 +2117,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse}
+     * Protobuf type {@code account.AdjustBalanceResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse)
+        // @@protoc_insertion_point(builder_implements:account.AdjustBalanceResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.Builder.class);
       }
@@ -2162,7 +2162,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AdjustBalanceResponse_descriptor;
       }
 
       @java.lang.Override
@@ -2306,10 +2306,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse)
+      // @@protoc_insertion_point(builder_scope:account.AdjustBalanceResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AdjustBalanceResponse)
+    // @@protoc_insertion_point(class_scope:account.AdjustBalanceResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse();
@@ -2347,7 +2347,7 @@ public final class AccountOuterClass {
   }
 
   public interface CheckBalanceRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest)
+      // @@protoc_insertion_point(interface_extends:account.CheckBalanceRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -2363,11 +2363,11 @@ public final class AccountOuterClass {
         getAccountNumberBytes();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest}
+   * Protobuf type {@code account.CheckBalanceRequest}
    */
   public static final class CheckBalanceRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest)
+      // @@protoc_insertion_point(message_implements:account.CheckBalanceRequest)
       CheckBalanceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use CheckBalanceRequest.newBuilder() to construct.
@@ -2435,13 +2435,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest.Builder.class);
     }
@@ -2639,21 +2639,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest}
+     * Protobuf type {@code account.CheckBalanceRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest)
+        // @@protoc_insertion_point(builder_implements:account.CheckBalanceRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest.Builder.class);
       }
@@ -2684,7 +2684,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceRequest_descriptor;
       }
 
       @java.lang.Override
@@ -2874,10 +2874,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest)
+      // @@protoc_insertion_point(builder_scope:account.CheckBalanceRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceRequest)
+    // @@protoc_insertion_point(class_scope:account.CheckBalanceRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest();
@@ -2915,7 +2915,7 @@ public final class AccountOuterClass {
   }
 
   public interface CheckBalanceResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse)
+      // @@protoc_insertion_point(interface_extends:account.CheckBalanceResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -2925,11 +2925,11 @@ public final class AccountOuterClass {
     int getBalance();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse}
+   * Protobuf type {@code account.CheckBalanceResponse}
    */
   public static final class CheckBalanceResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse)
+      // @@protoc_insertion_point(message_implements:account.CheckBalanceResponse)
       CheckBalanceResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use CheckBalanceResponse.newBuilder() to construct.
@@ -2995,13 +2995,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse.Builder.class);
     }
@@ -3173,21 +3173,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse}
+     * Protobuf type {@code account.CheckBalanceResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse)
+        // @@protoc_insertion_point(builder_implements:account.CheckBalanceResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse.Builder.class);
       }
@@ -3218,7 +3218,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_CheckBalanceResponse_descriptor;
       }
 
       @java.lang.Override
@@ -3362,10 +3362,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse)
+      // @@protoc_insertion_point(builder_scope:account.CheckBalanceResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.CheckBalanceResponse)
+    // @@protoc_insertion_point(class_scope:account.CheckBalanceResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse();
@@ -3403,7 +3403,7 @@ public final class AccountOuterClass {
   }
 
   public interface TransferMoneyRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest)
+      // @@protoc_insertion_point(interface_extends:account.TransferMoneyRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3437,11 +3437,11 @@ public final class AccountOuterClass {
     int getAmount();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest}
+   * Protobuf type {@code account.TransferMoneyRequest}
    */
   public static final class TransferMoneyRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest)
+      // @@protoc_insertion_point(message_implements:account.TransferMoneyRequest)
       TransferMoneyRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use TransferMoneyRequest.newBuilder() to construct.
@@ -3521,13 +3521,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest.Builder.class);
     }
@@ -3795,21 +3795,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest}
+     * Protobuf type {@code account.TransferMoneyRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest)
+        // @@protoc_insertion_point(builder_implements:account.TransferMoneyRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest.Builder.class);
       }
@@ -3844,7 +3844,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyRequest_descriptor;
       }
 
       @java.lang.Override
@@ -4150,10 +4150,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest)
+      // @@protoc_insertion_point(builder_scope:account.TransferMoneyRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyRequest)
+    // @@protoc_insertion_point(class_scope:account.TransferMoneyRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyRequest();
@@ -4191,7 +4191,7 @@ public final class AccountOuterClass {
   }
 
   public interface TransferMoneyResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse)
+      // @@protoc_insertion_point(interface_extends:account.TransferMoneyResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -4201,11 +4201,11 @@ public final class AccountOuterClass {
     boolean getSucceeded();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse}
+   * Protobuf type {@code account.TransferMoneyResponse}
    */
   public static final class TransferMoneyResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse)
+      // @@protoc_insertion_point(message_implements:account.TransferMoneyResponse)
       TransferMoneyResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use TransferMoneyResponse.newBuilder() to construct.
@@ -4271,13 +4271,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse.Builder.class);
     }
@@ -4450,21 +4450,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse}
+     * Protobuf type {@code account.TransferMoneyResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse)
+        // @@protoc_insertion_point(builder_implements:account.TransferMoneyResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse.Builder.class);
       }
@@ -4495,7 +4495,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TransferMoneyResponse_descriptor;
       }
 
       @java.lang.Override
@@ -4639,10 +4639,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse)
+      // @@protoc_insertion_point(builder_scope:account.TransferMoneyResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TransferMoneyResponse)
+    // @@protoc_insertion_point(class_scope:account.TransferMoneyResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TransferMoneyResponse();
@@ -4680,15 +4680,15 @@ public final class AccountOuterClass {
   }
 
   public interface AllAccountsRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+      // @@protoc_insertion_point(interface_extends:account.AllAccountsRequest)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest}
+   * Protobuf type {@code account.AllAccountsRequest}
    */
   public static final class AllAccountsRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+      // @@protoc_insertion_point(message_implements:account.AllAccountsRequest)
       AllAccountsRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use AllAccountsRequest.newBuilder() to construct.
@@ -4749,13 +4749,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.Builder.class);
     }
@@ -4905,21 +4905,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest}
+     * Protobuf type {@code account.AllAccountsRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+        // @@protoc_insertion_point(builder_implements:account.AllAccountsRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest.Builder.class);
       }
@@ -4948,7 +4948,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsRequest_descriptor;
       }
 
       @java.lang.Override
@@ -5057,10 +5057,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+      // @@protoc_insertion_point(builder_scope:account.AllAccountsRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsRequest)
+    // @@protoc_insertion_point(class_scope:account.AllAccountsRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsRequest();
@@ -5098,7 +5098,7 @@ public final class AccountOuterClass {
   }
 
   public interface AllAccountsResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+      // @@protoc_insertion_point(interface_extends:account.AllAccountsResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -5127,11 +5127,11 @@ public final class AccountOuterClass {
         getAccountNumberBytes(int index);
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse}
+   * Protobuf type {@code account.AllAccountsResponse}
    */
   public static final class AllAccountsResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+      // @@protoc_insertion_point(message_implements:account.AllAccountsResponse)
       AllAccountsResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use AllAccountsResponse.newBuilder() to construct.
@@ -5206,13 +5206,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.Builder.class);
     }
@@ -5414,21 +5414,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse}
+     * Protobuf type {@code account.AllAccountsResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+        // @@protoc_insertion_point(builder_implements:account.AllAccountsResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse.Builder.class);
       }
@@ -5459,7 +5459,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AllAccountsResponse_descriptor;
       }
 
       @java.lang.Override
@@ -5695,10 +5695,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+      // @@protoc_insertion_point(builder_scope:account.AllAccountsResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.AllAccountsResponse)
+    // @@protoc_insertion_point(class_scope:account.AllAccountsResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AllAccountsResponse();
@@ -5736,15 +5736,15 @@ public final class AccountOuterClass {
   }
 
   public interface TotalBalanceRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+      // @@protoc_insertion_point(interface_extends:account.TotalBalanceRequest)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest}
+   * Protobuf type {@code account.TotalBalanceRequest}
    */
   public static final class TotalBalanceRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+      // @@protoc_insertion_point(message_implements:account.TotalBalanceRequest)
       TotalBalanceRequestOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use TotalBalanceRequest.newBuilder() to construct.
@@ -5805,13 +5805,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.Builder.class);
     }
@@ -5961,21 +5961,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest}
+     * Protobuf type {@code account.TotalBalanceRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+        // @@protoc_insertion_point(builder_implements:account.TotalBalanceRequest)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest.Builder.class);
       }
@@ -6004,7 +6004,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceRequest_descriptor;
       }
 
       @java.lang.Override
@@ -6113,10 +6113,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+      // @@protoc_insertion_point(builder_scope:account.TotalBalanceRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceRequest)
+    // @@protoc_insertion_point(class_scope:account.TotalBalanceRequest)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest();
@@ -6154,7 +6154,7 @@ public final class AccountOuterClass {
   }
 
   public interface TotalBalanceResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+      // @@protoc_insertion_point(interface_extends:account.TotalBalanceResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -6164,11 +6164,11 @@ public final class AccountOuterClass {
     long getTotalBalance();
   }
   /**
-   * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse}
+   * Protobuf type {@code account.TotalBalanceResponse}
    */
   public static final class TotalBalanceResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+      // @@protoc_insertion_point(message_implements:account.TotalBalanceResponse)
       TotalBalanceResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use TotalBalanceResponse.newBuilder() to construct.
@@ -6234,13 +6234,13 @@ public final class AccountOuterClass {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.Builder.class);
     }
@@ -6413,21 +6413,21 @@ public final class AccountOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse}
+     * Protobuf type {@code account.TotalBalanceResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+        // @@protoc_insertion_point(builder_implements:account.TotalBalanceResponse)
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse.Builder.class);
       }
@@ -6458,7 +6458,7 @@ public final class AccountOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_TotalBalanceResponse_descriptor;
       }
 
       @java.lang.Override
@@ -6602,10 +6602,10 @@ public final class AccountOuterClass {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+      // @@protoc_insertion_point(builder_scope:account.TotalBalanceResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:com.hazelcast.msfdemo.acctsvc.events.TotalBalanceResponse)
+    // @@protoc_insertion_point(class_scope:account.TotalBalanceResponse)
     private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse();
@@ -6642,66 +6642,1282 @@ public final class AccountOuterClass {
 
   }
 
+  public interface SubscribeRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:account.SubscribeRequest)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code account.SubscribeRequest}
+   */
+  public static final class SubscribeRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:account.SubscribeRequest)
+      SubscribeRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use SubscribeRequest.newBuilder() to construct.
+    private SubscribeRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private SubscribeRequest() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new SubscribeRequest();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private SubscribeRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_SubscribeRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_SubscribeRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.Builder.class);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) obj;
+
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code account.SubscribeRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:account.SubscribeRequest)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_SubscribeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_SubscribeRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_SubscribeRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:account.SubscribeRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:account.SubscribeRequest)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<SubscribeRequest>
+        PARSER = new com.google.protobuf.AbstractParser<SubscribeRequest>() {
+      @java.lang.Override
+      public SubscribeRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SubscribeRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<SubscribeRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SubscribeRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface AccountOpenedOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:account.AccountOpened)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string accountNumber = 1;</code>
+     * @return The accountNumber.
+     */
+    java.lang.String getAccountNumber();
+    /**
+     * <code>string accountNumber = 1;</code>
+     * @return The bytes for accountNumber.
+     */
+    com.google.protobuf.ByteString
+        getAccountNumberBytes();
+
+    /**
+     * <code>string accountName = 2;</code>
+     * @return The accountName.
+     */
+    java.lang.String getAccountName();
+    /**
+     * <code>string accountName = 2;</code>
+     * @return The bytes for accountName.
+     */
+    com.google.protobuf.ByteString
+        getAccountNameBytes();
+
+    /**
+     * <code>int32 initalBalance = 3;</code>
+     * @return The initalBalance.
+     */
+    int getInitalBalance();
+  }
+  /**
+   * Protobuf type {@code account.AccountOpened}
+   */
+  public static final class AccountOpened extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:account.AccountOpened)
+      AccountOpenedOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use AccountOpened.newBuilder() to construct.
+    private AccountOpened(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private AccountOpened() {
+      accountNumber_ = "";
+      accountName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new AccountOpened();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AccountOpened(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              accountNumber_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              accountName_ = s;
+              break;
+            }
+            case 24: {
+
+              initalBalance_ = input.readInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownField(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AccountOpened_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AccountOpened_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.Builder.class);
+    }
+
+    public static final int ACCOUNTNUMBER_FIELD_NUMBER = 1;
+    private volatile java.lang.Object accountNumber_;
+    /**
+     * <code>string accountNumber = 1;</code>
+     * @return The accountNumber.
+     */
+    @java.lang.Override
+    public java.lang.String getAccountNumber() {
+      java.lang.Object ref = accountNumber_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        accountNumber_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string accountNumber = 1;</code>
+     * @return The bytes for accountNumber.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getAccountNumberBytes() {
+      java.lang.Object ref = accountNumber_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        accountNumber_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ACCOUNTNAME_FIELD_NUMBER = 2;
+    private volatile java.lang.Object accountName_;
+    /**
+     * <code>string accountName = 2;</code>
+     * @return The accountName.
+     */
+    @java.lang.Override
+    public java.lang.String getAccountName() {
+      java.lang.Object ref = accountName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        accountName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string accountName = 2;</code>
+     * @return The bytes for accountName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getAccountNameBytes() {
+      java.lang.Object ref = accountName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        accountName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int INITALBALANCE_FIELD_NUMBER = 3;
+    private int initalBalance_;
+    /**
+     * <code>int32 initalBalance = 3;</code>
+     * @return The initalBalance.
+     */
+    @java.lang.Override
+    public int getInitalBalance() {
+      return initalBalance_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getAccountNumberBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, accountNumber_);
+      }
+      if (!getAccountNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, accountName_);
+      }
+      if (initalBalance_ != 0) {
+        output.writeInt32(3, initalBalance_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getAccountNumberBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, accountNumber_);
+      }
+      if (!getAccountNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, accountName_);
+      }
+      if (initalBalance_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, initalBalance_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened)) {
+        return super.equals(obj);
+      }
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened other = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened) obj;
+
+      if (!getAccountNumber()
+          .equals(other.getAccountNumber())) return false;
+      if (!getAccountName()
+          .equals(other.getAccountName())) return false;
+      if (getInitalBalance()
+          != other.getInitalBalance()) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ACCOUNTNUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getAccountNumber().hashCode();
+      hash = (37 * hash) + ACCOUNTNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getAccountName().hashCode();
+      hash = (37 * hash) + INITALBALANCE_FIELD_NUMBER;
+      hash = (53 * hash) + getInitalBalance();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code account.AccountOpened}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:account.AccountOpened)
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpenedOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AccountOpened_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AccountOpened_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.class, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.Builder.class);
+      }
+
+      // Construct using com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        accountNumber_ = "";
+
+        accountName_ = "";
+
+        initalBalance_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.internal_static_account_AccountOpened_descriptor;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened getDefaultInstanceForType() {
+        return com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened build() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened buildPartial() {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened result = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened(this);
+        result.accountNumber_ = accountNumber_;
+        result.accountName_ = accountName_;
+        result.initalBalance_ = initalBalance_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened) {
+          return mergeFrom((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened other) {
+        if (other == com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened.getDefaultInstance()) return this;
+        if (!other.getAccountNumber().isEmpty()) {
+          accountNumber_ = other.accountNumber_;
+          onChanged();
+        }
+        if (!other.getAccountName().isEmpty()) {
+          accountName_ = other.accountName_;
+          onChanged();
+        }
+        if (other.getInitalBalance() != 0) {
+          setInitalBalance(other.getInitalBalance());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object accountNumber_ = "";
+      /**
+       * <code>string accountNumber = 1;</code>
+       * @return The accountNumber.
+       */
+      public java.lang.String getAccountNumber() {
+        java.lang.Object ref = accountNumber_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          accountNumber_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string accountNumber = 1;</code>
+       * @return The bytes for accountNumber.
+       */
+      public com.google.protobuf.ByteString
+          getAccountNumberBytes() {
+        java.lang.Object ref = accountNumber_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          accountNumber_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string accountNumber = 1;</code>
+       * @param value The accountNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNumber(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        accountNumber_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountNumber = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAccountNumber() {
+        
+        accountNumber_ = getDefaultInstance().getAccountNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountNumber = 1;</code>
+       * @param value The bytes for accountNumber to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNumberBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        accountNumber_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object accountName_ = "";
+      /**
+       * <code>string accountName = 2;</code>
+       * @return The accountName.
+       */
+      public java.lang.String getAccountName() {
+        java.lang.Object ref = accountName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          accountName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string accountName = 2;</code>
+       * @return The bytes for accountName.
+       */
+      public com.google.protobuf.ByteString
+          getAccountNameBytes() {
+        java.lang.Object ref = accountName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          accountName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string accountName = 2;</code>
+       * @param value The accountName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        accountName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountName = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAccountName() {
+        
+        accountName_ = getDefaultInstance().getAccountName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string accountName = 2;</code>
+       * @param value The bytes for accountName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAccountNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        accountName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int initalBalance_ ;
+      /**
+       * <code>int32 initalBalance = 3;</code>
+       * @return The initalBalance.
+       */
+      @java.lang.Override
+      public int getInitalBalance() {
+        return initalBalance_;
+      }
+      /**
+       * <code>int32 initalBalance = 3;</code>
+       * @param value The initalBalance to set.
+       * @return This builder for chaining.
+       */
+      public Builder setInitalBalance(int value) {
+        
+        initalBalance_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 initalBalance = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearInitalBalance() {
+        
+        initalBalance_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:account.AccountOpened)
+    }
+
+    // @@protoc_insertion_point(class_scope:account.AccountOpened)
+    private static final com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened();
+    }
+
+    public static com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<AccountOpened>
+        PARSER = new com.google.protobuf.AbstractParser<AccountOpened>() {
+      @java.lang.Override
+      public AccountOpened parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AccountOpened(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<AccountOpened> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AccountOpened> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor;
+    internal_static_account_OpenAccountRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_fieldAccessorTable;
+      internal_static_account_OpenAccountRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor;
+    internal_static_account_OpenAccountResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_fieldAccessorTable;
+      internal_static_account_OpenAccountResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor;
+    internal_static_account_AdjustBalanceRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_fieldAccessorTable;
+      internal_static_account_AdjustBalanceRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor;
+    internal_static_account_AdjustBalanceResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_fieldAccessorTable;
+      internal_static_account_AdjustBalanceResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor;
+    internal_static_account_CheckBalanceRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_fieldAccessorTable;
+      internal_static_account_CheckBalanceRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor;
+    internal_static_account_CheckBalanceResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_fieldAccessorTable;
+      internal_static_account_CheckBalanceResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor;
+    internal_static_account_TransferMoneyRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_fieldAccessorTable;
+      internal_static_account_TransferMoneyRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor;
+    internal_static_account_TransferMoneyResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_fieldAccessorTable;
+      internal_static_account_TransferMoneyResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor;
+    internal_static_account_AllAccountsRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable;
+      internal_static_account_AllAccountsRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor;
+    internal_static_account_AllAccountsResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable;
+      internal_static_account_AllAccountsResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor;
+    internal_static_account_TotalBalanceRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable;
+      internal_static_account_TotalBalanceRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor;
+    internal_static_account_TotalBalanceResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable;
+      internal_static_account_TotalBalanceResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_account_SubscribeRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_account_SubscribeRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_account_AccountOpened_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_account_AccountOpened_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6711,124 +7927,131 @@ public final class AccountOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\rAccount.proto\022$com.hazelcast.msfdemo.a" +
-      "cctsvc.events\"A\n\022OpenAccountRequest\022\023\n\013a" +
-      "ccountName\030\001 \001(\t\022\026\n\016initialBalance\030\002 \001(\005" +
-      "\",\n\023OpenAccountResponse\022\025\n\raccountNumber" +
-      "\030\001 \001(\t\"=\n\024AdjustBalanceRequest\022\025\n\raccoun" +
-      "tNumber\030\001 \001(\t\022\016\n\006amount\030\002 \001(\005\"+\n\025AdjustB" +
-      "alanceResponse\022\022\n\nnewBalance\030\001 \001(\005\",\n\023Ch" +
-      "eckBalanceRequest\022\025\n\raccountNumber\030\001 \001(\t" +
-      "\"\'\n\024CheckBalanceResponse\022\017\n\007balance\030\001 \001(" +
-      "\005\"Z\n\024TransferMoneyRequest\022\031\n\021fromAccount" +
-      "Number\030\001 \001(\t\022\027\n\017toAccountNumber\030\002 \001(\t\022\016\n" +
-      "\006amount\030\003 \001(\005\"*\n\025TransferMoneyResponse\022\021" +
-      "\n\tsucceeded\030\001 \001(\010\"\024\n\022AllAccountsRequest\"" +
-      ",\n\023AllAccountsResponse\022\025\n\raccountNumber\030" +
-      "\001 \003(\t\"\025\n\023TotalBalanceRequest\",\n\024TotalBal" +
-      "anceResponse\022\024\n\014totalBalance\030\001 \001(\0032\315\007\n\007A" +
-      "ccount\022}\n\004Open\0228.com.hazelcast.msfdemo.a" +
-      "cctsvc.events.OpenAccountRequest\0329.com.h" +
-      "azelcast.msfdemo.acctsvc.events.OpenAcco" +
-      "untResponse\"\000\022\204\001\n\007Deposit\022:.com.hazelcas" +
-      "t.msfdemo.acctsvc.events.AdjustBalanceRe" +
-      "quest\032;.com.hazelcast.msfdemo.acctsvc.ev" +
-      "ents.AdjustBalanceResponse\"\000\022\205\001\n\010Withdra" +
-      "w\022:.com.hazelcast.msfdemo.acctsvc.events" +
-      ".AdjustBalanceRequest\032;.com.hazelcast.ms" +
-      "fdemo.acctsvc.events.AdjustBalanceRespon" +
-      "se\"\000\022\207\001\n\014CheckBalance\0229.com.hazelcast.ms" +
-      "fdemo.acctsvc.events.CheckBalanceRequest" +
-      "\032:.com.hazelcast.msfdemo.acctsvc.events." +
-      "CheckBalanceResponse\"\000\022\212\001\n\rTransferMoney" +
-      "\022:.com.hazelcast.msfdemo.acctsvc.events." +
-      "TransferMoneyRequest\032;.com.hazelcast.msf" +
-      "demo.acctsvc.events.TransferMoneyRespons" +
-      "e\"\000\022\212\001\n\021AllAccountNumbers\0228.com.hazelcas" +
-      "t.msfdemo.acctsvc.events.AllAccountsRequ" +
-      "est\0329.com.hazelcast.msfdemo.acctsvc.even" +
-      "ts.AllAccountsResponse\"\000\022\217\001\n\024TotalAccoun" +
-      "tBalances\0229.com.hazelcast.msfdemo.acctsv" +
-      "c.events.TotalBalanceRequest\032:.com.hazel" +
-      "cast.msfdemo.acctsvc.events.TotalBalance" +
-      "Response\"\000b\006proto3"
+      "\n\rAccount.proto\022\007account\"A\n\022OpenAccountR" +
+      "equest\022\023\n\013accountName\030\001 \001(\t\022\026\n\016initialBa" +
+      "lance\030\002 \001(\005\",\n\023OpenAccountResponse\022\025\n\rac" +
+      "countNumber\030\001 \001(\t\"=\n\024AdjustBalanceReques" +
+      "t\022\025\n\raccountNumber\030\001 \001(\t\022\016\n\006amount\030\002 \001(\005" +
+      "\"+\n\025AdjustBalanceResponse\022\022\n\nnewBalance\030" +
+      "\001 \001(\005\",\n\023CheckBalanceRequest\022\025\n\raccountN" +
+      "umber\030\001 \001(\t\"\'\n\024CheckBalanceResponse\022\017\n\007b" +
+      "alance\030\001 \001(\005\"Z\n\024TransferMoneyRequest\022\031\n\021" +
+      "fromAccountNumber\030\001 \001(\t\022\027\n\017toAccountNumb" +
+      "er\030\002 \001(\t\022\016\n\006amount\030\003 \001(\005\"*\n\025TransferMone" +
+      "yResponse\022\021\n\tsucceeded\030\001 \001(\010\"\024\n\022AllAccou" +
+      "ntsRequest\",\n\023AllAccountsResponse\022\025\n\racc" +
+      "ountNumber\030\001 \003(\t\"\025\n\023TotalBalanceRequest\"" +
+      ",\n\024TotalBalanceResponse\022\024\n\014totalBalance\030" +
+      "\001 \001(\003\"\022\n\020SubscribeRequest\"R\n\rAccountOpen" +
+      "ed\022\025\n\raccountNumber\030\001 \001(\t\022\023\n\013accountName" +
+      "\030\002 \001(\t\022\025\n\rinitalBalance\030\003 \001(\0052\202\005\n\007Accoun" +
+      "t\022C\n\004Open\022\033.account.OpenAccountRequest\032\034" +
+      ".account.OpenAccountResponse\"\000\022J\n\007Deposi" +
+      "t\022\035.account.AdjustBalanceRequest\032\036.accou" +
+      "nt.AdjustBalanceResponse\"\000\022K\n\010Withdraw\022\035" +
+      ".account.AdjustBalanceRequest\032\036.account." +
+      "AdjustBalanceResponse\"\000\022M\n\014CheckBalance\022" +
+      "\034.account.CheckBalanceRequest\032\035.account." +
+      "CheckBalanceResponse\"\000\022P\n\rTransferMoney\022" +
+      "\035.account.TransferMoneyRequest\032\036.account" +
+      ".TransferMoneyResponse\"\000\022P\n\021AllAccountNu" +
+      "mbers\022\033.account.AllAccountsRequest\032\034.acc" +
+      "ount.AllAccountsResponse\"\000\022U\n\024TotalAccou" +
+      "ntBalances\022\034.account.TotalBalanceRequest" +
+      "\032\035.account.TotalBalanceResponse\"\000\022O\n\030Sub" +
+      "scribeToAccountOpened\022\031.account.Subscrib" +
+      "eRequest\032\026.account.AccountOpened\"\000B&\n$co" +
+      "m.hazelcast.msfdemo.acctsvc.eventsb\006prot" +
+      "o3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor =
+    internal_static_account_OpenAccountRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_fieldAccessorTable = new
+    internal_static_account_OpenAccountRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountRequest_descriptor,
+        internal_static_account_OpenAccountRequest_descriptor,
         new java.lang.String[] { "AccountName", "InitialBalance", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor =
+    internal_static_account_OpenAccountResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_fieldAccessorTable = new
+    internal_static_account_OpenAccountResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_OpenAccountResponse_descriptor,
+        internal_static_account_OpenAccountResponse_descriptor,
         new java.lang.String[] { "AccountNumber", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor =
+    internal_static_account_AdjustBalanceRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_fieldAccessorTable = new
+    internal_static_account_AdjustBalanceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceRequest_descriptor,
+        internal_static_account_AdjustBalanceRequest_descriptor,
         new java.lang.String[] { "AccountNumber", "Amount", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor =
+    internal_static_account_AdjustBalanceResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_fieldAccessorTable = new
+    internal_static_account_AdjustBalanceResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_AdjustBalanceResponse_descriptor,
+        internal_static_account_AdjustBalanceResponse_descriptor,
         new java.lang.String[] { "NewBalance", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor =
+    internal_static_account_CheckBalanceRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_fieldAccessorTable = new
+    internal_static_account_CheckBalanceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceRequest_descriptor,
+        internal_static_account_CheckBalanceRequest_descriptor,
         new java.lang.String[] { "AccountNumber", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor =
+    internal_static_account_CheckBalanceResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_fieldAccessorTable = new
+    internal_static_account_CheckBalanceResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_CheckBalanceResponse_descriptor,
+        internal_static_account_CheckBalanceResponse_descriptor,
         new java.lang.String[] { "Balance", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor =
+    internal_static_account_TransferMoneyRequest_descriptor =
       getDescriptor().getMessageTypes().get(6);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_fieldAccessorTable = new
+    internal_static_account_TransferMoneyRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyRequest_descriptor,
+        internal_static_account_TransferMoneyRequest_descriptor,
         new java.lang.String[] { "FromAccountNumber", "ToAccountNumber", "Amount", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor =
+    internal_static_account_TransferMoneyResponse_descriptor =
       getDescriptor().getMessageTypes().get(7);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_fieldAccessorTable = new
+    internal_static_account_TransferMoneyResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_TransferMoneyResponse_descriptor,
+        internal_static_account_TransferMoneyResponse_descriptor,
         new java.lang.String[] { "Succeeded", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor =
+    internal_static_account_AllAccountsRequest_descriptor =
       getDescriptor().getMessageTypes().get(8);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_fieldAccessorTable = new
+    internal_static_account_AllAccountsRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsRequest_descriptor,
+        internal_static_account_AllAccountsRequest_descriptor,
         new java.lang.String[] { });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor =
+    internal_static_account_AllAccountsResponse_descriptor =
       getDescriptor().getMessageTypes().get(9);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_fieldAccessorTable = new
+    internal_static_account_AllAccountsResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_AllAccountsResponse_descriptor,
+        internal_static_account_AllAccountsResponse_descriptor,
         new java.lang.String[] { "AccountNumber", });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor =
+    internal_static_account_TotalBalanceRequest_descriptor =
       getDescriptor().getMessageTypes().get(10);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_fieldAccessorTable = new
+    internal_static_account_TotalBalanceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceRequest_descriptor,
+        internal_static_account_TotalBalanceRequest_descriptor,
         new java.lang.String[] { });
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor =
+    internal_static_account_TotalBalanceResponse_descriptor =
       getDescriptor().getMessageTypes().get(11);
-    internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_fieldAccessorTable = new
+    internal_static_account_TotalBalanceResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_com_hazelcast_msfdemo_acctsvc_events_TotalBalanceResponse_descriptor,
+        internal_static_account_TotalBalanceResponse_descriptor,
         new java.lang.String[] { "TotalBalance", });
+    internal_static_account_SubscribeRequest_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_account_SubscribeRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_account_SubscribeRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_account_AccountOpened_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_account_AccountOpened_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_account_AccountOpened_descriptor,
+        new java.lang.String[] { "AccountNumber", "AccountName", "InitalBalance", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

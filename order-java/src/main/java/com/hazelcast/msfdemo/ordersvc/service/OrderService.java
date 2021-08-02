@@ -32,9 +32,10 @@ import java.util.concurrent.Executors;
 
 public class OrderService {
 
-    MSFController controller;
-    OrderDAO orderDAO;
-    OrderEventStore eventStore;
+    private MSFController controller;
+    private OrderDAO orderDAO;
+    private OrderEventStore eventStore;
+    public static final String SERVICE_NAME = "OrderService";
 
     public void init() {
         controller = MSFController.getInstance();
@@ -58,6 +59,7 @@ public class OrderService {
     }
 
     public OrderEventStore getEventStore() { return eventStore; }
+    public OrderDAO getDAO() { return orderDAO; }
     public IMap<String, Order> getView() { return orderDAO.getMap(); }
 
     public void shutdown() {
