@@ -32,13 +32,12 @@ Proposing this as a candidate for the Platform 5.0 Hackathon; for purposes of th
 Currently only 3 of seven steps needed to fully process an order are implemented:
 - Order creation
 - Price Lookup
-- Inventory Reservation
+- Inventory Reservation (needs change to final stage)
+- Credit Approval (needs change to final stage)
+- Charge Customer Account (partial - dependent on fixes to previous two stages)
 
-Focus is on getting these cleanly implemented as other steps will highly leverage design choices made in these steps -- it will be far costlier to rework design choices as the number of processing stages increases.
 
-But as soon as design looks solid, will implement these additional stages:
-- Credit Approval
-- Charge Customer Account
+Additional stages not yet written:
 - Pull Inventory (and clear reservation)
 - Ship order 
 

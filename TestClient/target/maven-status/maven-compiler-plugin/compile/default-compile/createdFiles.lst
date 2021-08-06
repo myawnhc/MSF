@@ -1,4 +1,5 @@
 com/hazelcast/msf/testclient/OrderServiceClient.class
+com/hazelcast/msf/testclient/OrderServiceClient$1.class
 com/hazelcast/msf/testclient/InventoryServiceClient.class
 com/hazelcast/msf/testclient/AccountServiceClient$TransferRunnable.class
 com/hazelcast/msf/testclient/OrderServiceClient$OrderEventResponseProcessor.class

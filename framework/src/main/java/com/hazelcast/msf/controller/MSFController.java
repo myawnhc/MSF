@@ -107,6 +107,7 @@ public class MSFController {
      * @param topicName By convention, topic name is the name of the Event class
      * @param event the event to publish
      */
+    @Deprecated
     public void publish(String topicName, SequencedEvent event) {
        ITopic topic = hazelcast.getReliableTopic(topicName);
        topic.publish(event);
@@ -119,6 +120,7 @@ public class MSFController {
      * @param topic
      * @param listener
      */
+    @Deprecated
     public void subscribe(String serviceName, String topic, EventMsgListener listener) {
         HazelcastInstance hz = remoteHazelcasts.get(serviceName);
 

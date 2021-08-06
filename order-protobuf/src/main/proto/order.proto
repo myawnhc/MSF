@@ -4,9 +4,14 @@ option java_package = "com.hazelcast.msfdemo.ordersvc.events";
 
 service Order {
   rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}
+
   rpc SubscribeToOrderCreated (SubscribeRequest) returns (stream OrderCreated) {}
   rpc SubscribeToOrderPriced (SubscribeRequest) returns (stream OrderPriced) {}
   rpc SubscribeToInventoryReserved (SubscribeRequest) returns (stream InventoryReserved) {}
+  rpc SubscribeToCreditChecked (SubscribeRequest) returns (stream CreditChecked) {}
+  rpc SubscribeToAccountCharged (SubscribeRequest) returns (stream AccountCharged) {}
+  rpc SubscribeToInventoryPulled (SubscribeRequest) returns (stream InventoryPulled) {}
+  rpc SubscribeToOrderShipped (SubscribeRequest) returns (stream OrderShipped) {}
 }
 
 message CreateOrderRequest {
@@ -50,4 +55,30 @@ message OrderPriced {
 message InventoryReserved {
   string orderNumber = 1;
   int32 quantityReserved = 2;
+}
+
+message CreditChecked {
+  string orderNumber = 1;
+  string accountNumber = 2;
+  int32 amountRequested = 3;
+  bool approved = 4;
+}
+
+message AccountCharged {
+  string orderNumber = 1;
+  string accountNumber = 2;
+  int32 amountCharged = 3;
+}
+
+message InventoryPulled {
+  string orderNumber = 1;
+  string itemNumber = 2;
+  string location = 3;
+  int32 quantity = 4;
+}
+
+message OrderShipped {
+  string orderNumber = 1;
+  string itemNumber = 2;
+  int32 quantityShipped = 3;
 }

@@ -1,8 +1,0 @@
----
-service_name: test-service-1
-grpc-hostname: localhost
-grpc-port: 50051
----
-service_name: test-service-2
-grpc-hostname: 192.168.50.32
-grpc-port: 50052

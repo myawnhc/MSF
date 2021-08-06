@@ -35,7 +35,6 @@ import com.hazelcast.msf.messaging.StreamObserverToIMapAdapter;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import com.hazelcast.msfdemo.ordersvc.events.CreateOrderEvent;
-import com.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
 import com.hazelcast.msfdemo.ordersvc.events.PriceLookupEvent;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
@@ -45,7 +44,6 @@ import com.hazelcast.msfdemo.protosvc.events.CatalogOuterClass.PriceLookupReques
 import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
-import java.util.AbstractMap;
 import java.util.EnumSet;
 import java.util.Map;
 
@@ -148,15 +146,15 @@ public class PriceLookupPipeline implements Runnable {
         }).setName("Update Order Materialized View")
 
         // Write APIResponse to result map, triggering gRPC response to client
-        .map( tuple -> {
-            Long uniqueID = tuple.getKey();
-            OrderEvent event = tuple.getValue();
-            APIResponse<OrderEvent> response = new APIResponse<>(uniqueID, event);
-            //System.out.println("Building and returning API response");
-            return new AbstractMap.SimpleEntry<>(uniqueID, response);
-        }).setName("Build client APIResponse")
-                .writeTo(Sinks.map(responseMap))
-                .setName("Write result to response map (triggers response to client)");
+//        .map( tuple -> {
+//            Long uniqueID = tuple.getKey();
+//            OrderEvent event = tuple.getValue();
+//            APIResponse<OrderEvent> response = new APIResponse<>(uniqueID, event);
+//            //System.out.println("Building and returning API response");
+//            return new AbstractMap.SimpleEntry<>(uniqueID, response);
+//        }).setName("Build client APIResponse")
+                .writeTo(Sinks.noop())
+                .setName("Nothing to sink");
 
         return p;
     }

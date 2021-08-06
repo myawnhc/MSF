@@ -19,7 +19,9 @@ package com.hazelcast.msfdemo.ordersvc.service;
 
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.controller.MSFController;
+import com.hazelcast.msfdemo.ordersvc.business.CollectPaymentPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.CreateOrderPipeline;
+import com.hazelcast.msfdemo.ordersvc.business.CreditCheckPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.InventoryReservePipeline;
 import com.hazelcast.msfdemo.ordersvc.business.PriceLookupPipeline;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -43,10 +45,10 @@ public class OrderService {
 
         // Initialize the EventStore
         eventStore = OrderEventStore.getInstance();
-        // TODO: should have process that occasionally snapshots & evicts
+        // TODO: should have process that occasionally snapshots & compacts
 
         // Start the various Jet transaction handler pipelines
-        ExecutorService executor = Executors.newCachedThreadPool();
+        ExecutorService executor = Executors.newFixedThreadPool(7);
         CreateOrderPipeline orderPipeline = new CreateOrderPipeline(this);
         executor.submit(orderPipeline);
 
@@ -55,6 +57,12 @@ public class OrderService {
 
         InventoryReservePipeline reservePipeline = new InventoryReservePipeline(this);
         executor.submit(reservePipeline);
+
+        CreditCheckPipeline creditCheckPipeline = new CreditCheckPipeline(this);
+        executor.submit(creditCheckPipeline);
+
+        CollectPaymentPipeline collectPaymentPipeline = new CollectPaymentPipeline(this);
+        executor.submit(collectPaymentPipeline);
 
     }
 

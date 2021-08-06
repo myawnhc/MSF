@@ -60,6 +60,8 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
 
     final private Map<Long, UUID> listenersByRequestID = new HashMap<>();
 
+    private AccountDAO accountDAO = new AccountDAO();
+
 
     @Override
     public void open(OpenAccountRequest request, StreamObserver<OpenAccountResponse> responseObserver) {
@@ -148,14 +150,22 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
                 .setAmount(request.getAmount() * -1)
                 .build();
         deposit(withdrawal, responseObserver);
+    }
 
+    @Override
+    public void payment(AdjustBalanceRequest request, StreamObserver<AdjustBalanceResponse> responseObserver) {
+        //System.out.println("withdrawal requested " + request.getAccountNumber() + " " + request.getAmount());
+        // Just like withdrawals, we flip the sign and use the method to handle the transaction
+        AdjustBalanceRequest payment = AdjustBalanceRequest.newBuilder(request)
+                .setAmount(request.getAmount() * -1)
+                .build();
+        deposit(payment, responseObserver);
     }
 
     @Override
     public void checkBalance(CheckBalanceRequest request, StreamObserver<CheckBalanceResponse> responseObserver) {
-        AccountDAO dao = new AccountDAO();
         String acctNumber = request.getAccountNumber();
-        Account account = dao.findByKey(acctNumber);
+        Account account = accountDAO.findByKey(acctNumber);
         if (account == null) {
             Exception e = new IllegalArgumentException("Account Number does not exist: :" + acctNumber);
             responseObserver.onError(e);
@@ -166,6 +176,27 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
                     .build();
             responseObserver.onNext(response);
         }
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void requestAuth(AuthorizationRequest request, StreamObserver<AuthorizationResponse> responseObserver) {
+        String acctNumber = request.getAccountNumber();
+        Account account = accountDAO.findByKey(acctNumber);
+        boolean approved = false;
+        if (account == null) {
+            Exception e = new IllegalArgumentException("Account Number does not exist: :" + acctNumber);
+            responseObserver.onError(e);
+        } else {
+            if (account.getBalance() >= request.getRequestedAmount())
+                approved = true;
+            AuthorizationResponse response = AuthorizationResponse.newBuilder()
+                    .setApproved(approved)
+                    .build();
+            responseObserver.onNext(response);
+        }
+        System.out.println("Requested auth for " + request.getRequestedAmount() + ", balance is " +
+                account.getBalance() + ", approved=" + approved);
         responseObserver.onCompleted();
     }
 
@@ -240,8 +271,7 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
 
     @Override
     public void allAccountNumbers(AllAccountsRequest request, StreamObserver<AllAccountsResponse> responseObserver) {
-        AccountDAO dao = new AccountDAO();
-        Collection<Account> accounts = dao.getAllAccounts();
+        Collection<Account> accounts = accountDAO.getAllAccounts();
         List<String> accountNumbers = new ArrayList<>();
         for (Account a : accounts) {
             accountNumbers.add(a.getAcctNumber());
@@ -256,8 +286,7 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
 
     @Override
     public void totalAccountBalances(TotalBalanceRequest request, StreamObserver<TotalBalanceResponse> responseObserver) {
-        AccountDAO dao = new AccountDAO();
-        long total = dao.getTotalAccountBalances();
+        long total = accountDAO.getTotalAccountBalances();
 
         TotalBalanceResponse response = TotalBalanceResponse.newBuilder()
                 .setTotalBalance(total)

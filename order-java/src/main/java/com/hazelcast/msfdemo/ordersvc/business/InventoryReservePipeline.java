@@ -193,8 +193,8 @@ public class InventoryReservePipeline implements Runnable {
 //        }).setName("Build client APIResponse")
 //                .writeTo(Sinks.map(responseMap))
 //                .setName("Write result to response map (triggers response to client)");
-                .writeTo(Sinks.logger())
-                .setName("Log to console");
+                .writeTo(Sinks.noop())
+                .setName("/dev/null");
 
         return p;
     }

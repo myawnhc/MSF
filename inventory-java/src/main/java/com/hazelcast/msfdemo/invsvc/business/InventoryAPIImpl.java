@@ -99,6 +99,24 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
     }
 
     @Override
+    public void pull(PullRequest request, StreamObserver<PullResponse> responseObserver) {
+        System.out.println("pull unimplemented in InventoryAPIImpl");
+        // Very similar to reserve
+        // Will assume inventory previously reserved, so reduce quantity reserved
+        // as well as quantity on hand
+    }
+
+    @Override
+    public void unreserve(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
+        System.out.println("unreserve unimplemented in InventoryAPIImpl");
+    }
+
+    @Override
+    public void restock(PullRequest request, StreamObserver<PullResponse> responseObserver) {
+        System.out.println("restock unimplemented in InventoryAPIImpl");
+    }
+
+    @Override
     public void getItemCount(ItemCountRequest request, StreamObserver<ItemCountResponse> responseObserver) {
         // Request is empty so ignore it
         ItemCountResponse response = ItemCountResponse.newBuilder()

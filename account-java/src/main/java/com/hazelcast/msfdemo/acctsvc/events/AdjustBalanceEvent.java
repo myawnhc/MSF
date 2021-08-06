@@ -17,7 +17,10 @@
 
 package com.hazelcast.msfdemo.acctsvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.acctsvc.domain.Account;
+import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.function.UnaryOperator;
@@ -25,19 +28,33 @@ import java.util.function.UnaryOperator;
 public class AdjustBalanceEvent extends AccountEvent implements Serializable,
                                                                 UnaryOperator<Account> {
 
+    private int changeAmount;
+
+    private static SubscriptionManager<BalanceChanged> subscriptionManager = new SubscriptionManager<>(BalanceChanged.getDescriptor().getFullName());
+
     public AdjustBalanceEvent(String accountNumber, int adjustment) {
         super(AccountEventTypes.ADJUST, accountNumber, adjustment);
     }
     @Override
     public Account apply(Account account) {
+        this.changeAmount = getAmount();
         account.setBalance( account.getBalance() + getAmount() );
         //System.out.println("AdjustBalanceEvent.apply - " + account.getAcctNumber() + " with " + getAmount());
         return account;
     }
 
+    public static void subscribe(StreamObserver<BalanceChanged> observer) {
+        subscriptionManager.subscribe(observer, 0);
+    }
+
     @Override
     public void publish() {
-        System.out.println("****** AdjustBalanceEvent.publish unimplemented!");
+        BalanceChanged event = BalanceChanged.newBuilder()
+                .setAccountNumber(accountNumber)
+                .setChangeAmount(changeAmount)
+                .setNewBalance(getAmount())
+                .build();
+        subscriptionManager.publish(event);
     }
 
     public String toString() {

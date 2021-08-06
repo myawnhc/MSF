@@ -6,13 +6,16 @@ service Account {
     rpc Open (OpenAccountRequest) returns (OpenAccountResponse) {}
     rpc Deposit (AdjustBalanceRequest) returns (AdjustBalanceResponse) {}
     rpc Withdraw (AdjustBalanceRequest) returns (AdjustBalanceResponse) {}
+    rpc Payment (AdjustBalanceRequest) returns (AdjustBalanceResponse) {}
     rpc CheckBalance (CheckBalanceRequest) returns (CheckBalanceResponse) {}
     rpc TransferMoney (TransferMoneyRequest) returns (TransferMoneyResponse) {}
     rpc AllAccountNumbers (AllAccountsRequest) returns (AllAccountsResponse) {}
     rpc TotalAccountBalances (TotalBalanceRequest) returns (TotalBalanceResponse) {}
+    rpc RequestAuth (AuthorizationRequest) returns (AuthorizationResponse) {}
 
     // NOT IMPLEMENTED YET:
     rpc SubscribeToAccountOpened (SubscribeRequest) returns (AccountOpened) {}
+    rpc SubscribeToBalanceChanged (SubscribeRequest) returns (BalanceChanged) {}
 }
 
 message OpenAccountRequest {
@@ -61,9 +64,23 @@ message TotalBalanceResponse {
     int64 totalBalance = 1;
 }
 
+message AuthorizationRequest {
+    string accountNumber = 1;
+    int32 requestedAmount = 2;
+}
+
+message AuthorizationResponse {
+    bool approved = 1;
+}
+
 message SubscribeRequest {}
 message AccountOpened {
     string accountNumber = 1;
     string accountName = 2;
     int32 initalBalance = 3;
+}
+message BalanceChanged {
+    string accountNumber = 1;
+    int32 changeAmount = 2;
+    int32 newBalance = 3;
 }

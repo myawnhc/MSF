@@ -24,7 +24,8 @@ import java.io.Serializable;
 
 public abstract class AccountEvent extends SequencedEvent<Account>
         implements Serializable /*, UnaryOperator<Account> */ {
-    private AccountEventTypes eventType;
+
+            private AccountEventTypes eventType;
     protected String accountNumber;
     protected int amount;
 

@@ -7,6 +7,9 @@ service Inventory {
   rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
   rpc Ship (ShipRequest) returns (ShipResponse) {}
   rpc Reserve (ReserveRequest) returns (ReserveResponse) {}
+  rpc Pull (PullRequest) returns (PullResponse) {}
+  rpc Unreserve (ReserveRequest) returns (ReserveResponse) {} // Compensate for Reserve
+  rpc Restock (PullRequest) returns (PullResponse) {} // Compensate for Pull
 
   // These are more demo oriented than production, used to make sure we don't run
   // ahead of data generation and order items not yet added
@@ -45,6 +48,17 @@ message ReserveRequest {
 }
 
 message ReserveResponse {
+  bool success = 1;
+  string reason = 2;
+}
+
+message PullRequest {
+  string itemNumber = 1;
+  string location = 2;
+  int32 quantity = 3;
+}
+
+message PullResponse {
   bool success = 1;
   string reason = 2;
 }

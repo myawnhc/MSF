@@ -107,6 +107,37 @@ public final class AccountGrpc {
     return getWithdrawMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> getPaymentMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "Payment",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> getPaymentMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> getPaymentMethod;
+    if ((getPaymentMethod = AccountGrpc.getPaymentMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getPaymentMethod = AccountGrpc.getPaymentMethod) == null) {
+          AccountGrpc.getPaymentMethod = getPaymentMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "Payment"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("Payment"))
+              .build();
+        }
+      }
+    }
+    return getPaymentMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest,
       com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse> getCheckBalanceMethod;
 
@@ -231,6 +262,37 @@ public final class AccountGrpc {
     return getTotalAccountBalancesMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> getRequestAuthMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "RequestAuth",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> getRequestAuthMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> getRequestAuthMethod;
+    if ((getRequestAuthMethod = AccountGrpc.getRequestAuthMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getRequestAuthMethod = AccountGrpc.getRequestAuthMethod) == null) {
+          AccountGrpc.getRequestAuthMethod = getRequestAuthMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "RequestAuth"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("RequestAuth"))
+              .build();
+        }
+      }
+    }
+    return getRequestAuthMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
       com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> getSubscribeToAccountOpenedMethod;
 
@@ -260,6 +322,37 @@ public final class AccountGrpc {
       }
     }
     return getSubscribeToAccountOpenedMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> getSubscribeToBalanceChangedMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToBalanceChanged",
+      requestType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> getSubscribeToBalanceChangedMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> getSubscribeToBalanceChangedMethod;
+    if ((getSubscribeToBalanceChangedMethod = AccountGrpc.getSubscribeToBalanceChangedMethod) == null) {
+      synchronized (AccountGrpc.class) {
+        if ((getSubscribeToBalanceChangedMethod = AccountGrpc.getSubscribeToBalanceChangedMethod) == null) {
+          AccountGrpc.getSubscribeToBalanceChangedMethod = getSubscribeToBalanceChangedMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest, com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToBalanceChanged"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged.getDefaultInstance()))
+              .setSchemaDescriptor(new AccountMethodDescriptorSupplier("SubscribeToBalanceChanged"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToBalanceChangedMethod;
   }
 
   /**
@@ -333,6 +426,13 @@ public final class AccountGrpc {
 
     /**
      */
+    public void payment(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPaymentMethod(), responseObserver);
+    }
+
+    /**
+     */
     public void checkBalance(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest request,
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCheckBalanceMethod(), responseObserver);
@@ -360,6 +460,13 @@ public final class AccountGrpc {
     }
 
     /**
+     */
+    public void requestAuth(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRequestAuthMethod(), responseObserver);
+    }
+
+    /**
      * <pre>
      * NOT IMPLEMENTED YET:
      * </pre>
@@ -367,6 +474,13 @@ public final class AccountGrpc {
     public void subscribeToAccountOpened(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request,
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToAccountOpenedMethod(), responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToBalanceChanged(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToBalanceChangedMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -392,6 +506,13 @@ public final class AccountGrpc {
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest,
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse>(
                   this, METHODID_WITHDRAW)))
+          .addMethod(
+            getPaymentMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse>(
+                  this, METHODID_PAYMENT)))
           .addMethod(
             getCheckBalanceMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -421,12 +542,26 @@ public final class AccountGrpc {
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>(
                   this, METHODID_TOTAL_ACCOUNT_BALANCES)))
           .addMethod(
+            getRequestAuthMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse>(
+                  this, METHODID_REQUEST_AUTH)))
+          .addMethod(
             getSubscribeToAccountOpenedMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
                 com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened>(
                   this, METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED)))
+          .addMethod(
+            getSubscribeToBalanceChangedMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged>(
+                  this, METHODID_SUBSCRIBE_TO_BALANCE_CHANGED)))
           .build();
     }
   }
@@ -471,6 +606,14 @@ public final class AccountGrpc {
 
     /**
      */
+    public void payment(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getPaymentMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void checkBalance(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest request,
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -502,6 +645,14 @@ public final class AccountGrpc {
     }
 
     /**
+     */
+    public void requestAuth(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getRequestAuthMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
      * <pre>
      * NOT IMPLEMENTED YET:
      * </pre>
@@ -510,6 +661,14 @@ public final class AccountGrpc {
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSubscribeToAccountOpenedMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void subscribeToBalanceChanged(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSubscribeToBalanceChangedMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -550,6 +709,13 @@ public final class AccountGrpc {
 
     /**
      */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse payment(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getPaymentMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse checkBalance(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getCheckBalanceMethod(), getCallOptions(), request);
@@ -577,6 +743,13 @@ public final class AccountGrpc {
     }
 
     /**
+     */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse requestAuth(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getRequestAuthMethod(), getCallOptions(), request);
+    }
+
+    /**
      * <pre>
      * NOT IMPLEMENTED YET:
      * </pre>
@@ -584,6 +757,13 @@ public final class AccountGrpc {
     public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened subscribeToAccountOpened(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSubscribeToAccountOpenedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged subscribeToBalanceChanged(com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSubscribeToBalanceChangedMethod(), getCallOptions(), request);
     }
   }
 
@@ -627,6 +807,14 @@ public final class AccountGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse> payment(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getPaymentMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse> checkBalance(
         com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -658,6 +846,14 @@ public final class AccountGrpc {
     }
 
     /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse> requestAuth(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getRequestAuthMethod(), getCallOptions()), request);
+    }
+
+    /**
      * <pre>
      * NOT IMPLEMENTED YET:
      * </pre>
@@ -667,16 +863,27 @@ public final class AccountGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSubscribeToAccountOpenedMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged> subscribeToBalanceChanged(
+        com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSubscribeToBalanceChangedMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_OPEN = 0;
   private static final int METHODID_DEPOSIT = 1;
   private static final int METHODID_WITHDRAW = 2;
-  private static final int METHODID_CHECK_BALANCE = 3;
-  private static final int METHODID_TRANSFER_MONEY = 4;
-  private static final int METHODID_ALL_ACCOUNT_NUMBERS = 5;
-  private static final int METHODID_TOTAL_ACCOUNT_BALANCES = 6;
-  private static final int METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED = 7;
+  private static final int METHODID_PAYMENT = 3;
+  private static final int METHODID_CHECK_BALANCE = 4;
+  private static final int METHODID_TRANSFER_MONEY = 5;
+  private static final int METHODID_ALL_ACCOUNT_NUMBERS = 6;
+  private static final int METHODID_TOTAL_ACCOUNT_BALANCES = 7;
+  private static final int METHODID_REQUEST_AUTH = 8;
+  private static final int METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED = 9;
+  private static final int METHODID_SUBSCRIBE_TO_BALANCE_CHANGED = 10;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -707,6 +914,10 @@ public final class AccountGrpc {
           serviceImpl.withdraw((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse>) responseObserver);
           break;
+        case METHODID_PAYMENT:
+          serviceImpl.payment((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AdjustBalanceResponse>) responseObserver);
+          break;
         case METHODID_CHECK_BALANCE:
           serviceImpl.checkBalance((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.CheckBalanceResponse>) responseObserver);
@@ -723,9 +934,17 @@ public final class AccountGrpc {
           serviceImpl.totalAccountBalances((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.TotalBalanceResponse>) responseObserver);
           break;
+        case METHODID_REQUEST_AUTH:
+          serviceImpl.requestAuth((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AuthorizationResponse>) responseObserver);
+          break;
         case METHODID_SUBSCRIBE_TO_ACCOUNT_OPENED:
           serviceImpl.subscribeToAccountOpened((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.AccountOpened>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_BALANCE_CHANGED:
+          serviceImpl.subscribeToBalanceChanged((com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass.BalanceChanged>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -791,11 +1010,14 @@ public final class AccountGrpc {
               .addMethod(getOpenMethod())
               .addMethod(getDepositMethod())
               .addMethod(getWithdrawMethod())
+              .addMethod(getPaymentMethod())
               .addMethod(getCheckBalanceMethod())
               .addMethod(getTransferMoneyMethod())
               .addMethod(getAllAccountNumbersMethod())
               .addMethod(getTotalAccountBalancesMethod())
+              .addMethod(getRequestAuthMethod())
               .addMethod(getSubscribeToAccountOpenedMethod())
+              .addMethod(getSubscribeToBalanceChangedMethod())
               .build();
         }
       }

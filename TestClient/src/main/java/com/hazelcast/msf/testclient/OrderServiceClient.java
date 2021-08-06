@@ -17,6 +17,7 @@
 
 package com.hazelcast.msf.testclient;
 
+import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.hazelcast.msf.configuration.ServiceConfig;
@@ -26,10 +27,11 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -145,15 +147,15 @@ public class OrderServiceClient {
         // what the maximum 'safe' item number is.  When we scale this up, we
         // should periodically refresh the invRecordCount until it reaches
         // max (items * locations, currently 100K)
-        List<ListenableFuture<CreateOrderResponse>> futures = new ArrayList<>();
+        //List<ListenableFuture<CreateOrderResponse>> futures = new ArrayList<>();
 
         InventoryServiceClient iclient = new InventoryServiceClient();
         int invRecordCount = iclient.getInventoryRecordCount();
-        System.out.println("Inventory record count " + invRecordCount);
+        System.out.println("Starting to place orders, inventory record count " + invRecordCount);
         int NUM_LOCATIONS = 100;
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
         // Bumping order count from 10 to 1K
-        for (int i=0; i<1000; i++) {
+        for (int i=0; i<3; i++) {
             int index = (int)(Math.random()*validAccounts.size());
             String acctNumber = validAccounts.get(index);
             int itemOffset = (int)(Math.random()*maxSafeItem+1);
@@ -168,8 +170,23 @@ public class OrderServiceClient {
                     .setLocation(location)
                     .build();
             try {
-                futures.add(futureStub.createOrder(request));
+                Executor e = Executors.newCachedThreadPool();
+                //futures.add(futureStub.createOrder(request));
+                ListenableFuture<CreateOrderResponse> future = futureStub.createOrder(request);
+                Futures.addCallback(future, new FutureCallback<CreateOrderResponse>() {
 
+                    @Override
+                    public void onSuccess(@NullableDecl CreateOrderResponse createOrderResponse) {
+                        System.out.println("Order created: " + createOrderResponse.getOrderNumber());
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        System.out.println("Order creation failed: " + throwable.getMessage());
+
+                    }
+                }, e);
                 // When changed to server-side streaming RPC, createOrder disappeared from futureStub!
                 //asyncStub.createOrder(request, new OrderEventResponseProcessor());
                 System.out.println("Placed order " + i);
@@ -178,18 +195,17 @@ public class OrderServiceClient {
                 return;
             }
         }
-        // await all
-        // TODO: should do this more incrementally, not wait for everything.
-        ListenableFuture<List<CreateOrderResponse>> lf = Futures.allAsList(futures);
-        List<CreateOrderResponse> responses;
-        try {
-            responses = lf.get();
-            for (CreateOrderResponse response : responses) {
-                System.out.println("Order created: " + response.getOrderNumber());
-            }
-        } catch(InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+//        // await all
+//        // TODO: should do this more incrementally, not wait for everything.
+//        List<CreateOrderResponse> responses;
+//        try {
+//            responses = lf.get();
+//            for (CreateOrderResponse response : responses) {
+//                System.out.println("Order created: " + response.getOrderNumber());
+//            }
+//        } catch(InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
         return;
     }

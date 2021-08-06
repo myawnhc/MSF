@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'\n$com.hazelcast.msfdemo.acctsvc.events',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rAccount.proto\x12\x07\x61\x63\x63ount\"A\n\x12OpenAccountRequest\x12\x13\n\x0b\x61\x63\x63ountName\x18\x01 \x01(\t\x12\x16\n\x0einitialBalance\x18\x02 \x01(\x05\",\n\x13OpenAccountResponse\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"=\n\x14\x41\x64justBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\"+\n\x15\x41\x64justBalanceResponse\x12\x12\n\nnewBalance\x18\x01 \x01(\x05\",\n\x13\x43heckBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"\'\n\x14\x43heckBalanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x05\"Z\n\x14TransferMoneyRequest\x12\x19\n\x11\x66romAccountNumber\x18\x01 \x01(\t\x12\x17\n\x0ftoAccountNumber\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x05\"*\n\x15TransferMoneyResponse\x12\x11\n\tsucceeded\x18\x01 \x01(\x08\"\x14\n\x12\x41llAccountsRequest\",\n\x13\x41llAccountsResponse\x12\x15\n\raccountNumber\x18\x01 \x03(\t\"\x15\n\x13TotalBalanceRequest\",\n\x14TotalBalanceResponse\x12\x14\n\x0ctotalBalance\x18\x01 \x01(\x03\"\x12\n\x10SubscribeRequest\"R\n\rAccountOpened\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63\x63ountName\x18\x02 \x01(\t\x12\x15\n\rinitalBalance\x18\x03 \x01(\x05\x32\x82\x05\n\x07\x41\x63\x63ount\x12\x43\n\x04Open\x12\x1b.account.OpenAccountRequest\x1a\x1c.account.OpenAccountResponse\"\x00\x12J\n\x07\x44\x65posit\x12\x1d.account.AdjustBalanceRequest\x1a\x1e.account.AdjustBalanceResponse\"\x00\x12K\n\x08Withdraw\x12\x1d.account.AdjustBalanceRequest\x1a\x1e.account.AdjustBalanceResponse\"\x00\x12M\n\x0c\x43heckBalance\x12\x1c.account.CheckBalanceRequest\x1a\x1d.account.CheckBalanceResponse\"\x00\x12P\n\rTransferMoney\x12\x1d.account.TransferMoneyRequest\x1a\x1e.account.TransferMoneyResponse\"\x00\x12P\n\x11\x41llAccountNumbers\x12\x1b.account.AllAccountsRequest\x1a\x1c.account.AllAccountsResponse\"\x00\x12U\n\x14TotalAccountBalances\x12\x1c.account.TotalBalanceRequest\x1a\x1d.account.TotalBalanceResponse\"\x00\x12O\n\x18SubscribeToAccountOpened\x12\x19.account.SubscribeRequest\x1a\x16.account.AccountOpened\"\x00\x42&\n$com.hazelcast.msfdemo.acctsvc.eventsb\x06proto3'
+  serialized_pb=b'\n\rAccount.proto\x12\x07\x61\x63\x63ount\"A\n\x12OpenAccountRequest\x12\x13\n\x0b\x61\x63\x63ountName\x18\x01 \x01(\t\x12\x16\n\x0einitialBalance\x18\x02 \x01(\x05\",\n\x13OpenAccountResponse\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"=\n\x14\x41\x64justBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x0e\n\x06\x61mount\x18\x02 \x01(\x05\"+\n\x15\x41\x64justBalanceResponse\x12\x12\n\nnewBalance\x18\x01 \x01(\x05\",\n\x13\x43heckBalanceRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\"\'\n\x14\x43heckBalanceResponse\x12\x0f\n\x07\x62\x61lance\x18\x01 \x01(\x05\"Z\n\x14TransferMoneyRequest\x12\x19\n\x11\x66romAccountNumber\x18\x01 \x01(\t\x12\x17\n\x0ftoAccountNumber\x18\x02 \x01(\t\x12\x0e\n\x06\x61mount\x18\x03 \x01(\x05\"*\n\x15TransferMoneyResponse\x12\x11\n\tsucceeded\x18\x01 \x01(\x08\"\x14\n\x12\x41llAccountsRequest\",\n\x13\x41llAccountsResponse\x12\x15\n\raccountNumber\x18\x01 \x03(\t\"\x15\n\x13TotalBalanceRequest\",\n\x14TotalBalanceResponse\x12\x14\n\x0ctotalBalance\x18\x01 \x01(\x03\"F\n\x14\x41uthorizationRequest\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x17\n\x0frequestedAmount\x18\x02 \x01(\x05\")\n\x15\x41uthorizationResponse\x12\x10\n\x08\x61pproved\x18\x01 \x01(\x08\"\x12\n\x10SubscribeRequest\"R\n\rAccountOpened\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63\x63ountName\x18\x02 \x01(\t\x12\x15\n\rinitalBalance\x18\x03 \x01(\x05\"Q\n\x0e\x42\x61lanceChanged\x12\x15\n\raccountNumber\x18\x01 \x01(\t\x12\x14\n\x0c\x63hangeAmount\x18\x02 \x01(\x05\x12\x12\n\nnewBalance\x18\x03 \x01(\x05\x32\xf1\x06\n\x07\x41\x63\x63ount\x12\x43\n\x04Open\x12\x1b.account.OpenAccountRequest\x1a\x1c.account.OpenAccountResponse\"\x00\x12J\n\x07\x44\x65posit\x12\x1d.account.AdjustBalanceRequest\x1a\x1e.account.AdjustBalanceResponse\"\x00\x12K\n\x08Withdraw\x12\x1d.account.AdjustBalanceRequest\x1a\x1e.account.AdjustBalanceResponse\"\x00\x12J\n\x07Payment\x12\x1d.account.AdjustBalanceRequest\x1a\x1e.account.AdjustBalanceResponse\"\x00\x12M\n\x0c\x43heckBalance\x12\x1c.account.CheckBalanceRequest\x1a\x1d.account.CheckBalanceResponse\"\x00\x12P\n\rTransferMoney\x12\x1d.account.TransferMoneyRequest\x1a\x1e.account.TransferMoneyResponse\"\x00\x12P\n\x11\x41llAccountNumbers\x12\x1b.account.AllAccountsRequest\x1a\x1c.account.AllAccountsResponse\"\x00\x12U\n\x14TotalAccountBalances\x12\x1c.account.TotalBalanceRequest\x1a\x1d.account.TotalBalanceResponse\"\x00\x12N\n\x0bRequestAuth\x12\x1d.account.AuthorizationRequest\x1a\x1e.account.AuthorizationResponse\"\x00\x12O\n\x18SubscribeToAccountOpened\x12\x19.account.SubscribeRequest\x1a\x16.account.AccountOpened\"\x00\x12Q\n\x19SubscribeToBalanceChanged\x12\x19.account.SubscribeRequest\x1a\x17.account.BalanceChanged\"\x00\x42&\n$com.hazelcast.msfdemo.acctsvc.eventsb\x06proto3'
 )
 
 
@@ -423,6 +423,77 @@ _TOTALBALANCERESPONSE = _descriptor.Descriptor(
 )
 
 
+_AUTHORIZATIONREQUEST = _descriptor.Descriptor(
+  name='AuthorizationRequest',
+  full_name='account.AuthorizationRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='accountNumber', full_name='account.AuthorizationRequest.accountNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='requestedAmount', full_name='account.AuthorizationRequest.requestedAmount', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=607,
+  serialized_end=677,
+)
+
+
+_AUTHORIZATIONRESPONSE = _descriptor.Descriptor(
+  name='AuthorizationResponse',
+  full_name='account.AuthorizationResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='approved', full_name='account.AuthorizationResponse.approved', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=679,
+  serialized_end=720,
+)
+
+
 _SUBSCRIBEREQUEST = _descriptor.Descriptor(
   name='SubscribeRequest',
   full_name='account.SubscribeRequest',
@@ -443,8 +514,8 @@ _SUBSCRIBEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=607,
-  serialized_end=625,
+  serialized_start=722,
+  serialized_end=740,
 )
 
 
@@ -489,8 +560,54 @@ _ACCOUNTOPENED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=627,
-  serialized_end=709,
+  serialized_start=742,
+  serialized_end=824,
+)
+
+
+_BALANCECHANGED = _descriptor.Descriptor(
+  name='BalanceChanged',
+  full_name='account.BalanceChanged',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='accountNumber', full_name='account.BalanceChanged.accountNumber', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='changeAmount', full_name='account.BalanceChanged.changeAmount', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='newBalance', full_name='account.BalanceChanged.newBalance', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=826,
+  serialized_end=907,
 )
 
 DESCRIPTOR.message_types_by_name['OpenAccountRequest'] = _OPENACCOUNTREQUEST
@@ -505,8 +622,11 @@ DESCRIPTOR.message_types_by_name['AllAccountsRequest'] = _ALLACCOUNTSREQUEST
 DESCRIPTOR.message_types_by_name['AllAccountsResponse'] = _ALLACCOUNTSRESPONSE
 DESCRIPTOR.message_types_by_name['TotalBalanceRequest'] = _TOTALBALANCEREQUEST
 DESCRIPTOR.message_types_by_name['TotalBalanceResponse'] = _TOTALBALANCERESPONSE
+DESCRIPTOR.message_types_by_name['AuthorizationRequest'] = _AUTHORIZATIONREQUEST
+DESCRIPTOR.message_types_by_name['AuthorizationResponse'] = _AUTHORIZATIONRESPONSE
 DESCRIPTOR.message_types_by_name['SubscribeRequest'] = _SUBSCRIBEREQUEST
 DESCRIPTOR.message_types_by_name['AccountOpened'] = _ACCOUNTOPENED
+DESCRIPTOR.message_types_by_name['BalanceChanged'] = _BALANCECHANGED
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 OpenAccountRequest = _reflection.GeneratedProtocolMessageType('OpenAccountRequest', (_message.Message,), {
@@ -593,6 +713,20 @@ TotalBalanceResponse = _reflection.GeneratedProtocolMessageType('TotalBalanceRes
   })
 _sym_db.RegisterMessage(TotalBalanceResponse)
 
+AuthorizationRequest = _reflection.GeneratedProtocolMessageType('AuthorizationRequest', (_message.Message,), {
+  'DESCRIPTOR' : _AUTHORIZATIONREQUEST,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:account.AuthorizationRequest)
+  })
+_sym_db.RegisterMessage(AuthorizationRequest)
+
+AuthorizationResponse = _reflection.GeneratedProtocolMessageType('AuthorizationResponse', (_message.Message,), {
+  'DESCRIPTOR' : _AUTHORIZATIONRESPONSE,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:account.AuthorizationResponse)
+  })
+_sym_db.RegisterMessage(AuthorizationResponse)
+
 SubscribeRequest = _reflection.GeneratedProtocolMessageType('SubscribeRequest', (_message.Message,), {
   'DESCRIPTOR' : _SUBSCRIBEREQUEST,
   '__module__' : 'Account_pb2'
@@ -607,6 +741,13 @@ AccountOpened = _reflection.GeneratedProtocolMessageType('AccountOpened', (_mess
   })
 _sym_db.RegisterMessage(AccountOpened)
 
+BalanceChanged = _reflection.GeneratedProtocolMessageType('BalanceChanged', (_message.Message,), {
+  'DESCRIPTOR' : _BALANCECHANGED,
+  '__module__' : 'Account_pb2'
+  # @@protoc_insertion_point(class_scope:account.BalanceChanged)
+  })
+_sym_db.RegisterMessage(BalanceChanged)
+
 
 DESCRIPTOR._options = None
 
@@ -617,8 +758,8 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=712,
-  serialized_end=1354,
+  serialized_start=910,
+  serialized_end=1791,
   methods=[
   _descriptor.MethodDescriptor(
     name='Open',
@@ -651,9 +792,19 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='Payment',
+    full_name='account.Account.Payment',
+    index=3,
+    containing_service=None,
+    input_type=_ADJUSTBALANCEREQUEST,
+    output_type=_ADJUSTBALANCERESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='CheckBalance',
     full_name='account.Account.CheckBalance',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=_CHECKBALANCEREQUEST,
     output_type=_CHECKBALANCERESPONSE,
@@ -663,7 +814,7 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='TransferMoney',
     full_name='account.Account.TransferMoney',
-    index=4,
+    index=5,
     containing_service=None,
     input_type=_TRANSFERMONEYREQUEST,
     output_type=_TRANSFERMONEYRESPONSE,
@@ -673,7 +824,7 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='AllAccountNumbers',
     full_name='account.Account.AllAccountNumbers',
-    index=5,
+    index=6,
     containing_service=None,
     input_type=_ALLACCOUNTSREQUEST,
     output_type=_ALLACCOUNTSRESPONSE,
@@ -683,7 +834,7 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='TotalAccountBalances',
     full_name='account.Account.TotalAccountBalances',
-    index=6,
+    index=7,
     containing_service=None,
     input_type=_TOTALBALANCEREQUEST,
     output_type=_TOTALBALANCERESPONSE,
@@ -691,12 +842,32 @@ _ACCOUNT = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='RequestAuth',
+    full_name='account.Account.RequestAuth',
+    index=8,
+    containing_service=None,
+    input_type=_AUTHORIZATIONREQUEST,
+    output_type=_AUTHORIZATIONRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='SubscribeToAccountOpened',
     full_name='account.Account.SubscribeToAccountOpened',
-    index=7,
+    index=9,
     containing_service=None,
     input_type=_SUBSCRIBEREQUEST,
     output_type=_ACCOUNTOPENED,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SubscribeToBalanceChanged',
+    full_name='account.Account.SubscribeToBalanceChanged',
+    index=10,
+    containing_service=None,
+    input_type=_SUBSCRIBEREQUEST,
+    output_type=_BALANCECHANGED,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
