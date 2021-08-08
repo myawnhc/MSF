@@ -17,6 +17,23 @@ The technology stack used includes
 
 The intent is to make this a polyglot demo, featuring Java, C#, Python, Go, and Node.js, but the original prototype is all in Java.  After initial prototype version of services are validated they can be reimplemented in the chosen target language.
 
+# Building
+
+```bash
+git pull origin master
+mvn clean package install
+```
+
+# Running
+
+```bash
+cd TestClient
+docker-compose up
+```
+Test data is generated at startup time, you may notice pauses or warnings about waiting on a service to be ready, or data is still loading.  Once data is ready, the processing of orders will start (Look for log messages beginning with 'Placed order').  Additional logging tracks the progress of the order through the processing steps (detailed later in this document).
+
+You can change how many orders are generated on each run by changing the loop counter in the nonBlockingOrder method of the OrderServiceClient class (in TestClient module). 
+
 # Completed Steps
 
 - Basic prototype implementations of all 4 microservices
@@ -29,7 +46,7 @@ Proposing this as a candidate for the Platform 5.0 Hackathon; for purposes of th
 
 ### TODO: Additional process steps
 
-Currently only 3 of seven steps needed to fully process an order are implemented:
+Currently only about half of the seven steps needed to fully process an order are implemented:
 - Order creation
 - Price Lookup
 - Inventory Reservation (needs change to final stage)
