@@ -19,6 +19,7 @@ package com.hazelcast.msfdemo.ordersvc.views;
 
 import com.hazelcast.msf.persistence.DAO;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
+import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 
 public class OrderDAO extends DAO<Order, String> {
 
@@ -27,5 +28,8 @@ public class OrderDAO extends DAO<Order, String> {
     }
 
     // Non-inheritable query methods
+    public int countByWaitingOn(WaitingOn value) {
+        return map.aggregate(new CountByWaitingOn(value));
+    }
 
 }

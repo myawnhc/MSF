@@ -38,6 +38,7 @@ import com.hazelcast.msf.eventstore.SequencedEvent;
 import com.hazelcast.msf.messaging.EventMsgListener;
 import com.hazelcast.multimap.MultiMap;
 import com.hazelcast.ringbuffer.Ringbuffer;
+import com.hazelcast.scheduledexecutor.IScheduledExecutorService;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.topic.ITopic;
 
@@ -96,7 +97,9 @@ public class MSFController {
     public long getUniqueMessageID() { return messageID.newId(); }
     public IList getList(String name) { return hazelcast.getList(name); }
     public ICountDownLatch getCountDownLatch(String name) { return hazelcast.getCPSubsystem().getCountDownLatch(name); }
-
+    public IScheduledExecutorService getScheduledExecutorService(String name) {
+        return hazelcast.getScheduledExecutorService(name);
+    }
     // Event pub-sub support
     public Ringbuffer getRingbuffer(String name) {
         return hazelcast.getRingbuffer(name);

@@ -175,6 +175,7 @@ public class InventoryReservePipeline implements Runnable {
                         waits.add(WaitingOn.CHARGE_ACCOUNT);
                         waits.add(WaitingOn.PULL_INVENTORY);
                     }
+                    orderEntry.setValue(orderView1);
                     return orderView1;
                 });
             }

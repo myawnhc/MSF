@@ -15,6 +15,17 @@ services:
       MYSQL_ROOT_PASSWORD: "secret"
     command: --log-bin --binlog_format=ROW
 
+  dashboard:
+    image: msf/grafana:latest
+    container_name: grafana
+    deploy:
+      replicas: 1
+    ports:
+      - "80:80"
+      - "2003:2003"
+    networks:
+      - "msfnet"
+
   account:
     image: msf/account.service:latest
     container_name: acctsvc
@@ -36,6 +47,8 @@ services:
       - "50052:50052"
     networks:
       - "msfnet"
+    depends_on:
+      - dashboard
 
   inventory:
       image: msf/inventory.service:latest

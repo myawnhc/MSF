@@ -38,6 +38,7 @@
         <module>inventory-java</module>
         <module>catalog-java</module>
         <module>grpc-source</module>
+        <module>grafana</module>
 
     </modules>
 

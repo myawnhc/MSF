@@ -24,13 +24,18 @@ import com.hazelcast.msfdemo.ordersvc.business.CreateOrderPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.CreditCheckPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.InventoryReservePipeline;
 import com.hazelcast.msfdemo.ordersvc.business.PriceLookupPipeline;
+import com.hazelcast.msfdemo.ordersvc.dashboard.PumpGrafanaStats;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.msfdemo.ordersvc.views.OrderDAO;
+import com.hazelcast.scheduledexecutor.DuplicateTaskException;
+import com.hazelcast.scheduledexecutor.IScheduledExecutorService;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class OrderService {
 
@@ -38,6 +43,7 @@ public class OrderService {
     private OrderDAO orderDAO;
     private OrderEventStore eventStore;
     public static final String SERVICE_NAME = "OrderService";
+    private static final String GRAFANA_HOST = "grafana.host";
 
     public void init() {
         controller = MSFController.getInstance();
@@ -46,6 +52,22 @@ public class OrderService {
         // Initialize the EventStore
         eventStore = OrderEventStore.getInstance();
         // TODO: should have process that occasionally snapshots & compacts
+
+        // Start Grafana first, otherwise (for low order counts) we miss the first stages
+        // of order processing.
+        // Grafana needs to run in-cluster to minimize latency.
+        // grafana is docker container name; if running bare metal, add in /etc/hosts as localhost alias
+        String grafanaHost = System.getProperty(GRAFANA_HOST, "grafana");
+        //System.out.println("** Grafana host: " + grafanaHost);
+        PumpGrafanaStats pgs = new PumpGrafanaStats(grafanaHost, orderDAO);
+        IScheduledExecutorService dses = controller.getScheduledExecutorService("scheduledExecutor");
+        try {
+            dses.scheduleAtFixedRate(pgs, 1, 5, TimeUnit.SECONDS);
+        } catch (DuplicateTaskException dte) {
+            ; // OK to ignore
+        } catch (RejectedExecutionException ree) {
+            System.out.println("PumpGrafanaStats scheduled execution rejected");
+        }
 
         // Start the various Jet transaction handler pipelines
         ExecutorService executor = Executors.newFixedThreadPool(7);
@@ -64,6 +86,7 @@ public class OrderService {
         CollectPaymentPipeline collectPaymentPipeline = new CollectPaymentPipeline(this);
         executor.submit(collectPaymentPipeline);
 
+        // TODO: PullInventory pipeline to come.  Ship will just be a final status, not a pipeline.
     }
 
     public OrderEventStore getEventStore() { return eventStore; }

@@ -155,7 +155,7 @@ public class OrderServiceClient {
         int NUM_LOCATIONS = 100;
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
         // Bumping order count from 10 to 1K
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<30; i++) {
             int index = (int)(Math.random()*validAccounts.size());
             String acctNumber = validAccounts.get(index);
             int itemOffset = (int)(Math.random()*maxSafeItem+1);

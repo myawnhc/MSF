@@ -9,6 +9,7 @@
         <module name="order-java" />
         <module name="inventory-java" />
         <module name="framework" />
+        <module name="grafana" />
         <module name="order.protobuf" />
         <module name="TestClient" />
         <module name="catalog-java" />
