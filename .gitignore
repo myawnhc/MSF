@@ -1,2 +1,4 @@
 *.class
 *.jar
+/TestClient/data/
+/TestClient/log/

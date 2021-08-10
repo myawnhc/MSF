@@ -77,7 +77,6 @@ public class PumpGrafanaStats implements Serializable, Runnable, HazelcastInstan
             int wait0 = dao.countByWaitingOn(WaitingOn.PRICE_LOOKUP);
             int wait1 = dao.countByWaitingOn(WaitingOn.CREDIT_CHECK);
             int wait2 = dao.countByWaitingOn(WaitingOn.RESERVE_INVENTORY);
-            System.out.println("*** WRITE STATS FIRST VALUES " + wait0 + ", " + wait1 + ", " + wait2);
             graphite.writeStats("wait4.priceLookup", dao.countByWaitingOn(WaitingOn.PRICE_LOOKUP));
             graphite.writeStats("wait4.creditCheck", dao.countByWaitingOn(WaitingOn.CREDIT_CHECK));
             graphite.writeStats("wait4.reserveInv", dao.countByWaitingOn(WaitingOn.RESERVE_INVENTORY));
