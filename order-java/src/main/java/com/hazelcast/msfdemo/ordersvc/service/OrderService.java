@@ -69,6 +69,7 @@ public class OrderService {
     public OrderEventStore getEventStore() { return eventStore; }
     public OrderDAO getDAO() { return orderDAO; }
     public IMap<String, Order> getView() { return orderDAO.getMap(); }
+    public IMap getMap(String name) { return controller.getMap(name);}
 
     public void shutdown() {
         // notify Hazelcast controller, it can shut down if no other

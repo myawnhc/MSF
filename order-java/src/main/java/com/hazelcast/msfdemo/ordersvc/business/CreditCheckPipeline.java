@@ -36,6 +36,7 @@ import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
 import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import com.hazelcast.msfdemo.ordersvc.events.AccountInventoryCombo;
 import com.hazelcast.msfdemo.ordersvc.events.CreditCheckEvent;
 import com.hazelcast.msfdemo.ordersvc.events.PriceLookupEvent;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
@@ -55,6 +56,9 @@ public class CreditCheckPipeline implements Runnable {
     private static String accountServiceHost;
     private static int accountServicePort;
     private static IMap<Long, OrderPriced> orderPricedEvents;
+
+    private static final String PENDING_MAP_NAME = "pendingValidation";
+    private static final String COMPLETED_MAP_NAME = "JRN.completedValidation";
 
     public CreditCheckPipeline(OrderService service) {
         CreditCheckPipeline.orderService = service;
@@ -100,11 +104,17 @@ public class CreditCheckPipeline implements Runnable {
                 ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
 
         // IMap/Materialized View as a service
-        ServiceFactory<?, IMap<String,Order>> materializedViewServiceFatory =
+        ServiceFactory<?, IMap<String,Order>> materializedViewServiceFactory =
                 ServiceFactories.iMapService(orderService.getView().getName());
 
-        // Orders materialized view
+        // Maps for MapUsingIMap calls (not serializable, cannot reference outside those calls)
         IMap<String, Order> orderMap = orderService.getView();
+
+        ServiceFactory<?, IMap<String, AccountInventoryCombo>> pendingMapService =
+                ServiceFactories.iMapService(PENDING_MAP_NAME);
+
+//        ServiceFactory<?, IMap<String, AccountInventoryCombo>> completedMapService =
+//                ServiceFactories.iMapService(COMPLETED_MAP_NAME);
 
         Pipeline p = Pipeline.create();
         StreamStage<OrderPriced> pricingStream = p.readFrom(Sources.mapJournal(orderPricedEvents,
@@ -136,29 +146,62 @@ public class CreditCheckPipeline implements Runnable {
                     });
         });
 
-        // Perist to event store
+        // Persist to event store
         creditCheckEvents.mapUsingService(eventStoreServiceFactory, (store, ccevent) -> {
             store.append(ccevent);
             return ccevent;
         }).setName("Persist CreditCheckEvent to event store")
         // Update materialized view
-                .mapUsingService(materializedViewServiceFatory, (viewMap, ccevent) -> {
-                    viewMap.executeOnKey(ccevent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
+                .mapUsingService(materializedViewServiceFactory, (viewMap, ccevent) -> {
+                    Order order = viewMap.executeOnKey(ccevent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
                         Order orderView = orderEntry.getValue();
                         EnumSet<WaitingOn> waits = orderView.getWaitingOn();
                         waits.remove(WaitingOn.CREDIT_CHECK);
+                        System.out.println("* After removing C_C: " + waits.toString());
                         if (waits.isEmpty()) {
                             waits.add(WaitingOn.CHARGE_ACCOUNT);
                             waits.add(WaitingOn.PULL_INVENTORY);
+                            orderEntry.setValue(orderView);
+                            System.out.println("After removing CC wait, empty, reset and pass on");
+                            return orderView;
+                        } else {
+                            orderEntry.setValue(orderView);
+                            System.out.println("After removing CC wait, non-empty so filtering");
+                            return null;
                         }
-                        orderEntry.setValue(orderView);
-                        return orderView;
                     });
-                    return ccevent;
+                    return order == null ? null : ccevent;
                 })
                 .setName("Update order Materialized View")
-        // Could move MV update to sink stage but for now just append a nop sink
-        .writeTo(Sinks.noop());
+                .mapUsingService(pendingMapService, (map, ccevent) -> {
+
+                    String orderNumber = ccevent.getOrderNumber();
+                    AccountInventoryCombo combo = map.get(orderNumber);
+                    System.out.println("Combo: " + combo);
+                    if (combo != null) {
+                        // validate
+                        if (!combo.hasInventoryFields()) {
+                            System.out.println("WARNING: pending entry has no inventory data");
+                        }
+                        combo.setAccountFields(ccevent);
+                        map.remove(combo);
+                        //completedMap.set(orderNumber, combo);
+                        System.out.println("Combo completed with acct fields " + combo);
+                        return combo;
+                    } else {
+                        combo = new AccountInventoryCombo();
+                        combo.setAccountFields(ccevent);
+                        map.set(combo.getOrderNumber(), combo);
+                        System.out.println("Combo created with acct fields");
+                        return null;
+                    }
+                })
+                .setName("Merge account and inventory results")
+                .setName("Merge inventory and account results into combo item")
+                .writeTo(Sinks.map(COMPLETED_MAP_NAME,
+                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toValueFn */ combo -> combo))
+                .setName("Sink inv-acct combo item into map");
         return p;
     }
 }

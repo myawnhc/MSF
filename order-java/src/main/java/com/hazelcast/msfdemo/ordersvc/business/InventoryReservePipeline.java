@@ -36,6 +36,7 @@ import com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass;
 import com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.ReserveRequest;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import com.hazelcast.msfdemo.ordersvc.events.AccountInventoryCombo;
 import com.hazelcast.msfdemo.ordersvc.events.InventoryReserveEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced;
 import com.hazelcast.msfdemo.ordersvc.events.PriceLookupEvent;
@@ -46,9 +47,7 @@ import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
 import java.util.EnumSet;
-import java.util.Map;
 
-import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
 import static com.hazelcast.jet.grpc.GrpcServices.unaryService;
 
 public class InventoryReservePipeline implements Runnable {
@@ -58,7 +57,12 @@ public class InventoryReservePipeline implements Runnable {
     private static int inventoryServicePort;
     private static IMap<Long, OrderPriced> orderPricedEvents;
 
-    public InventoryReservePipeline(OrderService service) { InventoryReservePipeline.orderService = service; }
+    private static final String PENDING_MAP_NAME = "pendingValidation";
+    private static final String COMPLETED_MAP_NAME = "JRN.completedValidation";
+
+    public InventoryReservePipeline(OrderService service) {
+        InventoryReservePipeline.orderService = service;
+    }
 
     @Override
     public void run() {
@@ -94,9 +98,7 @@ public class InventoryReservePipeline implements Runnable {
 
         Pipeline p = Pipeline.create();
 
-        // Input from map journal has type Map.Entry<Long, OrderEvent>; once filtered
-        // the items will be specifically MapEntry<Long,PriceLookupEvent>
-        StreamStage<Map.Entry<Long, InventoryReserveEvent>> lookupStream = p.readFrom(Sources.mapJournal(orderPricedEvents,
+        StreamStage<InventoryReserveEvent> reserveEvents = p.readFrom(Sources.mapJournal(orderPricedEvents,
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
                 .setName("Read from " + orderPricedEvents.getName())
@@ -118,11 +120,6 @@ public class InventoryReservePipeline implements Runnable {
                     // accordingly downstream.
                     return service.call(request)
                             .thenApply(response -> {
-                                // Get incoming event, will copy over fields that aren't changed.
-                                // Might be better to get from DAO so we don't need to have
-                                // full item content carried along with every event
-                                //System.out.println("Received response from inventory reserve API: " + response.getSuccess());
-                                // Looking for possibility of CCE here ..
                                 OrderPriced lookup = eventEntry.getValue();
                                 InventoryReserveEvent reserve = new InventoryReserveEvent(lookup.getOrderNumber());
                                 reserve.setItemNumber(request.getItemNumber());
@@ -142,7 +139,8 @@ public class InventoryReservePipeline implements Runnable {
                                 // Non-request-specific fields carried over from last event
                                 reserve.setOrderNumber(lookup.getOrderNumber());
                                 reserve.setAccountNumber(order.getAcctNumber());
-                                return tuple2(eventEntry.getKey(), reserve);
+                                //return tuple2(eventEntry.getKey(), reserve);
+                                return reserve;
                             });
                 });
 
@@ -152,50 +150,74 @@ public class InventoryReservePipeline implements Runnable {
                         (ctx) -> OrderEventStore.getInstance()
                 );
 
-        ServiceFactory<?,IMap<String,Order>> materializedViewServiceFactory = ServiceFactories.iMapService(orderService.getView().getName());
+        ServiceFactory<?,IMap<String,Order>> materializedViewServiceFactory =
+                ServiceFactories.iMapService(orderService.getView().getName());
 
-        lookupStream.mapUsingService(eventStoreServiceFactory, (store, entry) -> {
-            store.append(entry.getValue());
-            return entry;
-        }).setName("Persist InventoryReserveEvent to event store")
+        ServiceFactory<?, IMap<String, AccountInventoryCombo>> pendingMapService =
+                ServiceFactories.iMapService(PENDING_MAP_NAME);
 
-         // Create Materialized View object and publish it
-        .mapUsingService(materializedViewServiceFactory, (viewMap, tuple)-> {
-            InventoryReserveEvent invEvent = tuple.getValue();
-            if (invEvent.getQuantity() != -1) {
-                //System.out.println("Updating Order (Materialized View) object with inv info");
-                viewMap.executeOnKey(invEvent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
-                    Order orderView1 = orderEntry.getValue();
-                    // Today this will always be a non-change, but possible we'd have an option
-                    // to partially fill an order and inventory reserved might not match requested.
-                    orderView1.setQuantity(invEvent.getQuantity());
-                    EnumSet<WaitingOn> waits = orderView1.getWaitingOn();
-                    waits.remove(WaitingOn.RESERVE_INVENTORY);
-                    if (waits.isEmpty()) {
-                        waits.add(WaitingOn.CHARGE_ACCOUNT);
-                        waits.add(WaitingOn.PULL_INVENTORY);
-                    }
+//        ServiceFactory<?, IMap<String, AccountInventoryCombo>> completedMapService =
+//                ServiceFactories.iMapService(COMPLETED_MAP_NAME);
+
+        // Append to Event Store
+        StreamStage<InventoryReserveEvent> persistedEvents = reserveEvents.mapUsingService(eventStoreServiceFactory, (store, event) -> {
+            store.append(event);
+            return event;
+        }).setName("Persist InventoryReserveEvent to event store");
+
+        // Update Materialized View
+        persistedEvents.mapUsingService(materializedViewServiceFactory, (viewMap, invEvent) -> {
+            // Types for viewMap, invEvent are unknown here but resolve fine in nearly-identical CreditCheckPipeline
+            Order order = viewMap.executeOnKey(invEvent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
+                Order orderView1 = orderEntry.getValue();
+                // Today this will always be a non-change, but possible we'd have an option
+                // to partially fill an order and inventory reserved might not match requested.
+                orderView1.setQuantity(invEvent.getQuantity());
+                EnumSet<WaitingOn> waits = orderView1.getWaitingOn();
+                waits.remove(WaitingOn.RESERVE_INVENTORY);
+                System.out.println("* After removing ReserveInventory, waiting on: " + waits.toString());
+                if (waits.isEmpty()) {
+                    waits.add(WaitingOn.CHARGE_ACCOUNT);
+                    waits.add(WaitingOn.PULL_INVENTORY);
+                    orderEntry.setValue(orderView1);
                     return orderView1;
-                });
-            }
-            //System.out.println("View object updated with reserved inventory");
-            return tuple;
-        }).setName("Update Order Materialized View")
+                } else {
+                    orderEntry.setValue(orderView1);
+                    return null;
+                }
+            });
+            return order == null ? null : invEvent;
+        })
+                //System.out.println("View object updated with reserved inventory");
+                //return tuple;
+                .setName("Update Order Materialized View")
+                .mapUsingService(pendingMapService, (map, irevent) -> {
+                    String orderNumber = irevent.getOrderNumber();
+                    AccountInventoryCombo combo = map.get(orderNumber);
+                    System.out.println("IR Combo: " + combo);
+                    if (combo != null) {
+                        // validate
+                        if (!combo.hasAccountFields()) {
+                            System.out.println("WARNING: pending entry has no account data");
+                        }
+                        combo.setInventoryFields(irevent);
+                        map.remove(irevent);
+                        System.out.println("Combo completed with inventory fields " + combo);
+                        return combo;
+                    } else {
+                        combo = new AccountInventoryCombo();
+                        combo.setInventoryFields(irevent);
+                        map.set(combo.getOrderNumber(), combo);
+                        System.out.println("Combo created with inventory fields");
+                        return null;
+                    }
 
-        // Now that events are subscribed to individually, we don't write every stage result
-                // back to the client.
-//        .map( tuple -> {
-//            Long uniqueID = tuple.getKey();
-//            OrderEvent event = tuple.getValue();
-//            APIResponse<OrderEvent> response = new APIResponse<>(uniqueID, event);
-//            //System.out.println("Building and returning API response");
-//            return new AbstractMap.SimpleEntry<>(uniqueID, response);
-//        }).setName("Build client APIResponse")
-//                .writeTo(Sinks.map(responseMap))
-//                .setName("Write result to response map (triggers response to client)");
-                .writeTo(Sinks.noop())
-                .setName("/dev/null");
-
+                })
+                .setName("Merge inventory and account results into combo item")
+                .writeTo(Sinks.map(COMPLETED_MAP_NAME,
+                                /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toValueFn */ combo -> combo))
+                .setName("Sink inv-acct combo item into map");
         return p;
     }
 }

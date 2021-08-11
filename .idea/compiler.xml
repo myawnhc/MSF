@@ -21,6 +21,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="account-protobuf" target="11" />
+      <module name="grafana" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

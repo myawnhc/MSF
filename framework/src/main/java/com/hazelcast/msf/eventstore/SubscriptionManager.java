@@ -30,7 +30,7 @@ import java.util.List;
 public class SubscriptionManager<T> {
 
     private String name;
-    private List<StreamObserver<T>> subscribers;
+    private final List<StreamObserver<T>> subscribers;
     private Ringbuffer<T> ringBuffer;
     private boolean verbose = true;
 

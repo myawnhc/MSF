@@ -140,6 +140,8 @@ public class PriceLookupPipeline implements Runnable {
                 Order orderView1 = orderEntry.getValue();
                 orderView1.setExtendedPrice(orderEvent.getExtendedPrice());
                 orderView1.setWaitingOn(EnumSet.of(WaitingOn.CREDIT_CHECK, WaitingOn.RESERVE_INVENTORY));
+                System.out.println("PLP updates wait flags to " + orderView1.getWaitingOn().toString());
+                orderEntry.setValue(orderView1);
                 return orderView1;
             });
             return tuple;
