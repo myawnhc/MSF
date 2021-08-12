@@ -25,6 +25,7 @@ import com.hazelcast.msfdemo.ordersvc.events.CreateOrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
 import com.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
+import com.hazelcast.msfdemo.ordersvc.events.OrderShippedEvent;
 import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
 
@@ -103,6 +104,13 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
                                         StreamObserver<OrderCreated> responseObserver) {
         // request is an empty type
         CreateOrderEvent.subscribe(responseObserver);
+    }
+
+    @Override
+    public void subscribeToOrderShipped(SubscribeRequest request,
+                                        StreamObserver<OrderShipped> responseObserver) {
+        // request is an empty type
+        OrderShippedEvent.subscribe(responseObserver);
     }
 
 //    public static class EventHandler {

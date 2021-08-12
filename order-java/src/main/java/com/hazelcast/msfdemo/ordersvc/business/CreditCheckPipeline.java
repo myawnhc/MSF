@@ -168,11 +168,11 @@ public class CreditCheckPipeline implements Runnable {
                     return ccevent;
                 })
                 .setName("Update order Materialized View")
-                .mapUsingService(pendingMapService, (map, ccevent) -> {
 
+                // Create or Update the Combo event (Inventory Reserved + Credit Checked)
+                .mapUsingService(pendingMapService, (map, ccevent) -> {
                     String orderNumber = ccevent.getOrderNumber();
                     AccountInventoryCombo combo = map.get(orderNumber);
-                    System.out.println("Combo: " + combo);
                     if (combo != null) {
                         // validate
                         if (!combo.hasInventoryFields()) {
@@ -181,17 +181,19 @@ public class CreditCheckPipeline implements Runnable {
                         combo.setAccountFields(ccevent);
                         map.remove(combo);
                         //completedMap.set(orderNumber, combo);
-                        System.out.println("Combo completed with acct fields " + combo);
+                        System.out.println("CCPipeline: CC+IR Combo completed with acct fields " + combo);
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setAccountFields(ccevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("Combo created with acct fields");
+                        System.out.println("CCPipeline: CC+IR Combo created with acct fields");
                         return null;
                     }
                 })
                 .setName("Merge inventory and account results into combo item")
+
+                // If CC+IR both present, sink into completed map to pass to next stages
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
                         /* toKeyFn*/ combo -> combo.getOrderNumber(),
                         /* toValueFn */ combo -> combo))

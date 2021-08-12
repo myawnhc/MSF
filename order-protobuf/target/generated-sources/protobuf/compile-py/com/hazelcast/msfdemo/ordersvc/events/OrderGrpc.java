@@ -429,6 +429,9 @@ public final class OrderGrpc {
     }
 
     /**
+     * <pre>
+     * Both are obsolete, can remove
+     * </pre>
      */
     public void subscribeToValidationInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
@@ -597,6 +600,9 @@ public final class OrderGrpc {
     }
 
     /**
+     * <pre>
+     * Both are obsolete, can remove
+     * </pre>
      */
     public void subscribeToValidationInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
         io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
@@ -691,6 +697,9 @@ public final class OrderGrpc {
     }
 
     /**
+     * <pre>
+     * Both are obsolete, can remove
+     * </pre>
      */
     public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> subscribeToValidationInvAcctCombo(
         com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {

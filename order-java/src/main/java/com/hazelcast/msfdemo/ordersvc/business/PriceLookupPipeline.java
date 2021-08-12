@@ -30,12 +30,10 @@ import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msf.controller.MSFController;
-import com.hazelcast.msf.messaging.APIResponse;
 import com.hazelcast.msf.messaging.StreamObserverToIMapAdapter;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import com.hazelcast.msfdemo.ordersvc.events.CreateOrderEvent;
-import com.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
 import com.hazelcast.msfdemo.ordersvc.events.PriceLookupEvent;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.msfdemo.ordersvc.service.OrderService;
@@ -96,8 +94,8 @@ public class PriceLookupPipeline implements Runnable {
         );
 
         Pipeline p = Pipeline.create();
-        String responseMapName = OrderEventTypes.CREATE.getQualifiedName() + ".Results";
-        IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
+//        String responseMapName = OrderEventTypes.CREATE.getQualifiedName() + ".Results";
+//        IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
 
         StreamStage<Map.Entry<Long,PriceLookupEvent>> lookupStream = p.readFrom(Sources.mapJournal(orderCreatedEvents,
                 JournalInitialPosition.START_FROM_OLDEST))

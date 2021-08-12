@@ -17,8 +17,10 @@
 
 package com.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.msf.eventstore.SubscriptionManager;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
+import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 import java.util.EnumSet;
@@ -27,22 +29,38 @@ public class OrderShippedEvent extends OrderEvent implements Serializable {
 
     private int quantityShipped;
     private String itemNumber;
+    private String location;
+
+    static SubscriptionManager<OrderOuterClass.OrderShipped> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.OrderShipped.getDescriptor().getFullName());
+
 
     public OrderShippedEvent(String orderNumber, String itemNumber, String location,
                             int quantity, int extendedPrice) {
         super(orderNumber);
         this.quantityShipped = quantity;
+        this.itemNumber = itemNumber;
+        this.location = location;
+    }
+
+    public static void subscribe(StreamObserver<OrderOuterClass.OrderShipped> observer) {
+        subscriptionManager.subscribe(observer, 0);
     }
 
     @Override
     public void publish() {
-        System.out.println("****** OrderShippedEvent.publish unimplemented!");
+        OrderOuterClass.OrderShipped grpcEvent = OrderOuterClass.OrderShipped.newBuilder()
+                .setOrderNumber(this.orderNumber)
+                .setItemNumber(this.itemNumber)
+                .setQuantityShipped(this.quantityShipped)
+                .build();
+        subscriptionManager.publish(grpcEvent);
     }
 
     @Override
     public Order apply(Order order) {
         order.setOrderNumber(super.orderNumber);
         order.setItemNumber(itemNumber);
+        order.setLocation(location);
         order.setQuantity(quantityShipped);
         order.setWaitingOn(EnumSet.of(WaitingOn.NOTHING));
         return order;    }

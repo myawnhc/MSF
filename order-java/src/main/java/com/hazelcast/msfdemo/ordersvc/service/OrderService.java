@@ -25,6 +25,7 @@ import com.hazelcast.msfdemo.ordersvc.business.CreditCheckPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.InventoryReservePipeline;
 import com.hazelcast.msfdemo.ordersvc.business.PriceLookupPipeline;
 import com.hazelcast.msfdemo.ordersvc.business.PullInventoryPipeline;
+import com.hazelcast.msfdemo.ordersvc.business.ShipPipeline;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.msfdemo.ordersvc.views.OrderDAO;
@@ -67,6 +68,9 @@ public class OrderService {
 
         PullInventoryPipeline pullInventoryPipeline = new PullInventoryPipeline(this);
         executor.submit(pullInventoryPipeline);
+
+        ShipPipeline shipPipeline = new ShipPipeline(this);
+        executor.submit(shipPipeline);
 
     }
 

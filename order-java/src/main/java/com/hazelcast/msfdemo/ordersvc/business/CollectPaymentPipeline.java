@@ -51,6 +51,9 @@ public class CollectPaymentPipeline implements Runnable {
     private static int accountServicePort;
     private static IMap<String, AccountInventoryCombo> acctInvCombos;
 
+    private static final String PENDING_MAP_NAME = "pendingTransactions";
+    private static final String COMPLETED_MAP_NAME = "JRN.completedTransactions";
+
     public CollectPaymentPipeline(OrderService service) {
         CollectPaymentPipeline.orderService = service;
     }
@@ -87,7 +90,6 @@ public class CollectPaymentPipeline implements Runnable {
                 () -> ManagedChannelBuilder.forAddress(accountServiceHost, accountServicePort) .usePlaintext(),
                 channel -> AccountGrpc.newStub(channel)::payment);
 
-
         // EventStore as a service
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
                 ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
@@ -95,6 +97,10 @@ public class CollectPaymentPipeline implements Runnable {
         // IMap/Materialized View as a service
         ServiceFactory<?, IMap<String,Order>> materializedViewServiceFactory =
                 ServiceFactories.iMapService(orderService.getView().getName());
+
+        // Pending map as a service
+        ServiceFactory<?, IMap<String, AccountInventoryCombo>> pendingMapService =
+                ServiceFactories.iMapService(PENDING_MAP_NAME);
 
         Pipeline p = Pipeline.create();
 
@@ -144,7 +150,35 @@ public class CollectPaymentPipeline implements Runnable {
             });
             return ccevent;
         }).setName("Update order Materialized View")
-                .writeTo(Sinks.noop());
+
+                // Create or Update the Combo event (Inventory Pulled + Payment collected)
+                .mapUsingService(pendingMapService, (map, cpevent) -> {
+                    String orderNumber = cpevent.getOrderNumber();
+                    AccountInventoryCombo combo = map.get(orderNumber);
+                    if (combo != null) {
+                        // validate
+                        if (!combo.hasInventoryFields()) {
+                            System.out.println("WARNING: pending combo entry has no inventory data");
+                        }
+                        combo.setAccountFields(cpevent);
+                        map.remove(cpevent);
+                        System.out.println("IRPipeline: CC+IR Combo completed with account fields " + combo);
+                        return combo;
+                    } else {
+                        combo = new AccountInventoryCombo();
+                        combo.setAccountFields(cpevent);
+                        map.set(combo.getOrderNumber(), combo);
+                        System.out.println("CPPipeline: CP+IP Combo created with account fields");
+                        return null;
+                    }
+                })
+                .setName("Merge inventory and account results into combo item")
+
+                // If CP+IP both present, sink into completed map to pass to next stages
+                .writeTo(Sinks.map(COMPLETED_MAP_NAME,
+                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toValueFn */ combo -> combo))
+                .setName("Sink inv-acct combo item into map");
         return p;
     }
 }

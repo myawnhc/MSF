@@ -63,6 +63,7 @@ public class OrderServiceClient {
 
         try {
             OrderServiceClient orderServiceClient = new OrderServiceClient(channel);
+            orderServiceClient.subscribeToShipmentNotifications();
             orderServiceClient.nonBlockingOrder();
         } finally {
 
@@ -112,29 +113,51 @@ public class OrderServiceClient {
         }
     }
 
-    private static class OrderEventResponseProcessor implements StreamObserver<OrderEventResponse> {
+//    private static class OrderEventResponseProcessor implements StreamObserver<OrderEventResponse> {
+//
+//        @Override
+//        public void onNext(OrderEventResponse orderEventResponse) {
+//            System.out.println("Received response: " + formatResponse(orderEventResponse));
+//        }
+//
+//        @Override
+//        public void onError(Throwable throwable) {
+//            System.out.println("onError " + throwable);
+//        }
+//
+//        @Override
+//        public void onCompleted() { }
+//    }
 
-        @Override
-        public void onNext(OrderEventResponse orderEventResponse) {
-            System.out.println("Received response: " + formatResponse(orderEventResponse));
-        }
+//    static String formatResponse(OrderEventResponse response) {
+//        return response.getEventName() + " O:" + response.getOrderNumber() +
+//                " A:" + response.getAccountNumber() +
+//                " I: " + response.getItemNumber() +
+//                " L: " + response.getLocation() +
+//                " Q: " + response.getQuantity() +
+//                " $: " + response.getExtendedPrice();
+//    }
 
-        @Override
-        public void onError(Throwable throwable) {
-            System.out.println("onError " + throwable);
-        }
+    public void subscribeToShipmentNotifications() {
+        SubscribeRequest request = SubscribeRequest.newBuilder().build();
+        asyncStub.subscribeToOrderShipped(request, new StreamObserver<OrderShipped>() {
 
-        @Override
-        public void onCompleted() { }
-    }
+            @Override
+            public void onNext(OrderShipped orderShipped) {
+                System.out.println("Client notified that order " + orderShipped.getOrderNumber() + " has now shipped");
+            }
 
-    static String formatResponse(OrderEventResponse response) {
-        return response.getEventName() + " O:" + response.getOrderNumber() +
-                " A:" + response.getAccountNumber() +
-                " I: " + response.getItemNumber() +
-                " L: " + response.getLocation() +
-                " Q: " + response.getQuantity() +
-                " $: " + response.getExtendedPrice();
+            @Override
+            public void onError(Throwable throwable) {
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+                // Not expected as we never complete the stream on server side
+                System.out.println("Client notified that shipment reasponse stream is completed");
+            }
+        });
     }
 
     public void nonBlockingOrder()  {
@@ -155,7 +178,7 @@ public class OrderServiceClient {
         int NUM_LOCATIONS = 100;
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
         // Bumping order count from 10 to 1K
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<100; i++) {
             int index = (int)(Math.random()*validAccounts.size());
             String acctNumber = validAccounts.get(index);
             int itemOffset = (int)(Math.random()*maxSafeItem+1);

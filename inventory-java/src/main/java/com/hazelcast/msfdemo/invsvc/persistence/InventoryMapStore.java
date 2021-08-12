@@ -68,6 +68,9 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
     private static final String selectInventoryTemplate =
             "select item_number, location, quantity, reserved, atp from inventory where item_number = ? and location = ?";
 
+    private static final String updateInventoryTemplate =
+            "update inventory set quantity=?, reserved=?, atp=? where item_number = ? and location = ?";
+
     private static final String selectItemTemplate =
             "select description from item where item_number = ?";
 
@@ -83,6 +86,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
     private PreparedStatement selectLocationStatement;
     private PreparedStatement selectItemStatement;
     private PreparedStatement selectItemKeysStatement;
+    private PreparedStatement updateInventoryStatement;
 
     public InventoryMapStore() {
         // Connect and create database if it doesn't yet exist
@@ -240,8 +244,19 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             int rowsAffected = insertInventoryStatement.executeUpdate();
             //System.out.println("writeInventory rows " + rowsAffected);
         } catch (SQLIntegrityConstraintViolationException e) {
-            // TODO: Update; only allow chage to the 3 quantity fields.
-            System.out.println("WARNING: Upsert not implemented in InventoryMapStore.writeInventory");
+            // Update; only allow change to the 3 quantity fields.
+            try {
+                if (updateInventoryStatement == null)
+                    updateInventoryStatement = conn.prepareStatement(updateInventoryTemplate);
+                updateInventoryStatement.setInt(1, inv.getQuantityOnHand());
+                updateInventoryStatement.setInt(2, inv.getQuantityReserved());
+                updateInventoryStatement.setInt(3, inv.getAvailableToPromise());
+                updateInventoryStatement.setString(4, inv.getItemNumber());
+                updateInventoryStatement.setString(5, inv.getLocation());
+                int rowsAffected = updateInventoryStatement.executeUpdate();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -13,8 +13,9 @@ service Order {
   rpc SubscribeToInventoryPulled (SubscribeRequest) returns (stream InventoryPulled) {}
   rpc SubscribeToOrderShipped (SubscribeRequest) returns (stream OrderShipped) {}
 
-  rpc SubscribeToValidationInvAcctCombo (SubscribeRequest) returns (stream InvAcctCombo) {}
-  rpc SubscribeToFinalInvAcctCombo (SubscribeRequest) returns (stream InvAcctCombo) {}
+  // Both are obsolete, can remove
+//  rpc SubscribeToValidationInvAcctCombo (SubscribeRequest) returns (stream InvAcctCombo) {}
+//  rpc SubscribeToFinalInvAcctCombo (SubscribeRequest) returns (stream InvAcctCombo) {}
 }
 
 message CreateOrderRequest {
@@ -86,13 +87,13 @@ message OrderShipped {
   int32 quantityShipped = 3;
 }
 
-message InvAcctCombo {
-  string orderNumber = 1;
-  // account fields
-  string acctNumber = 2;
-  int32 amountCharged = 3;
-  // inventory fields
-  string itemNumber = 4;
-  string location = 5;
-  int32 quantity = 6;
-}
+//message InvAcctCombo {
+//  string orderNumber = 1;
+//  // account fields
+//  string acctNumber = 2;
+//  int32 amountCharged = 3;
+//  // inventory fields
+//  string itemNumber = 4;
+//  string location = 5;
+//  int32 quantity = 6;
+//}

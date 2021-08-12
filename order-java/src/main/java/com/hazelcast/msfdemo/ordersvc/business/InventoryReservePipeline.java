@@ -156,9 +156,6 @@ public class InventoryReservePipeline implements Runnable {
         ServiceFactory<?, IMap<String, AccountInventoryCombo>> pendingMapService =
                 ServiceFactories.iMapService(PENDING_MAP_NAME);
 
-//        ServiceFactory<?, IMap<String, AccountInventoryCombo>> completedMapService =
-//                ServiceFactories.iMapService(COMPLETED_MAP_NAME);
-
         // Append to Event Store
         StreamStage<InventoryReserveEvent> persistedEvents = reserveEvents.mapUsingService(eventStoreServiceFactory, (store, event) -> {
             store.append(event);
@@ -185,33 +182,35 @@ public class InventoryReservePipeline implements Runnable {
             });
             return invEvent;
         })
-                //System.out.println("View object updated with reserved inventory");
-                //return tuple;
                 .setName("Update Order Materialized View")
+
+                // Create or Update the Combo event (Inventory Reserved + Credit Checked)
                 .mapUsingService(pendingMapService, (map, irevent) -> {
                     String orderNumber = irevent.getOrderNumber();
                     AccountInventoryCombo combo = map.get(orderNumber);
                     if (combo != null) {
                         // validate
                         if (!combo.hasAccountFields()) {
-                            System.out.println("WARNING: pending entry has no account data");
+                            System.out.println("WARNING: pending combo entry has no account data");
                         }
                         combo.setInventoryFields(irevent);
                         map.remove(irevent);
-                        System.out.println("Combo completed with inventory fields " + combo);
+                        System.out.println("IRPipeline: CC+IR Combo completed with inventory fields " + combo);
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setInventoryFields(irevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("Combo created with inventory fields");
+                        System.out.println("IRPipeline: CC+IR Combo created with inventory fields");
                         return null;
                     }
 
                 })
                 .setName("Merge inventory and account results into combo item")
+
+                // If CC+IR both present, sink into completed map to pass to next stages
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
-                                /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
                         /* toValueFn */ combo -> combo))
                 .setName("Sink inv-acct combo item into map");
         return p;
