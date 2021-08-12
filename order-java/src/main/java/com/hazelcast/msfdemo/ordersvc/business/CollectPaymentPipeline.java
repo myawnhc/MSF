@@ -162,13 +162,13 @@ public class CollectPaymentPipeline implements Runnable {
                         }
                         combo.setAccountFields(cpevent);
                         map.remove(cpevent);
-                        System.out.println("IRPipeline: CC+IR Combo completed with account fields " + combo);
+                        //System.out.println("CPPipeline: CC+IR Combo completed with account fields ");
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setAccountFields(cpevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("CPPipeline: CP+IP Combo created with account fields");
+                        //System.out.println("CPPipeline: CP+IP Combo created with account fields");
                         return null;
                     }
                 })

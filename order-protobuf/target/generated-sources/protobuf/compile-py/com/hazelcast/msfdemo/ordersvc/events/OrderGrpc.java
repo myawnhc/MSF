@@ -262,68 +262,6 @@ public final class OrderGrpc {
     return getSubscribeToOrderShippedMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToValidationInvAcctComboMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "SubscribeToValidationInvAcctCombo",
-      requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class,
-      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToValidationInvAcctComboMethod() {
-    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToValidationInvAcctComboMethod;
-    if ((getSubscribeToValidationInvAcctComboMethod = OrderGrpc.getSubscribeToValidationInvAcctComboMethod) == null) {
-      synchronized (OrderGrpc.class) {
-        if ((getSubscribeToValidationInvAcctComboMethod = OrderGrpc.getSubscribeToValidationInvAcctComboMethod) == null) {
-          OrderGrpc.getSubscribeToValidationInvAcctComboMethod = getSubscribeToValidationInvAcctComboMethod =
-              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToValidationInvAcctCombo"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo.getDefaultInstance()))
-              .setSchemaDescriptor(new OrderMethodDescriptorSupplier("SubscribeToValidationInvAcctCombo"))
-              .build();
-        }
-      }
-    }
-    return getSubscribeToValidationInvAcctComboMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToFinalInvAcctComboMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "SubscribeToFinalInvAcctCombo",
-      requestType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.class,
-      responseType = com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-      com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToFinalInvAcctComboMethod() {
-    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> getSubscribeToFinalInvAcctComboMethod;
-    if ((getSubscribeToFinalInvAcctComboMethod = OrderGrpc.getSubscribeToFinalInvAcctComboMethod) == null) {
-      synchronized (OrderGrpc.class) {
-        if ((getSubscribeToFinalInvAcctComboMethod = OrderGrpc.getSubscribeToFinalInvAcctComboMethod) == null) {
-          OrderGrpc.getSubscribeToFinalInvAcctComboMethod = getSubscribeToFinalInvAcctComboMethod =
-              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest, com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToFinalInvAcctCombo"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo.getDefaultInstance()))
-              .setSchemaDescriptor(new OrderMethodDescriptorSupplier("SubscribeToFinalInvAcctCombo"))
-              .build();
-        }
-      }
-    }
-    return getSubscribeToFinalInvAcctComboMethod;
-  }
-
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -428,23 +366,6 @@ public final class OrderGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToOrderShippedMethod(), responseObserver);
     }
 
-    /**
-     * <pre>
-     * Both are obsolete, can remove
-     * </pre>
-     */
-    public void subscribeToValidationInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToValidationInvAcctComboMethod(), responseObserver);
-    }
-
-    /**
-     */
-    public void subscribeToFinalInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToFinalInvAcctComboMethod(), responseObserver);
-    }
-
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -503,20 +424,6 @@ public final class OrderGrpc {
                 com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
                 com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderShipped>(
                   this, METHODID_SUBSCRIBE_TO_ORDER_SHIPPED)))
-          .addMethod(
-            getSubscribeToValidationInvAcctComboMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-              new MethodHandlers<
-                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>(
-                  this, METHODID_SUBSCRIBE_TO_VALIDATION_INV_ACCT_COMBO)))
-          .addMethod(
-            getSubscribeToFinalInvAcctComboMethod(),
-            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
-              new MethodHandlers<
-                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest,
-                com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>(
-                  this, METHODID_SUBSCRIBE_TO_FINAL_INV_ACCT_COMBO)))
           .build();
     }
   }
@@ -598,25 +505,6 @@ public final class OrderGrpc {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
           getChannel().newCall(getSubscribeToOrderShippedMethod(), getCallOptions()), request, responseObserver);
     }
-
-    /**
-     * <pre>
-     * Both are obsolete, can remove
-     * </pre>
-     */
-    public void subscribeToValidationInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
-          getChannel().newCall(getSubscribeToValidationInvAcctComboMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void subscribeToFinalInvAcctCombo(com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request,
-        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
-          getChannel().newCall(getSubscribeToFinalInvAcctComboMethod(), getCallOptions()), request, responseObserver);
-    }
   }
 
   /**
@@ -695,25 +583,6 @@ public final class OrderGrpc {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getSubscribeToOrderShippedMethod(), getCallOptions(), request);
     }
-
-    /**
-     * <pre>
-     * Both are obsolete, can remove
-     * </pre>
-     */
-    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> subscribeToValidationInvAcctCombo(
-        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {
-      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
-          getChannel(), getSubscribeToValidationInvAcctComboMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public java.util.Iterator<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo> subscribeToFinalInvAcctCombo(
-        com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest request) {
-      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
-          getChannel(), getSubscribeToFinalInvAcctComboMethod(), getCallOptions(), request);
-    }
   }
 
   /**
@@ -747,8 +616,6 @@ public final class OrderGrpc {
   private static final int METHODID_SUBSCRIBE_TO_ACCOUNT_CHARGED = 5;
   private static final int METHODID_SUBSCRIBE_TO_INVENTORY_PULLED = 6;
   private static final int METHODID_SUBSCRIBE_TO_ORDER_SHIPPED = 7;
-  private static final int METHODID_SUBSCRIBE_TO_VALIDATION_INV_ACCT_COMBO = 8;
-  private static final int METHODID_SUBSCRIBE_TO_FINAL_INV_ACCT_COMBO = 9;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -798,14 +665,6 @@ public final class OrderGrpc {
         case METHODID_SUBSCRIBE_TO_ORDER_SHIPPED:
           serviceImpl.subscribeToOrderShipped((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderShipped>) responseObserver);
-          break;
-        case METHODID_SUBSCRIBE_TO_VALIDATION_INV_ACCT_COMBO:
-          serviceImpl.subscribeToValidationInvAcctCombo((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
-              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>) responseObserver);
-          break;
-        case METHODID_SUBSCRIBE_TO_FINAL_INV_ACCT_COMBO:
-          serviceImpl.subscribeToFinalInvAcctCombo((com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.SubscribeRequest) request,
-              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InvAcctCombo>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -876,8 +735,6 @@ public final class OrderGrpc {
               .addMethod(getSubscribeToAccountChargedMethod())
               .addMethod(getSubscribeToInventoryPulledMethod())
               .addMethod(getSubscribeToOrderShippedMethod())
-              .addMethod(getSubscribeToValidationInvAcctComboMethod())
-              .addMethod(getSubscribeToFinalInvAcctComboMethod())
               .build();
         }
       }

@@ -30,7 +30,7 @@ import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import com.hazelcast.msfdemo.ordersvc.events.AccountInventoryCombo;
-import com.hazelcast.msfdemo.ordersvc.events.ShipEvent;
+import com.hazelcast.msfdemo.ordersvc.events.OrderShippedEvent;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.msfdemo.ordersvc.service.OrderService;
 
@@ -92,10 +92,11 @@ public class ShipPipeline implements Runnable {
                 .map( entry -> entry.getValue());
 
         // Create ShipEvent
-        StreamStage<ShipEvent> shipEvents = combos.map(combo -> {
-            ShipEvent shipment = new ShipEvent(combo.getOrderNumber());
+        StreamStage<OrderShippedEvent> shipEvents = combos.map(combo -> {
+            OrderShippedEvent shipment = new OrderShippedEvent(combo.getOrderNumber());
             shipment.setItemNumber(combo.getItemNumber());
-            shipment.setQuantity(combo.getQuantity());
+            shipment.setLocation(combo.getLocation());
+            shipment.setQuantityShipped(combo.getQuantity());
             return shipment;
         });
 
@@ -103,7 +104,7 @@ public class ShipPipeline implements Runnable {
         shipEvents.mapUsingService(eventStoreServiceFactory, (store, shipment) -> {
                     store.append(shipment);
                     return shipment;
-                }).setName("Persist ShipEvent to event store")
+                }).setName("Persist OrderShippedEvent to event store")
 
         // Update Materialized View including wait flags
         .mapUsingService(materializedViewServiceFactory, (viewMap, shipEvent) -> {

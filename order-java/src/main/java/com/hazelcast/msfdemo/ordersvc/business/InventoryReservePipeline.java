@@ -195,13 +195,13 @@ public class InventoryReservePipeline implements Runnable {
                         }
                         combo.setInventoryFields(irevent);
                         map.remove(irevent);
-                        System.out.println("IRPipeline: CC+IR Combo completed with inventory fields " + combo);
+                        //System.out.println("IRPipeline: CC+IR Combo completed with inventory fields " );
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setInventoryFields(irevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("IRPipeline: CC+IR Combo created with inventory fields");
+                        //System.out.println("IRPipeline: CC+IR Combo created with inventory fields");
                         return null;
                     }
 

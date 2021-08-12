@@ -19,6 +19,7 @@ package com.hazelcast.msf.eventstore;
 
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.ringbuffer.Ringbuffer;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
 import java.util.ArrayList;
@@ -70,16 +71,26 @@ public class SubscriptionManager<T> {
 
     // gRPC toString methods are one line per field so too noisy to log directly, so
     // adding an overload to publish that lets us specify what to log
-    public void publish (T event, String description) {
+    public synchronized void publish (T event, String description) {
         if (verbose) {
             if (description == null)
                 description = name;
             System.out.println("SubscriptionManager publishing " + description + " to " + subscribers.size() + " subscribers");
         }
         ringBuffer.add(event);
+        List<StreamObserver> failedObservers = new ArrayList<>();
         for (StreamObserver so : subscribers) {
-            so.onNext(event);
+            try {
+                so.onNext(event);
+            } catch (StatusRuntimeException ise) {
+                System.out.println("Cannot notify " + so + " of " + event.getClass() + ", stream closed by subscriber or due to error. Canceling subscription");
+                failedObservers.add(so);
+            }
         }
+        // Even with this moved outside main loop, can get ConcurrentModificationException because
+        // multiple threads can be in this method - synchronizing to resolve that.
+        for (StreamObserver so : failedObservers)
+            subscribers.remove(so);
     }
 
     // May override to invoke subclass-specific gRPC builder for event objects

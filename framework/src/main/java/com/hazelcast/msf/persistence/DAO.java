@@ -20,7 +20,9 @@ package com.hazelcast.msf.persistence;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
+import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
+import com.hazelcast.sql.SqlStatement;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,26 +37,13 @@ public abstract class DAO<T extends DTO<K>, K> {
     protected SqlService sql;
 
     public DAO(String mapName) {
-        //MSFController controller = MSFController.getInstance();
         HazelcastInstance client = getClientConnection();
         map = client.getMap(mapName);
         sql = client.getSql();
     }
 
     private HazelcastInstance getClientConnection() {
-        //String configname = "embedded";
-        //String configname = ConfigUtil.findConfigNameInArgs(args);
-        // Jet doesn't accept a clientConfig argument, only Config().
-        //ClientConfig clientConfig = ConfigUtil.getClientConfigForCluster(configname);
-        // TODO: this shouldn't be a hard-coded address!
-        //clientConfig.getNetworkConfig().addAddress("172.17.0.2:5701");
-        //clientConfig.setClusterName("dev"); // dev when embedded, jet when client-server
         HazelcastInstance client = HazelcastClient.newHazelcastClient();
-        // Debugging issue where DAO may connect to a non-service cluster
-//        Set<Member> memberSet = client.getCluster().getMembers();
-//        for (Member member : memberSet) {
-//            System.out.println("Connected to member at " + member.getAddress().toString());
-//        }
         return client;
     }
 
@@ -65,9 +54,7 @@ public abstract class DAO<T extends DTO<K>, K> {
     public IMap<K, T> getMap() { return map; }
 
     public void insert(K key, T dobj) {
-        // Do we need a separate Map (O/R mapping) object?  If so it should
-        // be reachable from the DO so shouldn't need additional parameter
-        map.set(key, dobj); // put here will trigger a db load for prev value that we don't need
+        map.set(key, dobj);
     };
     public void delete(T dobj) {
         map.remove(dobj.getKey());
@@ -85,4 +72,15 @@ public abstract class DAO<T extends DTO<K>, K> {
         Collection<T> values = map.values();
         return Collections.unmodifiableList(new ArrayList<>(values));
     }
+
+    // Not tested; find some good use cases to build on this.
+    // Can we work cooperatively with subclass to return domain objects rather than SqlResult?
+    // Can't be universal since query may be a count(*) or similar
+    public SqlResult query(String query) {
+        SqlStatement statement = new SqlStatement(query);
+        return sql.execute(statement);
+    }
+
+    // More flexible way to get to the SQL service
+    public SqlService getSql() { return sql; }
 }

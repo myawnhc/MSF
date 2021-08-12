@@ -166,13 +166,13 @@ public class PullInventoryPipeline implements Runnable {
                         }
                         combo.setInventoryFields(ipevent);
                         map.remove(ipevent);
-                        System.out.println("PIPipeline: CP+PI Combo completed with inventory fields " + combo);
+                        //System.out.println("PIPipeline: CP+PI Combo completed with inventory fields ");
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setInventoryFields(ipevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("PIPipeline: CP+PI Combo created with inventory fields");
+                        //System.out.println("PIPipeline: CP+PI Combo created with inventory fields");
                         return null;
                     }
 

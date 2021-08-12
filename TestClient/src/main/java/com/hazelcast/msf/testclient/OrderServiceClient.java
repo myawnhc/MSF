@@ -140,11 +140,14 @@ public class OrderServiceClient {
 
     public void subscribeToShipmentNotifications() {
         SubscribeRequest request = SubscribeRequest.newBuilder().build();
-        asyncStub.subscribeToOrderShipped(request, new StreamObserver<OrderShipped>() {
+        asyncStub.subscribeToOrderShipped(request, new StreamObserver<>() {
+
+            int counter;
 
             @Override
             public void onNext(OrderShipped orderShipped) {
-                System.out.println("Client notified that order " + orderShipped.getOrderNumber() + " has now shipped");
+                counter++;
+                System.out.println("Client notified that order " + orderShipped.getOrderNumber() + " has now shipped (#" + counter +")");
             }
 
             @Override
@@ -155,7 +158,7 @@ public class OrderServiceClient {
             @Override
             public void onCompleted() {
                 // Not expected as we never complete the stream on server side
-                System.out.println("Client notified that shipment reasponse stream is completed");
+                System.out.println("Client notified that shipment response stream is completed");
             }
         });
     }
@@ -218,17 +221,6 @@ public class OrderServiceClient {
                 return;
             }
         }
-//        // await all
-//        // TODO: should do this more incrementally, not wait for everything.
-//        List<CreateOrderResponse> responses;
-//        try {
-//            responses = lf.get();
-//            for (CreateOrderResponse response : responses) {
-//                System.out.println("Order created: " + response.getOrderNumber());
-//            }
-//        } catch(InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        }
 
         return;
     }

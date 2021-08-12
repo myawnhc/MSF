@@ -2,7 +2,6 @@ com/hazelcast/msf/testclient/OrderServiceClient.class
 com/hazelcast/msf/testclient/OrderServiceClient$1.class
 com/hazelcast/msf/testclient/InventoryServiceClient.class
 com/hazelcast/msf/testclient/AccountServiceClient$TransferRunnable.class
-com/hazelcast/msf/testclient/OrderServiceClient$OrderEventResponseProcessor.class
 com/hazelcast/msf/testclient/OrderServiceClient$2.class
 com/hazelcast/msf/testclient/AccountServiceClient.class
 com/hazelcast/msf/testclient/AccountServiceClient$OpenRunnable.class

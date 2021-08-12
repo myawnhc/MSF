@@ -33,12 +33,31 @@ public class OrderShippedEvent extends OrderEvent implements Serializable {
 
     static SubscriptionManager<OrderOuterClass.OrderShipped> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.OrderShipped.getDescriptor().getFullName());
 
-
-    public OrderShippedEvent(String orderNumber, String itemNumber, String location,
-                            int quantity, int extendedPrice) {
+    public OrderShippedEvent(String orderNumber) {
         super(orderNumber);
-        this.quantityShipped = quantity;
+    }
+
+    public int getQuantityShipped() {
+        return quantityShipped;
+    }
+
+    public void setQuantityShipped(int quantityShipped) {
+        this.quantityShipped = quantityShipped;
+    }
+
+    public String getItemNumber() {
+        return itemNumber;
+    }
+
+    public void setItemNumber(String itemNumber) {
         this.itemNumber = itemNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
     }
 

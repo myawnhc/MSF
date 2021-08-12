@@ -37,26 +37,12 @@ You can change how many orders are generated on each run by changing the loop co
 # Completed Steps
 
 - Basic prototype implementations of all 4 microservices
-- Upgrade dependencies from Jet 4.5 to Hazelcast Platform 5.0 Beta 1 
+- Upgrade dependencies from Jet 4.5 to Hazelcast Platform 5.0 Beta 2
      - It appears everything is still working as expected after the ugprade
 
 # Next Steps
 
 Proposing this as a candidate for the Platform 5.0 Hackathon; for purposes of that event here is a summary of work that could be done to help build out the demo.   Which of these tasks are done is primarily a function of who joins the team.
-
-### TODO: Additional process steps
-
-Currently only about half of the seven steps needed to fully process an order are implemented:
-- Order creation
-- Price Lookup
-- Inventory Reservation (needs change to final stage)
-- Credit Approval (needs change to final stage)
-- Charge Customer Account (partial - dependent on fixes to previous two stages)
-
-
-Additional stages not yet written:
-- Pull Inventory (and clear reservation)
-- Ship order 
 
 ### TODO: Polyglot
 
