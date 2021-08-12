@@ -324,6 +324,37 @@ public final class InventoryGrpc {
     return getSubscribeToInventoryReservedMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> getSubscribeToInventoryPulledMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SubscribeToInventoryPulled",
+      requestType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest.class,
+      responseType = com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest,
+      com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> getSubscribeToInventoryPulledMethod() {
+    io.grpc.MethodDescriptor<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> getSubscribeToInventoryPulledMethod;
+    if ((getSubscribeToInventoryPulledMethod = InventoryGrpc.getSubscribeToInventoryPulledMethod) == null) {
+      synchronized (InventoryGrpc.class) {
+        if ((getSubscribeToInventoryPulledMethod = InventoryGrpc.getSubscribeToInventoryPulledMethod) == null) {
+          InventoryGrpc.getSubscribeToInventoryPulledMethod = getSubscribeToInventoryPulledMethod =
+              io.grpc.MethodDescriptor.<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest, com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SubscribeToInventoryPulled"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled.getDefaultInstance()))
+              .setSchemaDescriptor(new InventoryMethodDescriptorSupplier("SubscribeToInventoryPulled"))
+              .build();
+        }
+      }
+    }
+    return getSubscribeToInventoryPulledMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -446,6 +477,13 @@ public final class InventoryGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToInventoryReservedMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void subscribeToInventoryPulled(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSubscribeToInventoryPulledMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -518,6 +556,13 @@ public final class InventoryGrpc {
                 com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest,
                 com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryReserved>(
                   this, METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED)))
+          .addMethod(
+            getSubscribeToInventoryPulledMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest,
+                com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled>(
+                  this, METHODID_SUBSCRIBE_TO_INVENTORY_PULLED)))
           .build();
     }
   }
@@ -619,6 +664,14 @@ public final class InventoryGrpc {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
           getChannel().newCall(getSubscribeToInventoryReservedMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void subscribeToInventoryPulled(com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest request,
+        io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getSubscribeToInventoryPulledMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -709,6 +762,14 @@ public final class InventoryGrpc {
         com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest request) {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getSubscribeToInventoryReservedMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled> subscribeToInventoryPulled(
+        com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getSubscribeToInventoryPulledMethod(), getCallOptions(), request);
     }
   }
 
@@ -805,6 +866,7 @@ public final class InventoryGrpc {
   private static final int METHODID_GET_ITEM_COUNT = 7;
   private static final int METHODID_GET_INVENTORY_RECORD_COUNT = 8;
   private static final int METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED = 9;
+  private static final int METHODID_SUBSCRIBE_TO_INVENTORY_PULLED = 10;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -862,6 +924,10 @@ public final class InventoryGrpc {
         case METHODID_SUBSCRIBE_TO_INVENTORY_RESERVED:
           serviceImpl.subscribeToInventoryReserved((com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest) request,
               (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryReserved>) responseObserver);
+          break;
+        case METHODID_SUBSCRIBE_TO_INVENTORY_PULLED:
+          serviceImpl.subscribeToInventoryPulled((com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.SubscribeRequest) request,
+              (io.grpc.stub.StreamObserver<com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -934,6 +1000,7 @@ public final class InventoryGrpc {
               .addMethod(getGetItemCountMethod())
               .addMethod(getGetInventoryRecordCountMethod())
               .addMethod(getSubscribeToInventoryReservedMethod())
+              .addMethod(getSubscribeToInventoryPulledMethod())
               .build();
         }
       }

@@ -29,12 +29,12 @@ import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.configuration.ServiceConfig;
 import com.hazelcast.msf.controller.MSFController;
-import com.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
-import com.hazelcast.msfdemo.acctsvc.events.AccountOuterClass;
+import com.hazelcast.msfdemo.invsvc.events.InventoryGrpc;
+import com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass;
 import com.hazelcast.msfdemo.ordersvc.domain.Order;
 import com.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import com.hazelcast.msfdemo.ordersvc.events.AccountInventoryCombo;
-import com.hazelcast.msfdemo.ordersvc.events.ChargeAccountEvent;
+import com.hazelcast.msfdemo.ordersvc.events.PullInventoryEvent;
 import com.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import com.hazelcast.msfdemo.ordersvc.service.OrderService;
 import io.grpc.ManagedChannelBuilder;
@@ -44,15 +44,15 @@ import java.util.EnumSet;
 
 import static com.hazelcast.jet.grpc.GrpcServices.unaryService;
 
-public class CollectPaymentPipeline implements Runnable {
+public class PullInventoryPipeline implements Runnable {
 
     private static OrderService orderService;
-    private static String accountServiceHost;
-    private static int accountServicePort;
+    private static String inventoryServiceHost;
+    private static int inventoryServicePort;
     private static IMap<String, AccountInventoryCombo> acctInvCombos;
 
-    public CollectPaymentPipeline(OrderService service) {
-        CollectPaymentPipeline.orderService = service;
+    public PullInventoryPipeline(OrderService service) {
+        PullInventoryPipeline.orderService = service;
     }
 
     @Override
@@ -61,9 +61,9 @@ public class CollectPaymentPipeline implements Runnable {
             MSFController controller = MSFController.getInstance();
 
             // Foreign service configuration
-            ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
-            accountServiceHost = props.getGrpcHostname();
-            accountServicePort = props.getGrpcPort();
+            ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
+            inventoryServiceHost = props.getGrpcHostname();
+            inventoryServicePort = props.getGrpcPort();
 
             // We pull from map that has merged events
             String comboMap = "JRN.completedValidation";
@@ -71,8 +71,8 @@ public class CollectPaymentPipeline implements Runnable {
 
             // Build pipeline and submit job
             File f = new File("./order/target/OrderService-1.0-SNAPSHOT.jar");
-            System.out.println("CollectPaymentPipeline.run() invoked, submitting job");
-            controller.startJob("OrderService", "OrderService.CollectPayment", f, createPipeline());
+            System.out.println("PullInventoryPipeline.run() invoked, submitting job");
+            controller.startJob("OrderService", "OrderService.PullInventory", f, createPipeline());
 
         } catch (Exception e) { // Happens if pipeline is not valid
             e.printStackTrace();
@@ -81,11 +81,11 @@ public class CollectPaymentPipeline implements Runnable {
 
     private static Pipeline createPipeline() {
 
-        // Remote gRPC service (AccountService RequestAuth )
-        ServiceFactory<?, ? extends GrpcService<AccountOuterClass.AdjustBalanceRequest, AccountOuterClass.AdjustBalanceResponse>>
-                accountService = unaryService(
-                () -> ManagedChannelBuilder.forAddress(accountServiceHost, accountServicePort) .usePlaintext(),
-                channel -> AccountGrpc.newStub(channel)::payment);
+        // Remote gRPC service (InventoryService PullInventory )
+        ServiceFactory<?, ? extends GrpcService<InventoryOuterClass.PullRequest, InventoryOuterClass.PullResponse>>
+                inventoryService = unaryService(
+                () -> ManagedChannelBuilder.forAddress(inventoryServiceHost, inventoryServicePort) .usePlaintext(),
+                channel -> InventoryGrpc.newStub(channel)::pull);
 
 
         // EventStore as a service
@@ -106,43 +106,46 @@ public class CollectPaymentPipeline implements Runnable {
                 .map( entry -> entry.getValue());
 
         // Enrichment stage not needed, combo object
-        StreamStage<ChargeAccountEvent> paymentEvents = combos.mapUsingServiceAsync(accountService, (service, combo) -> {
-            String account = combo.getAccountNumber();
-            int amount = combo.getAmountCharged();
-            System.out.println("CollectPaymentPipeline - Sending Payment request to account service");
-            AccountOuterClass.AdjustBalanceRequest request = AccountOuterClass.AdjustBalanceRequest.newBuilder()
-                    .setAccountNumber(account)
-                    .setAmount(amount)
+        StreamStage<PullInventoryEvent> pullevents = combos.mapUsingServiceAsync(inventoryService, (service, combo) -> {
+            String item = combo.getItemNumber();
+            String location = combo.getLocation();
+            int quantity = combo.getQuantity();
+            System.out.println("PullInventoryPipeline - Sending Pull request to account service");
+            InventoryOuterClass.PullRequest request = InventoryOuterClass.PullRequest.newBuilder()
+                    .setItemNumber(item)
+                    .setLocation(location)
+                    .setQuantity(quantity)
                     .build();
             return service.call(request)
                     .thenApply(response -> {
-                        ChargeAccountEvent payment = new ChargeAccountEvent(combo.getOrderNumber());
-                        payment.setAccountNumber(account);
-                        payment.setAmountRequested(amount);
-                        return payment;
+                        PullInventoryEvent pullEvent = new PullInventoryEvent(combo.getOrderNumber());
+                        pullEvent.setItemNumber(item);
+                        pullEvent.setLocation(location);
+                        pullEvent.setQuantityPulled(quantity);
+                        return pullEvent;
                     });
         });
 
         // Write ChargeAccountEvent to Event Store
-        paymentEvents.mapUsingService(eventStoreServiceFactory, (store, payment) -> {
+        pullevents.mapUsingService(eventStoreServiceFactory, (store, payment) -> {
                     store.append(payment);
                     return payment;
-                }).setName("Persist ChargeAccountEvent to event store")
+                }).setName("Persist PullInventoryEvent to event store")
 
         // Update Materialized View including wait flags
-        .mapUsingService(materializedViewServiceFactory, (viewMap, ccevent) -> {
-            viewMap.executeOnKey(ccevent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
+        .mapUsingService(materializedViewServiceFactory, (viewMap, pullEvent) -> {
+            viewMap.executeOnKey(pullEvent.getOrderNumber(), (EntryProcessor<String, Order, Order>) orderEntry -> {
                 Order orderView = orderEntry.getValue();
                 EnumSet<WaitingOn> waits = orderView.getWaitingOn();
-                waits.remove(WaitingOn.CHARGE_ACCOUNT);
+                waits.remove(WaitingOn.PULL_INVENTORY);
                 if (waits.isEmpty()) {
                     waits.add(WaitingOn.SHIP);
                 }
-                System.out.println("After removing CHARGE_ACCOUNT, waiting on: " + waits.toString());
+                System.out.println("After removing PULL_INVENTORY, waiting on: " + waits.toString());
                 orderEntry.setValue(orderView);
                 return orderView;
             });
-            return ccevent;
+            return pullEvent;
         }).setName("Update order Materialized View")
                 .writeTo(Sinks.noop());
         return p;

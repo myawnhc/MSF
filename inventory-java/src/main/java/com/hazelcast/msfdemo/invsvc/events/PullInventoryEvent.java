@@ -18,19 +18,19 @@
 package com.hazelcast.msfdemo.invsvc.events;
 
 import com.hazelcast.msf.eventstore.SubscriptionManager;
-import com.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryReserved;
 import io.grpc.stub.StreamObserver;
 
 import java.io.Serializable;
 
-public class ReserveInventoryEvent extends InventoryEvent implements Serializable {
+// TODO: this is a Clone of Reserve event, update as appropriate
+public class PullInventoryEvent extends InventoryEvent implements Serializable {
     private String orderNumber = "[not provided]";
     private String locationID;
     private int quantity;
-    private static SubscriptionManager<InventoryReserved> subscriptionManger = new SubscriptionManager<>(InventoryReserved.getDescriptor().getFullName());
+    private static SubscriptionManager<InventoryOuterClass.InventoryPulled> subscriptionManger = new SubscriptionManager<>(InventoryOuterClass.InventoryPulled.getDescriptor().getFullName());
 
-    public ReserveInventoryEvent() {
-        super(InventoryEventTypes.RESERVE);
+    public PullInventoryEvent() {
+        super(InventoryEventTypes.PULL);
     }
 
     public String getLocationID() {
@@ -49,18 +49,18 @@ public class ReserveInventoryEvent extends InventoryEvent implements Serializabl
         this.quantity = quantity;
     }
 
-    public static void subscribe(StreamObserver<InventoryReserved> observer) {
+    public static void subscribe(StreamObserver<InventoryOuterClass.InventoryPulled> observer) {
         subscriptionManger.subscribe(observer, 0);
     }
     @Override
     public void publish() {
-        InventoryReserved event = InventoryReserved.newBuilder()
+        InventoryOuterClass.InventoryPulled event = InventoryOuterClass.InventoryPulled.newBuilder()
                 .setOrderNumber(orderNumber)
                 .setItemNumber(getItemNumber())
                 .setLocation(locationID)
-                .setQuantityReserved(quantity)
+                .setQuantityPulled(quantity)
                 .build();
-        String description = "inventory.InventoryReserved Quantity " + quantity + " @ location " + locationID + " for Order " + orderNumber;
+        String description = "inventory.InventoryPulled Quantity " + quantity + " @ location " + locationID + " for Order " + orderNumber;
         subscriptionManger.publish(event, description);
     }
 }

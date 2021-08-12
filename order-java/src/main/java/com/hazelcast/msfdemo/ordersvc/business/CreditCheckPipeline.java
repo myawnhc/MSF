@@ -157,20 +157,15 @@ public class CreditCheckPipeline implements Runnable {
                         Order orderView = orderEntry.getValue();
                         EnumSet<WaitingOn> waits = orderView.getWaitingOn();
                         waits.remove(WaitingOn.CREDIT_CHECK);
-                        System.out.println("* After removing C_C: " + waits.toString());
+                        System.out.println("After removing CREDIT_CHECK, waiting on: " + waits.toString());
                         if (waits.isEmpty()) {
                             waits.add(WaitingOn.CHARGE_ACCOUNT);
                             waits.add(WaitingOn.PULL_INVENTORY);
-                            orderEntry.setValue(orderView);
-                            System.out.println("After removing CC wait, empty, reset and pass on");
-                            return orderView;
-                        } else {
-                            orderEntry.setValue(orderView);
-                            System.out.println("After removing CC wait, non-empty so filtering");
-                            return null;
                         }
+                        orderEntry.setValue(orderView);
+                        return orderView;
                     });
-                    return order == null ? null : ccevent;
+                    return ccevent;
                 })
                 .setName("Update order Materialized View")
                 .mapUsingService(pendingMapService, (map, ccevent) -> {
@@ -196,7 +191,6 @@ public class CreditCheckPipeline implements Runnable {
                         return null;
                     }
                 })
-                .setName("Merge account and inventory results")
                 .setName("Merge inventory and account results into combo item")
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
                         /* toKeyFn*/ combo -> combo.getOrderNumber(),

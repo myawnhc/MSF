@@ -88,6 +88,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
             if (iview.getAvailableToPromise() < 0) {
                 System.out.println("ATP has gone negative!");
             }
+            entry.setValue(iview);
             return iview;
         });
 
@@ -100,10 +101,67 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
     @Override
     public void pull(PullRequest request, StreamObserver<PullResponse> responseObserver) {
-        System.out.println("pull unimplemented in InventoryAPIImpl");
-        // Very similar to reserve
-        // Will assume inventory previously reserved, so reduce quantity reserved
-        // as well as quantity on hand
+        String itemNumber = request.getItemNumber();
+        String location = request.getLocation();
+        int quantity = request.getQuantity();
+        System.out.println("Pull request " + itemNumber + " " + location + " " + quantity);
+
+        // Get ATP from DAO, if not available we fail fast
+        InventoryKey invKey = new InventoryKey(itemNumber, location);
+        Inventory inv = inventoryDAO.findByKey(invKey);
+        if (inv == null) {
+            PullResponse nomatch = PullResponse.newBuilder()
+                    .setSuccess(false)
+                    .setReason("No record exists for item/location combination")
+                    .build();
+            responseObserver.onNext(nomatch);
+            responseObserver.onCompleted();
+            return;
+        }
+
+        if (inv.getAvailableToPromise() + inv.getQuantityReserved() < request.getQuantity() ) {
+            System.out.printf("Insufficient ATP %d %d %d\n", inv.getQuantityOnHand(), inv.getQuantityReserved(), inv.getAvailableToPromise());
+            PullResponse shortage = PullResponse.newBuilder()
+                    .setSuccess(false)
+                    .setReason(("Insufficient quantity available"))
+                    .build();
+            responseObserver.onNext(shortage);
+            responseObserver.onCompleted();
+            return;
+        }
+
+        System.out.println("Pull success, updating event store and view");
+
+        // Create Event object
+        ReserveInventoryEvent event = new ReserveInventoryEvent();
+        event.setItemNumber(request.getItemNumber());
+        event.setLocationID(request.getLocation());
+        event.setQuantity(request.getQuantity());
+
+        // Persist Event object
+        InventoryEventStore store = InventoryEventStore.getInstance();
+        store.append(event);
+
+        // Apply changes to DAO
+        IMap<InventoryKey,Inventory> invmap = inventoryDAO.getMap();
+        invmap.executeOnKey(invKey, (EntryProcessor<InventoryKey, Inventory, Object>) entry -> {
+            Inventory iview = entry.getValue();
+            // Release from reserved, decrement on hand, recalculate ATP
+            iview.setQuantityReserved(iview.getQuantityReserved() - request.getQuantity());
+            iview.setQuantityOnHand((iview.getQuantityOnHand() - request.getQuantity()));
+            iview.setAvailableToPromise(iview.getQuantityOnHand() - iview.getQuantityReserved());
+            if (iview.getAvailableToPromise() < 0) {
+                System.out.println("ATP has gone negative!");
+            }
+            entry.setValue(iview);
+            return iview;
+        });
+
+        // Respond to caller
+        PullResponse success = PullResponse.newBuilder()
+                .setSuccess(true).build();
+        responseObserver.onNext(success);
+        responseObserver.onCompleted();
     }
 
     @Override

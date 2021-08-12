@@ -175,18 +175,15 @@ public class InventoryReservePipeline implements Runnable {
                 orderView1.setQuantity(invEvent.getQuantity());
                 EnumSet<WaitingOn> waits = orderView1.getWaitingOn();
                 waits.remove(WaitingOn.RESERVE_INVENTORY);
-                System.out.println("* After removing ReserveInventory, waiting on: " + waits.toString());
+                System.out.println("After removing ReserveInventory, waiting on: " + waits.toString());
                 if (waits.isEmpty()) {
                     waits.add(WaitingOn.CHARGE_ACCOUNT);
                     waits.add(WaitingOn.PULL_INVENTORY);
-                    orderEntry.setValue(orderView1);
-                    return orderView1;
-                } else {
-                    orderEntry.setValue(orderView1);
-                    return null;
                 }
+                orderEntry.setValue(orderView1);
+                return orderView1;
             });
-            return order == null ? null : invEvent;
+            return invEvent;
         })
                 //System.out.println("View object updated with reserved inventory");
                 //return tuple;
@@ -194,7 +191,6 @@ public class InventoryReservePipeline implements Runnable {
                 .mapUsingService(pendingMapService, (map, irevent) -> {
                     String orderNumber = irevent.getOrderNumber();
                     AccountInventoryCombo combo = map.get(orderNumber);
-                    System.out.println("IR Combo: " + combo);
                     if (combo != null) {
                         // validate
                         if (!combo.hasAccountFields()) {

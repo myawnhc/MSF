@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -238,6 +239,9 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             insertInventoryStatement.setInt(5, inv.getAvailableToPromise());
             int rowsAffected = insertInventoryStatement.executeUpdate();
             //System.out.println("writeInventory rows " + rowsAffected);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            // TODO: Update; only allow chage to the 3 quantity fields.
+            System.out.println("WARNING: Upsert not implemented in InventoryMapStore.writeInventory");
         } catch (SQLException e) {
             e.printStackTrace();
         }

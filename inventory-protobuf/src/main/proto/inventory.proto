@@ -18,6 +18,7 @@ service Inventory {
   // Additional APIs including add / move not required for initial demo use case
 
   rpc SubscribeToInventoryReserved (SubscribeRequest) returns (stream InventoryReserved)  {}
+  rpc SubscribeToInventoryPulled (SubscribeRequest) returns (stream InventoryPulled) {}
 }
 
 message ATPRequest {
@@ -77,6 +78,14 @@ message SubscribeRequest {}
 
 message InventoryReserved {
   string orderNumber = 1;
-  string location = 2;
-  int32 quantityReserved = 3;
+  string itemNumber = 2;
+  string location = 3;
+  int32 quantityReserved = 4;
+}
+
+message InventoryPulled {
+  string orderNumber = 1;
+  string itemNumber = 2;
+  string location = 3;
+  int32 quantityPulled = 4;
 }
