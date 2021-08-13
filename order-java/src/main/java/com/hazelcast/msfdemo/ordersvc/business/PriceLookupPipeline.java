@@ -94,8 +94,6 @@ public class PriceLookupPipeline implements Runnable {
         );
 
         Pipeline p = Pipeline.create();
-//        String responseMapName = OrderEventTypes.CREATE.getQualifiedName() + ".Results";
-//        IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
 
         StreamStage<Map.Entry<Long,PriceLookupEvent>> lookupStream = p.readFrom(Sources.mapJournal(orderCreatedEvents,
                 JournalInitialPosition.START_FROM_OLDEST))

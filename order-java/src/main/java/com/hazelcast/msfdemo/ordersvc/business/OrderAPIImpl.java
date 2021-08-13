@@ -112,38 +112,4 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
         // request is an empty type
         OrderShippedEvent.subscribe(responseObserver);
     }
-
-//    public static class EventHandler {
-//        private StreamObserver<OrderEventResponse> responseObserver;
-//        private OrderEventStore eventStore;
-//        private UUID listenerID;
-//
-//        public EventHandler(String orderNumber, StreamObserver<OrderEventResponse> observer) {
-//            this.responseObserver = observer;
-//            this.eventStore = OrderEventStore.getInstance();
-//            this.listenerID = eventStore.registerEventHandler(orderNumber, this);
-//            //System.out.println("Registered handler for subsequent events on order " + orderNumber);
-//        }
-//
-//        // Needs responseStream in order to respond!
-//        public void handleEvent(OrderEvent event) {
-//            System.out.println("New event : " + event);
-//            OrderEventResponse grpcResponse =
-//                    OrderEventResponse.newBuilder()
-//                            .setOrderNumber(event.getOrderNumber())
-//                            .setAccountNumber(event.getAccountNumber())
-//                            .setItemNumber(event.getItemNumber())
-//                            .setLocation(event.getLocation())
-//                            .setQuantity(event.getQuantity())
-//                            .setExtendedPrice(event.getExtendedPrice())
-//                            .setEventName(event.getEventName())
-//                            .build();
-//            responseObserver.onNext(grpcResponse);
-//            if (event.isTerminal()) {
-//                System.out.println("Terminal event, calling onCompleted");
-//                responseObserver.onCompleted();
-//                eventStore.removeEventListener(listenerID);
-//            }
-//        }
-//    }
 }

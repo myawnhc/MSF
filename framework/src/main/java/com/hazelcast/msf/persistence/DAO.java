@@ -24,9 +24,7 @@ import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.sql.SqlStatement;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /* T = domain object type
@@ -43,8 +41,7 @@ public abstract class DAO<T extends DTO<K>, K> {
     }
 
     private HazelcastInstance getClientConnection() {
-        HazelcastInstance client = HazelcastClient.newHazelcastClient();
-        return client;
+        return HazelcastClient.newHazelcastClient();
     }
 
     public void disconnect() {
@@ -55,7 +52,7 @@ public abstract class DAO<T extends DTO<K>, K> {
 
     public void insert(K key, T dobj) {
         map.set(key, dobj);
-    };
+    }
     public void delete(T dobj) {
         map.remove(dobj.getKey());
     }
@@ -70,7 +67,7 @@ public abstract class DAO<T extends DTO<K>, K> {
     }
     public List<T> findAll() {
         Collection<T> values = map.values();
-        return Collections.unmodifiableList(new ArrayList<>(values));
+        return List.copyOf(values);
     }
 
     // Not tested; find some good use cases to build on this.

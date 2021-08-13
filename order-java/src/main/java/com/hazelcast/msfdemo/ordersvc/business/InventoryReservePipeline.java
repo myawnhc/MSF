@@ -172,7 +172,7 @@ public class InventoryReservePipeline implements Runnable {
                 orderView1.setQuantity(invEvent.getQuantity());
                 EnumSet<WaitingOn> waits = orderView1.getWaitingOn();
                 waits.remove(WaitingOn.RESERVE_INVENTORY);
-                System.out.println("After removing ReserveInventory, waiting on: " + waits.toString());
+                System.out.println("After removing ReserveInventory, waiting on: " + waits);
                 if (waits.isEmpty()) {
                     waits.add(WaitingOn.CHARGE_ACCOUNT);
                     waits.add(WaitingOn.PULL_INVENTORY);
@@ -210,7 +210,7 @@ public class InventoryReservePipeline implements Runnable {
 
                 // If CC+IR both present, sink into completed map to pass to next stages
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
-                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toKeyFn*/ AccountInventoryCombo::getOrderNumber,
                         /* toValueFn */ combo -> combo))
                 .setName("Sink inv-acct combo item into map");
         return p;

@@ -25,11 +25,11 @@ import java.util.function.UnaryOperator;
 public class CompactionEvent extends OrderEvent implements Serializable,
         UnaryOperator<Order> {
 
-    private String accountNumber;
-    private String itemNumber;
-    private int    quantity;
-    private String location;
-    private int    extendedPrice;
+    private final String accountNumber;
+    private final String itemNumber;
+    private final int    quantity;
+    private final String location;
+    private final int    extendedPrice;
 
     public CompactionEvent(String orderNumber, String acctNumber, String itemNumber,
                            String location, int quantity, int price) {

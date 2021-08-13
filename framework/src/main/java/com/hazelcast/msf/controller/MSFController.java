@@ -59,7 +59,7 @@ public class MSFController {
     private MultiMap<String, String> servicesStarted;
 
     // Key is service name
-    private Map<String, HazelcastInstance> remoteHazelcasts = new HashMap<>();
+    private final Map<String, HazelcastInstance> remoteHazelcasts = new HashMap<>();
 
     // Singleton implementation
     private MSFController() { this.init(); }

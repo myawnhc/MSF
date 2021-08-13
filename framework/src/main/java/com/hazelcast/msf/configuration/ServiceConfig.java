@@ -35,23 +35,11 @@ public class ServiceConfig {
         public String grpc_hostname;
         public String grpc_port; // actually numeric
 
-        // NOPE.  Decided to abandon these in favor of service-specific
-        // hazelcast-client-<service>.yaml files, in case we need ot leverage
-        // various discovery mechanisms in a future revision.
-//        public String hazelcast_hostname;
-//        public String hazelcast_port;
-//        public String hazelcast_cluster_name;
-//        public String hazelcast_cloud__discovery_token;
-        // additional fields will be needed for cloud deployments
-        // List of API details can go here but not needed for first prototype
-
         // Format used by gRPC ManagedChannelBuilder.forTarget()
         public String getTarget() {
             return grpc_hostname + ":" + grpc_port;
         }
-
         public String getGrpcHostname() { return grpc_hostname; }
-
         public int getGrpcPort() {
             return Integer.parseInt(grpc_port);
         }
@@ -89,10 +77,10 @@ public class ServiceConfig {
     // For testing use only.  Needs service-yaml.test renamed to drop '.test' in order to work.
     // (Renamed because otherwise it overwrote service-specific files when jar with dependencies built)
     public static void main(String[] args) {
-        ServiceConfig serviceConfig = new ServiceConfig();
-        ServiceProperties props = serviceConfig.get("test-service-1");
+        //ServiceConfig serviceConfig = new ServiceConfig();
+        ServiceProperties props = get("test-service-1");
         System.out.println("Test service 1 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
-        props = serviceConfig.get("test-service-2");
+        props = get("test-service-2");
         System.out.println("Test service 2 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
     }
 }

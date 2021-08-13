@@ -31,7 +31,7 @@ public class ChargeAccountEvent extends OrderEvent implements Serializable, Unar
     private String accountNumber;
     private int amountCharged;
 
-    private static SubscriptionManager<OrderOuterClass.AccountCharged> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.AccountCharged.getDescriptor().getFullName());
+    private static final SubscriptionManager<OrderOuterClass.AccountCharged> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.AccountCharged.getDescriptor().getFullName());
 
     public ChargeAccountEvent(String orderNumber) {
         super(orderNumber);

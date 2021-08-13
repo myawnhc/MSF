@@ -30,9 +30,9 @@ import java.util.List;
 // There may be more parameterization coming ...
 public class SubscriptionManager<T> {
 
-    private String name;
+    private final String name;
     private final List<StreamObserver<T>> subscribers;
-    private Ringbuffer<T> ringBuffer;
+    private final Ringbuffer<T> ringBuffer;
     private boolean verbose = true;
 
     public SubscriptionManager(String eventName) {

@@ -45,6 +45,7 @@ import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
 import java.util.EnumSet;
+import java.util.Map;
 
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
 import static com.hazelcast.jet.grpc.GrpcServices.unaryService;
@@ -113,20 +114,17 @@ public class CreditCheckPipeline implements Runnable {
         ServiceFactory<?, IMap<String, AccountInventoryCombo>> pendingMapService =
                 ServiceFactories.iMapService(PENDING_MAP_NAME);
 
-//        ServiceFactory<?, IMap<String, AccountInventoryCombo>> completedMapService =
-//                ServiceFactories.iMapService(COMPLETED_MAP_NAME);
-
         Pipeline p = Pipeline.create();
         StreamStage<OrderPriced> pricingStream = p.readFrom(Sources.mapJournal(orderPricedEvents,
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
-                .map(entry -> entry.getValue())
+                .map(Map.Entry::getValue)
                 .setName("Read from " + orderPricedEvents.getName());
 
         // OrderPriced event doesn't contain account number, so must enrich stream
         StreamStage<Tuple2<OrderPriced,Order>> enrichedItems = pricingStream.mapUsingIMap(
                 orderMap,
-                /* lookupKeyFn */ op->op.getOrderNumber(),
+                /* lookupKeyFn */ OrderPriced::getOrderNumber,
                 /* mapFN */ (orderPriced, order) -> tuple2(orderPriced, order));
 
         StreamStage<CreditCheckEvent> creditCheckEvents = enrichedItems.mapUsingServiceAsync(accountService, (service, tuple) -> {
@@ -157,7 +155,7 @@ public class CreditCheckPipeline implements Runnable {
                         Order orderView = orderEntry.getValue();
                         EnumSet<WaitingOn> waits = orderView.getWaitingOn();
                         waits.remove(WaitingOn.CREDIT_CHECK);
-                        System.out.println("After removing CREDIT_CHECK, waiting on: " + waits.toString());
+                        System.out.println("After removing CREDIT_CHECK, waiting on: " + waits);
                         if (waits.isEmpty()) {
                             waits.add(WaitingOn.CHARGE_ACCOUNT);
                             waits.add(WaitingOn.PULL_INVENTORY);
@@ -179,7 +177,7 @@ public class CreditCheckPipeline implements Runnable {
                             System.out.println("WARNING: pending entry has no inventory data");
                         }
                         combo.setAccountFields(ccevent);
-                        map.remove(combo);
+                        map.remove(combo.getOrderNumber());
                         //completedMap.set(orderNumber, combo);
                         System.out.println("CCPipeline: CC+IR Combo completed with acct fields " + combo);
                         return combo;
@@ -195,7 +193,7 @@ public class CreditCheckPipeline implements Runnable {
 
                 // If CC+IR both present, sink into completed map to pass to next stages
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
-                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toKeyFn*/ AccountInventoryCombo::getOrderNumber,
                         /* toValueFn */ combo -> combo))
                 .setName("Sink inv-acct combo item into map");
         return p;

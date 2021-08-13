@@ -30,11 +30,11 @@ import static com.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderPriced;
 public class PriceLookupEvent extends OrderEvent implements Serializable {
 
     private int extendedPrice;
-    private String itemNumber;
-    private String location;
-    private int quantity;
+    private final String itemNumber;
+    private final String location;
+    private final int quantity;
 
-    private static SubscriptionManager<OrderPriced> subscriptionManager = new SubscriptionManager<>(OrderPriced.getDescriptor().getFullName());
+    private static final SubscriptionManager<OrderPriced> subscriptionManager = new SubscriptionManager<>(OrderPriced.getDescriptor().getFullName());
 
     public PriceLookupEvent(String orderNumber, String itemNumber, String location, int quantity, int price) {
         super(orderNumber);

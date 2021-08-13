@@ -36,6 +36,7 @@ import com.hazelcast.msfdemo.ordersvc.service.OrderService;
 
 import java.io.File;
 import java.util.EnumSet;
+import java.util.Map;
 
 public class ShipPipeline implements Runnable {
 
@@ -89,7 +90,7 @@ public class ShipPipeline implements Runnable {
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
                 .setName("Read from " + acctInvCombos.getName())
-                .map( entry -> entry.getValue());
+                .map(Map.Entry::getValue);
 
         // Create ShipEvent
         StreamStage<OrderShippedEvent> shipEvents = combos.map(combo -> {
@@ -115,7 +116,7 @@ public class ShipPipeline implements Runnable {
                 if (waits.isEmpty()) {
                     waits.add(WaitingOn.NOTHING);
                 }
-                System.out.println("After removing SHIP, waiting on: " + waits.toString());
+                System.out.println("After removing SHIP, waiting on: " + waits);
                 orderEntry.setValue(orderView);
                 return orderView;
             });

@@ -25,7 +25,7 @@ public abstract class SequencedEvent<T> implements UnaryOperator<T> {
 
     public String getEventName() {
         return this.getClass().getSimpleName();
-    };
+    }
     // The published event is not of type T but an associated gRPC type
     abstract public void publish();
     // subscribe method is static on subclasses so can't define it here

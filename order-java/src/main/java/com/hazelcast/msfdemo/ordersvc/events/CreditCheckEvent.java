@@ -32,7 +32,7 @@ public class CreditCheckEvent extends OrderEvent implements Serializable, UnaryO
     private int amountRequested;
     private boolean sufficient;
 
-    private static SubscriptionManager<OrderOuterClass.CreditChecked> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.CreditChecked.getDescriptor().getFullName());
+    private static final SubscriptionManager<OrderOuterClass.CreditChecked> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.CreditChecked.getDescriptor().getFullName());
 
     public CreditCheckEvent(String orderNumber) {
         super(orderNumber);

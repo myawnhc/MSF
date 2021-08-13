@@ -22,8 +22,8 @@ import java.io.Serializable;
 public class APIResponse<T> implements Serializable {
     public enum Status { SUCCESS, FAILURE, CANCELED }
 
-    private long uniqueID;
-    private Status status;
+    private final long uniqueID;
+    private final Status status;
     private Throwable error;
     private T result;
 

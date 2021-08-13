@@ -32,7 +32,7 @@ public class PullInventoryEvent extends OrderEvent implements Serializable, Unar
     private String location;
     private int quantityPulled;
 
-    private static SubscriptionManager<OrderOuterClass.InventoryPulled> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.InventoryPulled.getDescriptor().getFullName());
+    private static final SubscriptionManager<OrderOuterClass.InventoryPulled> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.InventoryPulled.getDescriptor().getFullName());
 
     public PullInventoryEvent(String orderNumber) {
         super(orderNumber);

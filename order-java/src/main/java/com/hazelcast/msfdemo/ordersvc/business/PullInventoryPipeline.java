@@ -41,6 +41,7 @@ import io.grpc.ManagedChannelBuilder;
 
 import java.io.File;
 import java.util.EnumSet;
+import java.util.Map;
 
 import static com.hazelcast.jet.grpc.GrpcServices.unaryService;
 
@@ -110,7 +111,7 @@ public class PullInventoryPipeline implements Runnable {
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
                 .setName("Read from " + acctInvCombos.getName())
-                .map( entry -> entry.getValue());
+                .map(Map.Entry::getValue);
 
         // Enrichment stage not needed, combo object
         StreamStage<PullInventoryEvent> pullevents = combos.mapUsingServiceAsync(inventoryService, (service, combo) -> {
@@ -148,7 +149,7 @@ public class PullInventoryPipeline implements Runnable {
                 if (waits.isEmpty()) {
                     waits.add(WaitingOn.SHIP);
                 }
-                System.out.println("After removing PULL_INVENTORY, waiting on: " + waits.toString());
+                System.out.println("After removing PULL_INVENTORY, waiting on: " + waits);
                 orderEntry.setValue(orderView);
                 return orderView;
             });
@@ -165,7 +166,7 @@ public class PullInventoryPipeline implements Runnable {
                             System.out.println("WARNING: pending combo entry has no account data");
                         }
                         combo.setInventoryFields(ipevent);
-                        map.remove(ipevent);
+                        map.remove(ipevent.getOrderNumber());
                         //System.out.println("PIPipeline: CP+PI Combo completed with inventory fields ");
                         return combo;
                     } else {
@@ -181,7 +182,7 @@ public class PullInventoryPipeline implements Runnable {
 
                 // If CP+IP both present, sink into completed map to pass to next stages
                 .writeTo(Sinks.map(COMPLETED_MAP_NAME,
-                        /* toKeyFn*/ combo -> combo.getOrderNumber(),
+                        /* toKeyFn*/ AccountInventoryCombo::getOrderNumber,
                         /* toValueFn */ combo -> combo))
                 .setName("Sink inv-acct combo item into map");
         return p;

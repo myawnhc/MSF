@@ -25,7 +25,6 @@ import com.hazelcast.jet.pipeline.ServiceFactory;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.Sources;
 import com.hazelcast.jet.pipeline.StreamStage;
-import com.hazelcast.jet.pipeline.WindowDefinition;
 import com.hazelcast.map.IMap;
 import com.hazelcast.msf.controller.MSFController;
 import com.hazelcast.msf.messaging.APIResponse;
@@ -70,7 +69,6 @@ public class CreateOrderPipeline implements Runnable {
         IMap<Long, CreateOrderRequest> requestMap = MSFController.getInstance().getMap(requestMapName);
         String responseMapName = requestMapName + ".Results";
         IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
-        WindowDefinition oneSecond = WindowDefinition.sliding(1000, 1000);
         // Kind of a pain that we have to propagate the request ID throughout the entire
         // pipeline but don't want to pollute domain objects with it.
         StreamStage<Tuple2<Long,CreateOrderEvent>> tupleStream = p.readFrom(Sources.mapJournal(requestMap,

@@ -33,7 +33,7 @@ public class InventoryReserveEvent extends OrderEvent implements Serializable {
     private int quantity;
     private String location;
     private String failureReason;
-    private static SubscriptionManager<InventoryReserved> subscriptionManager = new SubscriptionManager<>(InventoryReserved.getDescriptor().getFullName());
+    private static final SubscriptionManager<InventoryReserved> subscriptionManager = new SubscriptionManager<>(InventoryReserved.getDescriptor().getFullName());
 
     public InventoryReserveEvent(String orderNumber) {
         super(orderNumber);
