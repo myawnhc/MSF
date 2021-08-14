@@ -34,6 +34,7 @@ public class InventoryService {
     ItemDAO itemDAO;
     InventoryDAO inventoryDAO;
     InventoryEventStore eventStore;
+    public static final String SERVICE_NAME = "InventoryService";
 
     private void init() {
         controller = MSFController.getInstance();

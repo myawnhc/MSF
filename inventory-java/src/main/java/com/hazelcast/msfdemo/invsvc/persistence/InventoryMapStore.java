@@ -22,6 +22,7 @@ import com.hazelcast.logging.Logger;
 import com.hazelcast.map.MapStore;
 import com.hazelcast.msfdemo.invsvc.domain.Inventory;
 import com.hazelcast.msfdemo.invsvc.domain.Item;
+import com.hazelcast.msfdemo.invsvc.service.InventoryService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,6 +40,11 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
     private final static ILogger log = Logger.getLogger(InventoryMapStore.class);
     private Connection conn;
 
+    // All inserts, updates need to set origin service into the last-updated-by field;
+    // should be a function of the storage layer code and not exposed via user API.
+    // CDC will use this to filter out "our" events so we don't cycle endlessly.
+    private static final String SERVICE_ORIGIN = InventoryService.SERVICE_NAME;
+
     private static final String createInventoryTableString =
             "create table if not exists inventory ( " +
                     "item_number    varchar(20)     not null, " +
@@ -46,6 +52,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                     "quantity       int, " +
                     "reserved       int, " +
                     "atp            int, " +
+                    "last_updated_by varchar(20), " +
                     "primary key (item_number, location) " +
                     ")";
 
@@ -54,22 +61,24 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                     "location_id    varchar(4) not null, " +
                     "location_type  varchar(2), " +
                     "geohash        varchar(10), " +
+                    "last_updated_by varchar(20), " +
                     "primary key (location_id) " +
                     ")";
 
     private static final String insertInventoryTemplate =
-            "insert into inventory (item_number, location, quantity, reserved, atp) " +
-                    " values (?, ?, ?, ?, ?)";
+            "insert into inventory (item_number, location, quantity, reserved, atp, last_updated_by) " +
+                    " values (?, ?, ?, ?, ?, ?)";
 
     private static final String insertLocationTemplate =
-            "insert into location (location_id, location_type, geohash) " +
-                    " values (?, ?, ?)";
+            "insert into location (location_id, location_type, geohash, last_updated_by) " +
+                    " values (?, ?, ?, ?)";
 
     private static final String selectInventoryTemplate =
             "select item_number, location, quantity, reserved, atp from inventory where item_number = ? and location = ?";
 
     private static final String updateInventoryTemplate =
-            "update inventory set quantity=?, reserved=?, atp=? where item_number = ? and location = ?";
+            "update inventory set quantity=?, reserved=?, atp=?, last_updated_by=?" +
+                    " where item_number = ? and location = ?";
 
     private static final String selectItemTemplate =
             "select description from item where item_number = ?";
@@ -225,6 +234,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             insertLocationStatement.setString(1, loc.locationID);
             insertLocationStatement.setString(2, loc.locationType);
             insertLocationStatement.setString(3, loc.geohash);
+            insertLocationStatement.setString(4, SERVICE_ORIGIN);
             int rowsAffected = insertLocationStatement.executeUpdate();
             //System.out.println("writeLocation rows " + rowsAffected);
         } catch (SQLException e) {
@@ -241,6 +251,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             insertInventoryStatement.setInt(3, inv.getQuantityOnHand());
             insertInventoryStatement.setInt(4, inv.getQuantityReserved());
             insertInventoryStatement.setInt(5, inv.getAvailableToPromise());
+            insertInventoryStatement.setString(6, SERVICE_ORIGIN);
             int rowsAffected = insertInventoryStatement.executeUpdate();
             //System.out.println("writeInventory rows " + rowsAffected);
         } catch (SQLIntegrityConstraintViolationException e) {
@@ -251,8 +262,9 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                 updateInventoryStatement.setInt(1, inv.getQuantityOnHand());
                 updateInventoryStatement.setInt(2, inv.getQuantityReserved());
                 updateInventoryStatement.setInt(3, inv.getAvailableToPromise());
-                updateInventoryStatement.setString(4, inv.getItemNumber());
-                updateInventoryStatement.setString(5, inv.getLocation());
+                updateInventoryStatement.setString(4, SERVICE_ORIGIN);
+                updateInventoryStatement.setString(5, inv.getItemNumber());
+                updateInventoryStatement.setString(6, inv.getLocation());
                 int rowsAffected = updateInventoryStatement.executeUpdate();
             } catch (SQLException e2) {
                 e2.printStackTrace();

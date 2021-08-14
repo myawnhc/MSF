@@ -26,6 +26,9 @@ mvn clean package install
 
 # Running
 
+
+## Running the demo
+
 ```bash
 cd TestClient
 docker-compose up

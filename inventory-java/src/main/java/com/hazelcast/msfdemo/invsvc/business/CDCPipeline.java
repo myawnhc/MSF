@@ -22,6 +22,7 @@ import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.retry.IntervalFunction;
 import com.hazelcast.jet.retry.RetryStrategy;
 import com.hazelcast.msf.controller.MSFController;
+import com.hazelcast.msfdemo.invsvc.service.InventoryService;
 
 import java.io.File;
 
@@ -36,7 +37,6 @@ public class CDCPipeline implements Runnable {
         try {
             MSFController controller = MSFController.getInstance();
             File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
-            //System.out.println("OpenAccountPipeline Found service: " + f.exists());
             System.out.println("CDCPipeline.run() invoked, submitting job");
             controller.startJob("InventoryService", "InventoryService.CDCPipeline", f, createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
@@ -71,8 +71,8 @@ public class CDCPipeline implements Runnable {
                         .setReconnectBehavior(new Retry3Strategy())
                         .build())
                 .withNativeTimestamps(0)
-                // TODO: bogus filter just to cut down output volume, come back and make a real one
-                .filter(changeRecord -> { return changeRecord.key().equals("10101"); })
+                // Filter out events with local origin, we have already applied them
+                .filter(changeRecord -> !changeRecord.value().toMap().get("last_updated_by").equals(InventoryService.SERVICE_NAME))
                 .writeTo(Sinks.logger());
         return p;
     }

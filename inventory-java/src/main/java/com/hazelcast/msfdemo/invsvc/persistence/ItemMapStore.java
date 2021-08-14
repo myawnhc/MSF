@@ -21,6 +21,7 @@ import com.hazelcast.logging.ILogger;
 import com.hazelcast.logging.Logger;
 import com.hazelcast.map.MapStore;
 import com.hazelcast.msfdemo.invsvc.domain.Item;
+import com.hazelcast.msfdemo.invsvc.service.InventoryService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +36,12 @@ import java.util.Map;
 public class ItemMapStore implements MapStore<String, Item> {
 
     private final static ILogger log = Logger.getLogger(ItemMapStore.class);
-    private Connection conn;
+    private final Connection conn;
+
+    // All inserts, updates need to set origin service into the last-updated-by field;
+    // should be a function of the storage layer code and not exposed via user API.
+    // CDC will use this to filter out "our" events so we don't cycle endlessly.
+    private static final String SERVICE_ORIGIN = InventoryService.SERVICE_NAME;
 
     private static final String createItemTableString =
             "create table if not exists item ( " +
@@ -43,25 +49,25 @@ public class ItemMapStore implements MapStore<String, Item> {
                     "description    varchar(30), " +
                     "category       varchar(4)      not null, " +
                     "price          int, " +
+                    "last_updated_by varchar(20), " +
                     "primary key (item_number) " +
-//                    "foreign key (category) " +
-//                    "   references category (category_id) " +
                     ")";
 
     private static final String createCategoryTableString =
             "create table if not exists category ( " +
                     "category_id    varchar(4) not null, " +
                     "description    varchar(20), " +
+                    "last_updated_by varchar(20), " +
                     "primary key (category_id) " +
                     ")";
 
     private static final String insertItemTemplate =
-            "insert into item (item_number, description, category, price) " +
-                    " values (?, ?, ?, ?)";
+            "insert into item (item_number, description, category, price, last_updated_by) " +
+                    " values (?, ?, ?, ?, ?)";
 
     private static final String insertCategoryTemplate =
-            "insert into category (category_id, description) " +
-                    " values (?, ?)";
+            "insert into category (category_id, description, last_updated_by) " +
+                    " values (?, ?, ?)";
 
     private static final String selectItemTemplate =
             "select item_number, description, category, price from item where item_number = ?";
@@ -178,6 +184,7 @@ public class ItemMapStore implements MapStore<String, Item> {
                 insertCategoryStatement = conn.prepareStatement(insertCategoryTemplate);
             insertCategoryStatement.setString(1, c.categoryID);
             insertCategoryStatement.setString(2, c.description);
+            insertCategoryStatement.setString(3, SERVICE_ORIGIN);
             int rowsAffected = insertCategoryStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -192,6 +199,7 @@ public class ItemMapStore implements MapStore<String, Item> {
             insertItemStatement.setString(2, item.getDescription());
             insertItemStatement.setString(3, item.getCategoryID());
             insertItemStatement.setInt(4, item.getPrice());
+            insertItemStatement.setString(5, SERVICE_ORIGIN);
             int rowsAffected = insertItemStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
