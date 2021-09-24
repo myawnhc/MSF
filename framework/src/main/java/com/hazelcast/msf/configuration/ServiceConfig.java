@@ -34,6 +34,7 @@ public class ServiceConfig {
         public String service_name;
         public String grpc_hostname;
         public String grpc_port; // actually numeric
+        public String hz_mode;
 
         // Format used by gRPC ManagedChannelBuilder.forTarget()
         public String getTarget() {
@@ -42,6 +43,25 @@ public class ServiceConfig {
         public String getGrpcHostname() { return grpc_hostname; }
         public int getGrpcPort() {
             return Integer.parseInt(grpc_port);
+        }
+        public boolean isEmbedded() {
+            validateMode();
+            return hz_mode.equalsIgnoreCase("embedded");
+        }
+        public boolean isClientServer() {
+            validateMode();
+            return hz_mode.equalsIgnoreCase("client-server");
+        }
+        private boolean validateMode() {
+            if (hz_mode.equalsIgnoreCase("embedded") )
+                return true;
+            if (hz_mode.equalsIgnoreCase("client-server"))
+                return true;
+            if (hz_mode == null)
+                throw new IllegalArgumentException(("HZ mode not set"));
+            else
+                throw new IllegalArgumentException(("Illegal hz_mode setting " + hz_mode));
+
         }
     }
 
@@ -58,7 +78,7 @@ public class ServiceConfig {
         ObjectMapper mapper = new ObjectMapper(yfactory);
         MappingIterator<ServiceProperties> configInfo;
         try {
-            URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml");
+            URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml.test");
             YAMLParser parser = yfactory.createParser(yamlFile);
             System.out.println("ServiceConfig reading config info from " + yamlFile.toExternalForm());
             configInfo = mapper.readValues(parser, ServiceProperties.class);
@@ -80,7 +100,11 @@ public class ServiceConfig {
         //ServiceConfig serviceConfig = new ServiceConfig();
         ServiceProperties props = get("test-service-1");
         System.out.println("Test service 1 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
+        if (! (props.isClientServer() || props.isEmbedded()) )
+            throw new IllegalArgumentException(("HZ mode not set or set to illegal value"));
         props = get("test-service-2");
         System.out.println("Test service 2 can be found at " + props.grpc_hostname + ":" + props.grpc_port);
+        if (! (props.isClientServer() || props.isEmbedded()) )
+            throw new IllegalArgumentException(("HZ mode not set or set to illegal value"));
     }
 }

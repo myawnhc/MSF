@@ -24,10 +24,10 @@ kubectl scale --replicas=0 statefulset account-service
 
 #kubectl delete deployment management-center
 
-kubectl delete service account-service
-#kubectl delete service inventory-service
-#kubectl delete service catalog-service
-#kubectl delete service order-service
+kubectl delete service acctsvc
+#kubectl delete service invsvc
+#kubectl delete service catalogsvc
+#kubectl delete service ordersvc
 #kubectl delete service invdb
 
 #kubectl delete horizontalpodautoscaler bankinabox-imdg
