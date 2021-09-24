@@ -78,7 +78,7 @@ public class ServiceConfig {
         ObjectMapper mapper = new ObjectMapper(yfactory);
         MappingIterator<ServiceProperties> configInfo;
         try {
-            URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml.test");
+            URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml");
             YAMLParser parser = yfactory.createParser(yamlFile);
             System.out.println("ServiceConfig reading config info from " + yamlFile.toExternalForm());
             configInfo = mapper.readValues(parser, ServiceProperties.class);

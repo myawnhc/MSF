@@ -2,6 +2,7 @@
 service_name: account-service
 grpc_hostname: localhost
 grpc_port: 50051
+hz_mode: embedded
 # Will add additional fields as needed for cloud deployments
 #  apis:
 #    - api: open

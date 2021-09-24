@@ -73,7 +73,9 @@ public class CDCPipeline implements Runnable {
                 .withNativeTimestamps(0)
                 // Filter out events with local origin, we have already applied them
                 .filter(changeRecord -> !changeRecord.value().toMap().get("last_updated_by").equals(InventoryService.SERVICE_NAME))
-                .writeTo(Sinks.logger());
+                // Confirmed we now just see OrderService stuff, but it's spamming the log so let's
+                // throw it away until we're ready to process it.
+                .writeTo(Sinks.noop());
         return p;
     }
 }
