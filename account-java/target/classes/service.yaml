@@ -2,6 +2,6 @@
 service_name: account-service
 grpc_hostname: localhost
 grpc_port: 50051
-hz_mode: client-server
+hz_mode: embedded
 hz_client_config: hazelcast-client.local.yaml
-# above can be .local., .k8s., .hzce., etc.
+# above can be .local., .k8s., .hzce., etc.; ignored for embedded mode
