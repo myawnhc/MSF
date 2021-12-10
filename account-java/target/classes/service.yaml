@@ -2,11 +2,6 @@
 service_name: account-service
 grpc_hostname: localhost
 grpc_port: 50051
-# Will add additional fields as needed for cloud deployments
-#  apis:
-#    - api: open
-#      request-map: AccountService.OPEN.Request
-#      response-map: AccountService.OPEN.Response
-#    - api: adjust
-#      request-map: AccountService.ADJUST.Request
-#      response-map: AccountService.ADJUST.Response
+hz_mode: client-server
+hz_client_config: hazelcast-client.local.yaml
+# above can be .local., .k8s., .hzce., etc.

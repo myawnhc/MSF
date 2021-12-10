@@ -33,7 +33,7 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <!-- Environment variables -->
-        <my.main.class>com.hazelcast.msfdemo.catalogsvc.service.CatalogService</my.main.class>
+        <my.main.class>org.hazelcast.msfdemo.catalogsvc.service.CatalogService</my.main.class>
 
         <!-- Plugins -->
         <java.version>11</java.version>
@@ -173,6 +173,11 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
+            <version>${hazelcast-platform-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-sql</artifactId>
             <version>${hazelcast-platform-version}</version>
         </dependency>
         <dependency>

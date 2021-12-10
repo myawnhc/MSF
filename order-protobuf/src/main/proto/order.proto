@@ -1,6 +1,6 @@
 syntax = "proto3";
 package order;
-option java_package = "com.hazelcast.msfdemo.ordersvc.events";
+option java_package = "org.hazelcast.msfdemo.ordersvc.events";
 
 service Order {
   rpc CreateOrder (CreateOrderRequest) returns (CreateOrderResponse) {}

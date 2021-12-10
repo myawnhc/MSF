@@ -19,6 +19,10 @@
 NAMESPACE="msf"
 REGISTRY=""
 
+# Enable HZ Kubernetes Discovery Plugin to make needed calls to Kubernetes API
+kubectl apply -f https://raw.githubusercontent.com/hazelcast/hazelcast-kubernetes/master/rbac.yaml
+
+
 for FILE in ../templates/*.yaml
 do
   echo Deploying $FILE

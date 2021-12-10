@@ -1,6 +1,6 @@
 syntax = "proto3";
 package inventory;
-option java_package = "com.hazelcast.msfdemo.invsvc.events";
+option java_package = "org.hazelcast.msfdemo.invsvc.events";
 
 service Inventory {
   rpc CheckAvailability (ATPRequest) returns (ATPResponse) {}

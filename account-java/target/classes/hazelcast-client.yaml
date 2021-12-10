@@ -1,5 +1,14 @@
 hazelcast-client:
     cluster-name: account
+    # HZCE cluster name will be something like pr-2760
+#    properties:
     network:
       cluster-members:
-      - localhost:5701
+      - 192.168.86.231:5701
+      kubernetes:
+        enabled: false
+      aws:
+        enabled: false
+      hazelcast-cloud:
+        enabled: false
+        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu

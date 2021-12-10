@@ -1,0 +1,11 @@
+hazelcast-client:
+    cluster-name: pr-2760
+#    properties:
+    network:
+      kubernetes:
+        enabled: false
+      aws:
+        enabled: false
+      hazelcast-cloud:
+        enabled: true
+        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu

@@ -1,6 +1,6 @@
 syntax = "proto3";
 package account;
-option java_package = "com.hazelcast.msfdemo.acctsvc.events";
+option java_package = "org.hazelcast.msfdemo.acctsvc.events";
 
 service Account {
     rpc Open (OpenAccountRequest) returns (OpenAccountResponse) {}

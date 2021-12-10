@@ -2,3 +2,4 @@
 service_name: inventory-service
 grpc_hostname: localhost
 grpc_port: 50053
+hz_mode: embedded

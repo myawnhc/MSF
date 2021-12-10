@@ -4,6 +4,8 @@ hazelcast:
     port:
       port-count: 10
       port: 5721
+    rest-api:
+      enabled: true
   map:
     InventoryEvent*:
       event-journal:
@@ -18,7 +20,7 @@ hazelcast:
       map-store:
         enabled: true
         initial-mode: LAZY
-        class-name: com.hazelcast.msfdemo.invsvc.persistence.ItemMapStore
+        class-name: org.hazelcast.msfdemo.invsvc.persistence.ItemMapStore
         write-delay-seconds: 5
         write-batch-size: 1000
         write-coalescing: true
@@ -27,7 +29,7 @@ hazelcast:
       map-store:
         enabled: true
         initial-mode: LAZY
-        class-name: com.hazelcast.msfdemo.invsvc.persistence.InventoryMapStore
+        class-name: org.hazelcast.msfdemo.invsvc.persistence.InventoryMapStore
         write-delay-seconds: 5
         write-batch-size: 1000
         write-coalescing: true

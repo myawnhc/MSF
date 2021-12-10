@@ -40,7 +40,7 @@ kind: Service
 metadata:
   name: acctsvc
 spec:
-  clusterIP: None
+#  clusterIP: None
   selector:
     app: account-service
   ports:

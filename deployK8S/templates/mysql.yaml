@@ -1,0 +1,44 @@
+---
+# =========================================================
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mysql-invdb
+  name: mysql-invdb
+  namespace: default
+spec:
+  replicas: 1
+  serviceName: mysql-invdb
+  selector:
+    matchLabels:
+      app: mysql-invdb
+  template:
+    metadata:
+      labels:
+        app: mysql-invdb
+    spec:
+      containers:
+        - image: "mysql:latest"
+          imagePullPolicy: IfNotPresent
+          name: container-mysql-invdb
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: msf-secret
+
+---
+# =========================================================
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-invdb-service
+spec:
+  clusterIP: None
+  selector:
+    app: mysql-invdb
+  ports:
+  - port: 3306
+    targetPort: 3306
+---

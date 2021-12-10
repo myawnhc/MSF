@@ -4,6 +4,8 @@ hazelcast:
     port:
       port-count: 10
       port: 5731
+    rest-api:
+      enabled: true
   map:
     CatalogEvent*:
       event-journal:

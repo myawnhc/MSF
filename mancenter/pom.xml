@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2018-2021 Hazelcast, Inc
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.package com.theyawns.controller.launcher;
+  ~
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>MSF</artifactId>
+        <groupId>com.hazelcast</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mancenter</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.13</version>
+                <configuration>
+                    <buildArgs>
+                        <MC_ADMINUSER>admin</MC_ADMINUSER>
+                        <MC_ADMINPASSWORD>password1</MC_ADMINPASSWORD>
+                        <MC_LICENSE></MC_LICENSE>
+                        <MC_CLUSTER1_NAME>order</MC_CLUSTER1_NAME>
+                        <MC_CLUSTER1_ADDRESSLIST>order-service.default.svc.cluster.local</MC_CLUSTER1_ADDRESSLIST>
+                        <MC_CLUSTER2_NAME>account</MC_CLUSTER2_NAME>
+                        <MC_CLUSTER2_ADDRESSLIST>account-service.default.svc.cluster.local</MC_CLUSTER2_ADDRESSLIST>
+                        <MC_CLUSTER3_NAME>inventory</MC_CLUSTER3_NAME>
+                        <MC_CLUSTER3_ADDRESSLIST>inventory-service.default.svc.cluster.local</MC_CLUSTER3_ADDRESSLIST>
+                    </buildArgs>
+                    <dockerfile>Dockerfile</dockerfile>
+                    <pullNewerImage>false</pullNewerImage>
+                    <repository>msf/management-center</repository>
+                    <tag>latest</tag>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

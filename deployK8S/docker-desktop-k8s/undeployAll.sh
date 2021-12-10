@@ -17,19 +17,25 @@
 #
 
 kubectl scale --replicas=0 statefulset account-service
-#kubectl scale --replicas=0 statefulset inventory-service
-#kubectl scale --replicas=0 statefulset catalog-service
-#kubectl scale --replicas=0 statefulset order-service
-#kubectl scale --replicas=0 statefulset invdb
+kubectl scale --replicas=0 statefulset inventory-service
+kubectl scale --replicas=0 statefulset catalog-service
+kubectl scale --replicas=0 statefulset order-service
+kubectl scale --replicas=0 statefulset mysql-invdb
 
-#kubectl delete deployment management-center
+kubectl delete statefulset account-service
+kubectl delete statefulset inventory-service
+kubectl delete statefulset catalog-service
+kubectl delete statefulset order-service
+
+kubectl delete deployment management-center
 
 kubectl delete service acctsvc
-#kubectl delete service invsvc
-#kubectl delete service catalogsvc
-#kubectl delete service ordersvc
-#kubectl delete service invdb
+kubectl delete service invsvc
+kubectl delete service catalogsvc
+kubectl delete service ordersvc
+kubectl delete service mysql-invdb-service
+kubectl delete service management-center-service
 
 #kubectl delete horizontalpodautoscaler bankinabox-imdg
 
-#kubectl delete job test-client
+kubectl delete job test-client

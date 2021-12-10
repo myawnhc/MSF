@@ -1,0 +1,13 @@
+hazelcast-client:
+    cluster-name: account
+#    properties:
+    network:
+      cluster-members:
+      - 192.168.86.231:5701
+      kubernetes:
+        enabled: false
+      aws:
+        enabled: false
+      hazelcast-cloud:
+        enabled: false
+        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu

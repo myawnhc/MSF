@@ -1,0 +1,23 @@
+---
+# =========================================================
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: test-client
+  name: test-client
+  namespace: default
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: test-client
+    spec:
+      containers:
+        - image: "$(REGISTRY)/$(NAMESPACE)/test.client:latest"
+          imagePullPolicy: $(IPP)
+          name: container-test-client
+      restartPolicy: Never
+---

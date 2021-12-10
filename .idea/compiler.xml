@@ -13,6 +13,7 @@
         <module name="TestClient" />
         <module name="catalog-java" />
         <module name="inventory.protobuf" />
+        <module name="mancenter" />
         <module name="grpc-source" />
         <module name="account.service" />
         <module name="account-proto" />

@@ -1,2 +1,2 @@
-com/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreTest.class
-com/hazelcast/msfdemo/acctsvc/views/AccountDAOTest.class
+org/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreTest.class
+org/hazelcast/msfdemo/acctsvc/views/AccountDAOTest.class

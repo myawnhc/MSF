@@ -1,7 +1,7 @@
 syntax = "proto3";
 package catalog;
 
-option java_package = "com.hazelcast.msfdemo.protosvc.events";
+option java_package = "org.hazelcast.msfdemo.protosvc.events";
 
 service Catalog {
   rpc PriceLookup (PriceLookupRequest) returns (PriceLookupResponse) {}

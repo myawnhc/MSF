@@ -1,2 +1,2 @@
-/Users/myawn/Documents/GitHub/MSF/account-java/src/test/java/com/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreTest.java
-/Users/myawn/Documents/GitHub/MSF/account-java/src/test/java/com/hazelcast/msfdemo/acctsvc/views/AccountDAOTest.java
+/Users/myawn/Documents/GitHub/MSF/account-java/src/test/java/org/hazelcast/msfdemo/acctsvc/views/AccountDAOTest.java
+/Users/myawn/Documents/GitHub/MSF/account-java/src/test/java/org/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreTest.java

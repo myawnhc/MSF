@@ -4,6 +4,8 @@ hazelcast:
     port:
       port-count: 10
       port: 5711
+    rest-api:
+        enabled: true
   map:
     OrderEvent*:
       event-journal:

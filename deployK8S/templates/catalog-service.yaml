@@ -1,0 +1,50 @@
+---
+# =========================================================
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: catalog-service
+  name: catalog-service
+  namespace: default
+spec:
+  replicas: 1
+  serviceName: catalog-service
+  selector:
+    matchLabels:
+      app: catalog-service
+  template:
+    metadata:
+      labels:
+        app: catalog-service
+    spec:
+      containers:
+        - image: "$(REGISTRY)/$(NAMESPACE)/catalog.service:latest"
+          imagePullPolicy: $(IPP)
+          livenessProbe:
+            httpGet:
+              path: /hazelcast/health/node-state
+              port: 5731
+          name: container-account-svc
+          readinessProbe:
+            httpGet:
+              path: /hazelcast/health/node-state
+              port: 5731
+            initialDelaySeconds: 30
+---
+# =========================================================
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogsvc
+spec:
+#  clusterIP: None
+  selector:
+    app: catalog-service
+  ports:
+  - protocol: TCP
+    port: 50054
+    targetPort: 50054
+---

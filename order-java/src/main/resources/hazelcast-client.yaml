@@ -2,4 +2,4 @@ hazelcast-client:
   cluster-name: order
   network:
     cluster-members:
-      - ordersvc:5711
+      - localhost:5711  # Testing this for Kubernetes, was ordersvc:5711
