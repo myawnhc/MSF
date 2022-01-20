@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="Hazelcast" />
+  <settings default="Hazelcast">
+    <module2copyright>
+      <element module="Project Files" copyright="Hazelcast" />
+    </module2copyright>
+  </settings>
 </component>

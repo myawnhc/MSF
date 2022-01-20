@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Hazelcast, Inc
+ * Copyright 2018-2022 Hazelcast, Inc
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.package com.theyawns.controller.launcher;
- *
+ *  limitations under the License.
  */
 
 package org.hazelcast.msf.testclient;
@@ -175,11 +174,13 @@ public class OrderServiceClient {
         //List<ListenableFuture<CreateOrderResponse>> futures = new ArrayList<>();
 
         InventoryServiceClient iclient = new InventoryServiceClient();
+        // This will actually block, logging RetryableHazelcastException, until the load from
+        // backing data store has completed.  So we never see partially loaded data.
         int invRecordCount = iclient.getInventoryRecordCount();
         System.out.println("Starting to place orders, inventory record count " + invRecordCount);
         int NUM_LOCATIONS = 100;
         int maxSafeItem = invRecordCount / NUM_LOCATIONS;
-        // Bumping order count from 10 to 1K
+        // Bumping order count to 100, will eventually probably be much larger.
         for (int i=0; i<100; i++) {
             int index = (int)(Math.random()*validAccounts.size());
             String acctNumber = validAccounts.get(index);

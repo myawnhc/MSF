@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Hazelcast, Inc
+ * Copyright 2018-2022 Hazelcast, Inc
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -11,18 +11,24 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.package com.theyawns.controller.launcher;
- *
+ *  limitations under the License.
  */
 
 package org.hazelcast.msfdemo.invsvc.testdata;
 
+import org.hazelcast.msf.controller.MSFController;
 import org.hazelcast.msfdemo.invsvc.domain.Inventory;
 import org.hazelcast.msfdemo.invsvc.domain.Item;
 import org.hazelcast.msfdemo.invsvc.views.InventoryDAO;
 import org.hazelcast.msfdemo.invsvc.views.ItemDAO;
 
 public class GenerateData {
+
+    private MSFController controller;
+
+    public GenerateData(MSFController controller) {
+        this.controller = controller;
+    }
 
     // Set up some categories categories
     private static String[] categories = new String[] {
@@ -34,7 +40,7 @@ public class GenerateData {
 
     // Categories are build as a side effect
     public void generateItems(int count) {
-        ItemDAO itemDAO = new ItemDAO();
+        ItemDAO itemDAO = new ItemDAO(controller);
         int initialItemNumber = 10101;
         for (int i=0; i<count; i++) {
             Item item = new Item();
@@ -48,24 +54,26 @@ public class GenerateData {
             itemDAO.insert(itemNumber, item);
         }
         System.out.printf("Created %d items\n", count);
-        itemDAO.disconnect();
+        //itemDAO.disconnect();
     }
-    public static void main(String[] args) {
-        // Generate 1000 items
-        int numItems = 1000;
-        GenerateData main = new GenerateData();
-        main.generateItems(numItems);
 
-        // Will use 10 warehouses, location ids 00-09
-        // Will use 90 stores, location ids 10-99
-        int locations = 100;
-        int warehouses = 10; // must be < locations
-        main.generateInventory(numItems, locations, warehouses);
-        System.exit(0);
-    }
+    // May resurrect this later, if so need to have it instantiate an MSFController as services do
+//    public static void main(String[] args) {
+//        // Generate 1000 items
+//        int numItems = 1000;
+//        GenerateData main = new GenerateData(controller);
+//        main.generateItems(numItems);
+//
+//        // Will use 10 warehouses, location ids 00-09
+//        // Will use 90 stores, location ids 10-99
+//        int locations = 100;
+//        int warehouses = 10; // must be < locations
+//        main.generateInventory(numItems, locations, warehouses);
+//        System.exit(0);
+//    }
 
     public void generateInventory(int items, int locations, int warehouses) {
-        InventoryDAO inventoryDAO = new InventoryDAO();
+        InventoryDAO inventoryDAO = new InventoryDAO(controller);
         // Generate 100K inventory records
         for (int i=0; i<items; i++) {
             String itemNumber = ""+(10101+i);
@@ -89,6 +97,6 @@ public class GenerateData {
             }
         }
         System.out.println("Generate inventory data complete");
-        inventoryDAO.disconnect();
+        //inventoryDAO.disconnect();
     }
 }

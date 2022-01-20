@@ -1,6 +1,8 @@
 hazelcast-client:
-    cluster-name: pr-2760
-#    properties:
+    cluster-name: ua-1130
+    properties:
+      # Following property needed only when testing in UAT environment
+      hazelcast.client.cloud.url: https://uat.hazelcast.cloud
     network:
       kubernetes:
         enabled: false
@@ -8,4 +10,10 @@ hazelcast-client:
         enabled: false
       hazelcast-cloud:
         enabled: true
-        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu
+        discovery-token: wUM1VJiLK2FzrDkPIw4pMSw0ahNjRjcH5A5BeUM4ED0rRJIHO3
+
+
+
+
+
+

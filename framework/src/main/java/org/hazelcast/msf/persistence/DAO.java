@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Hazelcast, Inc
+ * Copyright 2018-2022 Hazelcast, Inc
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -11,18 +11,16 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.package com.theyawns.controller.launcher;
- *
+ *  limitations under the License.
  */
 
 package org.hazelcast.msf.persistence;
 
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.sql.SqlStatement;
+import org.hazelcast.msf.controller.MSFController;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,19 +32,19 @@ public abstract class DAO<T extends DTO<K>, K> {
     protected IMap<K, T> map;
     protected SqlService sql;
 
-    public DAO(String mapName) {
-        HazelcastInstance client = getClientConnection();
-        map = client.getMap(mapName);
-        sql = client.getSql();
+    public DAO(MSFController controller, String mapName) {
+        //HazelcastInstance client = getClientConnection();
+        map = controller.getMap(mapName);
+        sql = controller.getSqlService();
     }
 
-    private HazelcastInstance getClientConnection() {
-        return HazelcastClient.newHazelcastClient();
-    }
+//    private HazelcastInstance getClientConnection() {
+//        return HazelcastClient.newHazelcastClient();
+//    }
 
-    public void disconnect() {
-        getClientConnection().shutdown();
-    }
+//    public void disconnect() {
+//        getClientConnection().shutdown();
+//    }
 
     public IMap<K, T> getMap() { return map; }
 

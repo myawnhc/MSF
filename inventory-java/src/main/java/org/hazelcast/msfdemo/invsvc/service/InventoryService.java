@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Hazelcast, Inc
+ * Copyright 2018-2022 Hazelcast, Inc
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.package com.theyawns.controller.launcher;
- *
+ *  limitations under the License.
  */
 
 package org.hazelcast.msfdemo.invsvc.service;
@@ -42,8 +41,8 @@ public class InventoryService {
 
     private void init(boolean isEmbedded, byte[] clientConfig) {
         controller = MSFController.createInstance(isEmbedded, clientConfig);
-        inventoryDAO = new InventoryDAO();
-        itemDAO = new ItemDAO();
+        inventoryDAO = new InventoryDAO(controller);
+        itemDAO = new ItemDAO(controller);
 
         // Initialize the EventStore
         eventStore = InventoryEventStore.getInstance();
@@ -57,7 +56,7 @@ public class InventoryService {
         // Item and Inventory data is persistent, but if we're running the first time
         // after pulling a new DB image we'll need to generate our test data
         executor.submit(() -> {
-            GenerateData generator = new GenerateData();
+            GenerateData generator = new GenerateData(controller);
             if (itemDAO.getItemCount() == 0) {
                 System.out.println("InventoryService - items empty, generating");
                 generator.generateItems(1000);

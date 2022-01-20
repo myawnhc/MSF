@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 Hazelcast, Inc
+ * Copyright 2018-2022 Hazelcast, Inc
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *  limitations under the License.package com.theyawns.controller.launcher;
- *
+ *  limitations under the License.
  */
 
 package org.hazelcast.msfdemo.acctsvc.service;
@@ -47,7 +46,7 @@ public class AccountService {
         }
         controller = MSFController.createInstance(isEmbedded, clientConfig);
         // DAO not currently being used but will be back as a Materialized View ...
-        accountDAO = new AccountDAO();
+        accountDAO = new AccountDAO(controller);
 
         // Initialize the EventStore
         eventStore = AccountEventStore.getInstance(controller);
@@ -56,10 +55,18 @@ public class AccountService {
         // Start the various Jet transaction handler pipelines
         ExecutorService executor = Executors.newCachedThreadPool();
         OpenAccountPipeline openPipeline = new OpenAccountPipeline(this);
-        executor.submit(openPipeline);
+        try {
+            executor.submit(openPipeline);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
 
         AdjustBalancePipeline adjPipeline = new AdjustBalancePipeline(this);
-        executor.submit(adjPipeline);
+        try {
+            executor.submit(adjPipeline);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public boolean isEmbedded() { return embedded; }
