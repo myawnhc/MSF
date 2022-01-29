@@ -59,7 +59,7 @@ public class MSFController {
     private HazelcastInstance hazelcast;
     private FlakeIdGenerator messageID;
 
-    private MultiMap<String, String> servicesStarted;
+    private MultiMap<String, String> jobsStarted;
     private boolean initialized = false;
     private boolean embedded = false;
 
@@ -109,6 +109,11 @@ public class MSFController {
         } else {
             InputStream is = new ByteArrayInputStream(clientConfig);
             ClientConfig config = new YamlClientConfigBuilder(is).build();
+
+            // Doing programmatically for now since YAML marked invalid
+            config.getSerializationConfig().getCompactSerializationConfig().setEnabled(true);
+            System.out.println("MSFController has explicitly enabled compact serialization (can remove in 5.1)");
+
             System.out.println("MSFController starting Hazelcast Platform client with config from classpath");
             hazelcast = HazelcastClient.newHazelcastClient(config);
             System.out.println("              Target cluster: " + hazelcast.getConfig().getClusterName());
@@ -117,8 +122,10 @@ public class MSFController {
             enableMapJournal();
         }
         messageID = hazelcast.getFlakeIdGenerator("messageID");
-        servicesStarted = hazelcast.getMultiMap("servicesRunning");
+        jobsStarted = hazelcast.getMultiMap("servicesRunning");
     }
+
+    public HazelcastInstance getHazelcastInstance() { return hazelcast; }
 
     // This needs to run on cluster, not on client, so need to submit this via Runnable/Callable
     private void enableMapJournal() {
@@ -205,6 +212,7 @@ public class MSFController {
 
     }
     // Might move this to EventStore base class
+    @Deprecated  // moved to EventStore
     public IMap createEventStore(String mapName, String keyFieldName) {
         Config config = new Config();
         MapConfig mapConfig = config.getMapConfig(keyFieldName);
@@ -233,14 +241,14 @@ public class MSFController {
     // Not currently used, but if we want to shut down cleanly we have to have some
     // way of knowing when all services have stopped running.
     public void startService(String service) {
-        servicesStarted.put(service, null);  // might not be legal
+        jobsStarted.put(service, null);  // might not be legal
     }
     public void stopService(String service) {
-        Collection<String> jobsRunning = servicesStarted.get(service);
+        Collection<String> jobsRunning = jobsStarted.get(service);
         for (String job : jobsRunning) {
             hazelcast.getJet().getJob(job).cancel();
         }
-        servicesStarted.remove(service);
+        jobsStarted.remove(service);
         // TODO: use logger
         System.out.println("All jobs for " + service + " have initiated shutdown.");
     }
@@ -255,10 +263,11 @@ public class MSFController {
         System.out.println("MSFController starting job " + jobName);
         try {
             hazelcast.getJet().newJobIfAbsent(p, jconfig);
-            servicesStarted.put(service, jobName);
-            System.out.println(servicesStarted.get(service).size() + " jobs now running for " + service);
+            jobsStarted.put(service, jobName);
+            System.out.println(jobsStarted.get(service).size() + " jobs now running for " + service);
         } catch (Throwable t) {
-            System.out.println("Job start failed " + t.getMessage());
+            System.out.println("Job " + jobName + ": start failed ");
+            t.printStackTrace();
         }
     }
 

@@ -27,4 +27,4 @@ export SERVICE_JAR=./target/account.service-1.0-SNAPSHOT.jar
 #jar -tvf $FRAMEWORK_JAR | grep MapJournalEnabler
 
 echo Starting Hazelcast Platform
-hz start --config=target/classes/hazelcast.yaml --jar=$FRAMEWORK_JAR,$SERVICE_PROTO_JAR,$SERVICE_JAR
+hz start -J-Dhazelcast.config.schema.validation.enabled=false --config=target/classes/hazelcast.yaml --jar=$FRAMEWORK_JAR,$SERVICE_PROTO_JAR,$SERVICE_JAR

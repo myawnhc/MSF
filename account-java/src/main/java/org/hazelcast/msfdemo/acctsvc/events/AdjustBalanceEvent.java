@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.acctsvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.acctsvc.domain.Account;
@@ -29,11 +30,20 @@ public class AdjustBalanceEvent extends AccountEvent implements Serializable,
 
     private int changeAmount;
 
-    private static SubscriptionManager<BalanceChanged> subscriptionManager = new SubscriptionManager<>(BalanceChanged.getDescriptor().getFullName());
+    private static SubscriptionManager<BalanceChanged> subscriptionManager;
+
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        //hazelcast = hz;
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<BalanceChanged>(hz, BalanceChanged.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
 
     public AdjustBalanceEvent(String accountNumber, int adjustment) {
         super(AccountEventTypes.ADJUST, accountNumber, adjustment);
     }
+
     @Override
     public Account apply(Account account) {
         this.changeAmount = getAmount();

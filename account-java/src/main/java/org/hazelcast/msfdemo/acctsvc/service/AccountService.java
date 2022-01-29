@@ -31,6 +31,7 @@ import java.util.concurrent.Executors;
 
 public class AccountService {
 
+    // Might refactor out MSFController and just hold HazelcastInstance here
     private MSFController controller;
     private AccountDAO accountDAO;
     private AccountEventStore eventStore;
@@ -49,7 +50,7 @@ public class AccountService {
         accountDAO = new AccountDAO(controller);
 
         // Initialize the EventStore
-        eventStore = AccountEventStore.getInstance(controller);
+        eventStore = new AccountEventStore(controller.getHazelcastInstance());
         // TODO: should have process that occasionally snapshots & evicts
 
         // Start the various Jet transaction handler pipelines

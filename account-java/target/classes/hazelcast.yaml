@@ -10,6 +10,11 @@ hazelcast:
         # Health check is enabled by default once rest-api enabled, so this is unnecessary
         HEALTH_CHECK:
           enabled: true
+  properties:
+    hazelcast.config.schema.validation.enabled: false
+  serialization:
+    compact-serialization:
+      enabled: true
   map:
     AccountEvent_*:
       event-journal:

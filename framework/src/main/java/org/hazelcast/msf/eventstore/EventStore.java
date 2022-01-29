@@ -16,6 +16,11 @@
 
 package org.hazelcast.msf.eventstore;
 
+import com.hazelcast.config.Config;
+import com.hazelcast.config.IndexConfig;
+import com.hazelcast.config.IndexType;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.IAtomicLong;
 import com.hazelcast.map.IMap;
 import com.hazelcast.query.Predicates;
@@ -45,7 +50,7 @@ import java.util.function.Supplier;
  * @param <K> the type of the key of the domain object
  * @param <T> the Event Object type that will be appended to the Event Store
  */
-public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> {
+public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent>  {
     // Key is sequence number; event store is not kept sorted so must sort upon use
     protected IMap<Long, T> eventMap;
     protected IAtomicLong sequenceProvider;
@@ -53,17 +58,44 @@ public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> 
     // Domain object (e.g., Account, not AccountEvent or AccountEventStore) has to
     // be constructed in the materialize method, so we pass in a constructor
     // when creating the store.  (e.g., new EventStore("aes", Account::new) )
-    protected final Supplier<? extends D> domainObjectConstructor;
+    protected Supplier<? extends D> domainObjectConstructor;
 
     /** Constructs an event store
      * @param storeName  the name for the event store
      * @param domainObjectConstructor a zero-argument constructor that can be used to
      *                                create domain objects during materialization
      */
+    @Deprecated // Use variant below that takes Hazelcast instance; drop need for MSFController
     public EventStore(String storeName, Supplier<? extends D> domainObjectConstructor) {
         // If we have an uninitialized controller, it means we're in C/S mode ... so hard-coded false is OK here
+        System.out.println("EventStore.<init> starts");
         sequenceProvider = MSFController.getInstance().getSequenceGenerator(storeName);
         this.domainObjectConstructor = Objects.requireNonNull(domainObjectConstructor);
+        System.out.println("EventStore.<init> ends");
+    }
+
+    // New design: completely independent of MSFController, requires HazelcastInstance
+    public EventStore(String mapName, String keyName, Supplier<? extends D> domainObjConstructor, HazelcastInstance hazelcast) {
+        System.out.println("EventStore.<init>, new version, invoked");
+        sequenceProvider = hazelcast.getCPSubsystem().getAtomicLong(mapName);
+        domainObjectConstructor = domainObjConstructor;
+        // UnsupportedOperationException: Client config object only supports adding new data structure configurations
+        //MapConfig existingConfig = hazelcast.getConfig().getMapConfig(mapName);
+        if (true) {
+            Config config = new Config();
+            MapConfig mapConfig = config.getMapConfig(keyName);
+            IndexConfig timeStampIndex = new IndexConfig(IndexType.SORTED);
+            timeStampIndex.addAttribute("timestamp");
+            mapConfig.addIndexConfig(timeStampIndex);
+            IndexConfig keyIndex = new IndexConfig(IndexType.HASH);
+            keyIndex.addAttribute(keyName);
+            mapConfig.addIndexConfig(timeStampIndex);
+            mapConfig.addIndexConfig(keyIndex);
+            config.addMapConfig(mapConfig);
+            // may surround this with try/catch and ignore errors of duplicate config ...
+            hazelcast.getConfig().addMapConfig(mapConfig);
+        }
+        eventMap = hazelcast.getMap(mapName);
     }
 
     private Long getNextSequence() {

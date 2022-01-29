@@ -3,11 +3,17 @@ hazelcast-client:
 #    properties:
     network:
       cluster-members:
-      - 192.168.86.231:5701
-      kubernetes:
-        enabled: false
-      aws:
-        enabled: false
-      hazelcast-cloud:
-        enabled: false
-        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu
+      - 192.168.86.242:5701
+#    properties:
+#      hazelcast.config.schema.validation.enabled: false
+#    serialization:
+#      compact-serialization:
+#        enabled: true
+#      - 127.0.0.1:5701
+#      kubernetes:
+#        enabled: false
+#      aws:
+#        enabled: false
+#      hazelcast-cloud:
+#        enabled: false
+#        discovery-token: bq0R7jfxTlnD2rBWJqvIu75TG1x7KVDg58yABNX9B9G9c8Xipu

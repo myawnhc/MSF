@@ -16,33 +16,22 @@
 
 package org.hazelcast.msfdemo.acctsvc.eventstore;
 
-import org.hazelcast.msf.controller.MSFController;
+import com.hazelcast.core.HazelcastInstance;
 import org.hazelcast.msf.eventstore.EventStore;
 import org.hazelcast.msfdemo.acctsvc.domain.Account;
 import org.hazelcast.msfdemo.acctsvc.events.AccountEvent;
 import org.hazelcast.msfdemo.acctsvc.events.CompactionEvent;
 
-public class AccountEventStore extends EventStore<Account, String, AccountEvent> {
+public class AccountEventStore extends EventStore<Account, String, AccountEvent>
+{
+    private static final String mapName = "AccountEventStore";
+    private static final String keyName = "accountNumber"; // used to build an index, so case sensitive!
 
-    private static MSFController controller;
-
-    // Singleton implementation
-    private AccountEventStore() {
-        super(AccountEventStore.class.getCanonicalName(), Account::new);
-        //MSFController controller = MSFController.getInstance();
-        String mapName = "AccountEventStore";
-        String keyName = "accountNumber"; // builds an index, so case sensitive!
-        eventMap = controller.createEventStore(mapName, keyName);
-    }
-    private static class Singleton {
-        private static final AccountEventStore INSTANCE = new AccountEventStore();
-    }
-    public static AccountEventStore getInstance(MSFController controller) {
-        AccountEventStore.controller = controller;
-        return Singleton.INSTANCE;
+    public AccountEventStore(HazelcastInstance hazelcast) {
+        super(mapName, keyName, Account::new, hazelcast);
     }
 
-    // Materialize method generified and moved to EventStore base class
+    // Materialize method has been generified and moved to EventStore base class
 
     // Is this an all-or-nothing operation?  Maybe we want to use it for space
     // management so might set a threshold - checkpoint keys having over X entries.

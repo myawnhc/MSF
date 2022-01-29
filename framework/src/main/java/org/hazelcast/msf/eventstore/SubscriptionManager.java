@@ -16,6 +16,7 @@
 
 package org.hazelcast.msf.eventstore;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.ringbuffer.Ringbuffer;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -34,9 +35,18 @@ public class SubscriptionManager<T> {
     private final Ringbuffer<T> ringBuffer;
     private boolean verbose = true;
 
+    @Deprecated
     public SubscriptionManager(String eventName) {
         name = eventName;
         ringBuffer = MSFController.getInstance().getRingbuffer(name);
+        subscribers = new ArrayList<>();
+        if (verbose)
+            System.out.println("Created subscription manager for " + name);
+    }
+
+    public SubscriptionManager(HazelcastInstance hz, String eventName) {
+        name = eventName;
+        ringBuffer = hz.getRingbuffer(name);
         subscribers = new ArrayList<>();
         if (verbose)
             System.out.println("Created subscription manager for " + name);

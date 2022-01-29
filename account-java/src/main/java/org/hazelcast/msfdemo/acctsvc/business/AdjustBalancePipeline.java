@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.acctsvc.business;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.datamodel.Tuple2;
 import com.hazelcast.jet.pipeline.JournalInitialPosition;
 import com.hazelcast.jet.pipeline.Pipeline;
@@ -24,7 +25,6 @@ import com.hazelcast.jet.pipeline.ServiceFactory;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.Sources;
 import com.hazelcast.jet.pipeline.StreamStage;
-import com.hazelcast.jet.pipeline.WindowDefinition;
 import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
 import org.hazelcast.msf.controller.MSFController;
@@ -62,34 +62,30 @@ public class AdjustBalancePipeline implements Runnable {
     }
 
     private static Pipeline createPipeline() {
-        boolean embedded = service.isEmbedded();
-        byte[] clientConfig = service.getClientConfig();
-        System.out.println("@ createPipeline " + embedded + " " + clientConfig.toString() );
-
         Pipeline p = Pipeline.create();
         String requestMapName = AccountEventTypes.ADJUST.getQualifiedName();
         IMap<Long, AdjustBalanceRequest> requestMap = MSFController.getInstance().getMap(requestMapName);
         String responseMapName = requestMapName + ".Results";
         IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
-        WindowDefinition oneSecond = WindowDefinition.sliding(1000, 1000);
-        WindowDefinition tenSeconds = WindowDefinition.sliding(10000, 10000);
 
-        // Kind of a pain that we have to propagate the request ID throughout the entire
-        // pipeline but don't want to pollute domain objects with it.
+        // Dummy service creation, purely as a way to retrieve Hazelcast instance and stick it into
+        // Event object where it is needed to initialize SubscriptionManager
+        ServiceFactory<?, HazelcastInstance> hzSF = ServiceFactories.sharedService( (ctx) -> {
+            HazelcastInstance hz = ctx.hazelcastInstance();
+            return hz;
+        });
+
         StreamStage<Tuple2<Long, AdjustBalanceEvent>> tupleStream = p.readFrom(Sources.mapJournal(requestMap,
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
                 .setName("Read from " + requestMapName)
 
-                // Not needed: filter - here a nop.
-                // Not needed: transform - handle versioning, nop for now
-                // Not needed: enrich - nothing to do for an ADJUST
-
-                // Create AccountEvent object
-                .map(entry -> {
+                // Create AdjustBalanceEvent object
+                .mapUsingService(hzSF, (hz, entry) -> {
                     //System.out.println("Creating AccountEvent, returning Tuple2");
                     Long uniqueRequestID = (Long) entry.getKey();
                     AdjustBalanceRequest request = entry.getValue();
+                    AdjustBalanceEvent.setHazelcastInstance(hz);
                     AdjustBalanceEvent event = new AdjustBalanceEvent(
                             request.getAccountNumber(), request.getAmount());
                     Tuple2<Long,AdjustBalanceEvent> item = tuple2(uniqueRequestID, event);
@@ -101,10 +97,7 @@ public class AdjustBalancePipeline implements Runnable {
 
         ServiceFactory<?, AccountEventStore> eventStoreServiceFactory =
                ServiceFactories.sharedService(
-                        (ctx) -> {
-                            System.out.println("@ service decl " + embedded + " " + clientConfig);
-                            return AccountEventStore.getInstance(MSFController.getOrCreateInstance(embedded, clientConfig));
-                        }
+                        (ctx) ->  new AccountEventStore(ctx.hazelcastInstance())
                 );
 
         tupleStream.mapUsingService(eventStoreServiceFactory, (eventStore, tuple) -> {

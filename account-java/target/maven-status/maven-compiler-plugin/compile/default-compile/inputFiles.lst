@@ -10,4 +10,5 @@
 /Users/myawn/Documents/GitHub/MSF/account-java/src/main/java/org/hazelcast/msfdemo/acctsvc/events/CompactionEvent.java
 /Users/myawn/Documents/GitHub/MSF/account-java/src/main/java/org/hazelcast/msfdemo/acctsvc/service/AccountService.java
 /Users/myawn/Documents/GitHub/MSF/account-java/src/main/java/org/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl.java
+/Users/myawn/Documents/GitHub/MSF/account-java/src/main/java/org/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreSerializer.java
 /Users/myawn/Documents/GitHub/MSF/account-java/src/main/java/org/hazelcast/msfdemo/acctsvc/events/AccountEvent.java

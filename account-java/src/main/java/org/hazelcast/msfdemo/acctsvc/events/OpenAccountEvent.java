@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.acctsvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.acctsvc.domain.Account;
@@ -31,9 +32,12 @@ public class OpenAccountEvent extends AccountEvent implements Serializable,
 
     private static SubscriptionManager<AccountOpened> subscriptionManager;
 
-    static {
-        subscriptionManager = new SubscriptionManager<>(AccountOpened.getDescriptor().getFullName());
-        subscriptionManager.setVerbose(false);
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<AccountOpened>(hz, AccountOpened.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
     }
 
     public OpenAccountEvent(String accountNumber, String accountName, int openingBalance) {

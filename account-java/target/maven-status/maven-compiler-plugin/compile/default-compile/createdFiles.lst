@@ -6,6 +6,7 @@ org/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl$1.class
 org/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl.class
 org/hazelcast/msfdemo/acctsvc/service/GrpcServer.class
 org/hazelcast/msfdemo/acctsvc/events/AccountEvent.class
+org/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStoreSerializer.class
 org/hazelcast/msfdemo/acctsvc/business/OpenAccountPipeline.class
 org/hazelcast/msfdemo/acctsvc/events/AdjustBalanceEvent.class
 org/hazelcast/msfdemo/acctsvc/business/AccountAPIImpl$2.class
@@ -13,5 +14,4 @@ org/hazelcast/msfdemo/acctsvc/events/AccountEventTypes.class
 org/hazelcast/msfdemo/acctsvc/events/CompactionEvent.class
 org/hazelcast/msfdemo/acctsvc/events/OpenAccountEvent.class
 org/hazelcast/msfdemo/acctsvc/business/AdjustBalancePipeline.class
-org/hazelcast/msfdemo/acctsvc/eventstore/AccountEventStore$Singleton.class
 org/hazelcast/msfdemo/acctsvc/service/AccountService.class

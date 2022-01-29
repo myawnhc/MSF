@@ -13,10 +13,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package org.hazelcast.msfdemo.acctsvc.business;
 
-import com.hazelcast.jet.aggregate.AggregateOperations;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.flakeidgen.FlakeIdGenerator;
 import com.hazelcast.jet.datamodel.Tuple2;
 import com.hazelcast.jet.pipeline.JournalInitialPosition;
 import com.hazelcast.jet.pipeline.Pipeline;
@@ -25,7 +25,6 @@ import com.hazelcast.jet.pipeline.ServiceFactory;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.Sources;
 import com.hazelcast.jet.pipeline.StreamStage;
-import com.hazelcast.jet.pipeline.WindowDefinition;
 import com.hazelcast.map.IMap;
 import org.hazelcast.msf.controller.MSFController;
 import org.hazelcast.msf.messaging.APIResponse;
@@ -64,32 +63,33 @@ public class OpenAccountPipeline implements Runnable {
     }
 
     private static Pipeline createPipeline() {
-        boolean embedded = service.isEmbedded();
-        byte[] clientConfig = service.getClientConfig();
-
         Pipeline p = Pipeline.create();
         String requestMapName = AccountEventTypes.OPEN.getQualifiedName();
         IMap<Long, OpenAccountRequest> requestMap = MSFController.getInstance().getMap(requestMapName);
         String responseMapName = requestMapName + ".Results";
         IMap<Long, APIResponse<?>> responseMap = MSFController.getInstance().getMap(responseMapName);
-        WindowDefinition oneSecond = WindowDefinition.sliding(1000, 1000);
-        // Kind of a pain that we have to propagate the request ID throughout the entire
-        // pipeline but don't want to pollute domain objects with it.
+
+        ServiceFactory<?, FlakeIdGenerator> sequenceGeneratorServiceFactory =
+                ServiceFactories.sharedService(
+                        (ctx) -> {
+                            // Stuffing HZ into the event object while we have it, as in
+                            // the mapping stage we can't retrieve it easily
+                            HazelcastInstance hz = ctx.hazelcastInstance();
+                            OpenAccountEvent.setHazelcastInstance(hz);
+                            return hz.getFlakeIdGenerator("accountNumber");
+                        }
+                );
+
         StreamStage<Tuple2<Long,OpenAccountEvent>> tupleStream = p.readFrom(Sources.mapJournal(requestMap,
                 JournalInitialPosition.START_FROM_OLDEST))
                 .withIngestionTimestamps()
                 .setName("Read from " + requestMapName)
-                //.map(entry -> (AccountOuterClass.OpenAccountRequest) entry.getValue());
-                //.writeTo(Sinks.logger());
-                // Not needed: filter - here a nop.
-                // Not needed: transform - handle versioning, nop for now
-                // Not needed: enrich - nothing to do for an OPEN
+
                 // Create AccountEvent object
-                .map(entry -> {
-                    //System.out.println("Creating AccountEvent, returning Tuple2");
-                    Long uniqueRequestID = (Long) entry.getKey();
+                .mapUsingService(sequenceGeneratorServiceFactory, (seqGen, entry) -> {
+                    Long uniqueRequestID = entry.getKey();
                     OpenAccountRequest request = entry.getValue();
-                    long acctNumber = MSFController.getInstance().getUniqueId("accountNumber");
+                    long acctNumber = seqGen.newId();
                     OpenAccountEvent event = new OpenAccountEvent(
                             ""+acctNumber, request.getAccountName(), request.getInitialBalance());
                     Tuple2<Long,OpenAccountEvent> item = tuple2(uniqueRequestID, event);
@@ -97,25 +97,13 @@ public class OpenAccountPipeline implements Runnable {
                 })
                 .setName("Create AccountEvent.OPEN");
 
-//        // Drop the UniqueID for most use cases
-//        StreamStage<OpenAccountEvent> eventStream = tupleStream.map( tuple -> tuple.f1())
-//                .setName("Simplify stream item (drop uniqueItemID)");
-
-        // Peek in on progress
-        tupleStream.window(oneSecond)
-                .aggregate(AggregateOperations.counting())
-                .setName("Count operations per second")
-                .writeTo(Sinks.logger(count -> "AccountEvent.OPEN count " + count));
-
-        // Persist to Event Store and Materialized View
-        final IMap<String, Account> accountView = service.getView();
+        // Persist to Event Store
         ServiceFactory<?, AccountEventStore> eventStoreServiceFactory =
                 ServiceFactories.sharedService(
-                        (ctx) -> AccountEventStore.getInstance(MSFController.getOrCreateInstance(embedded, clientConfig))
+                        (ctx) -> new AccountEventStore(ctx.hazelcastInstance())
                 );
 
         ServiceFactory<?,IMap<String,Account>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());
-
 
         tupleStream.mapUsingService( eventStoreServiceFactory, (eventStore, tuple) -> {
                     eventStore.append(tuple.f1());
@@ -133,16 +121,12 @@ public class OpenAccountPipeline implements Runnable {
             viewMap.put(openEvent.getAccountNumber(), a);
             return tuple2(tuple.f0(), a);
         }).setName("Create and publish Account Materialized View")
-//                //.writeTo(Sinks.logger());
-//                .writeTo(Sinks.map(accountView))
-//                .setName("Insert into Materialized View map"); // Will be map w/Merge or Update for subsequent txns
 
         .map( tuple -> {
             Long uniqueID = tuple.f0();
             Account account = tuple.f1();
             APIResponse<String> response = new APIResponse<String>(uniqueID,
                    account.getAcctNumber());
-            //System.out.println("Building and returning API response");
             return new AbstractMap.SimpleEntry<Long,APIResponse<String>>(uniqueID, response);
         }).setName("Build client APIResponse")
                 .writeTo(Sinks.map(responseMap))
