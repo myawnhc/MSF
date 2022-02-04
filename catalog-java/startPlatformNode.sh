@@ -16,10 +16,10 @@
 #
 
 export FRAMEWORK_JAR=../framework/target/framework-1.0-SNAPSHOT.jar
-export SERVICE_PROTO_JAR=../account-protobuf/target/account-proto-1.0-SNAPSHOT.jar
-export SERVICE_JAR=./target/account.service-1.0-SNAPSHOT.jar
+export SERVICE_PROTO_JAR=../catalog-protobuf/target/catalog.protobuf-1.0-SNAPSHOT.jar
+export SERVICE_JAR=./target/catalog-java-1.0-SNAPSHOT.jar
 
-# Notes: schema validation can be re-enabled on 5.1
+# Notes: schema validation can be re-enabled on 5.1ls
 # Uploading jars with JobConfig still results in not found, so adding explicitly here
 
 echo Starting Hazelcast Platform

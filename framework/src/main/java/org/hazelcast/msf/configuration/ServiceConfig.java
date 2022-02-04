@@ -36,36 +36,29 @@ public class ServiceConfig {
         public String grpc_port; // actually numeric
         public String hz_mode;
         public String hz_client_config;
+        public String database_host;
 
         // Format used by gRPC ManagedChannelBuilder.forTarget()
         public String getTarget() {
             return grpc_hostname + ":" + grpc_port;
         }
+
         public String getGrpcHostname() { return grpc_hostname; }
         public int getGrpcPort() {
             return Integer.parseInt(grpc_port);
         }
+        // Could be hostname or IP
+        public String getDatabaseHost() { return database_host; }
         //public String getClientConfigFilename() { return  hz_client_config; }
         public byte[] getClientConfig() {
-            System.out.println("getClientConfig: " + hz_client_config);
+            System.out.println("ServiceConfig.getClientConfig: " + hz_client_config);
             if (hz_client_config == null) {
                 return new byte[0];
             }
             try {
                 URL configURL = ServiceConfig.class.getClassLoader().getResource(hz_client_config);
-                System.out.println("  configURL " + configURL);
-                //System.out.println("  as file   " + configURL.getFile());
                 byte[] bytes = configURL.openStream().readAllBytes();
-                System.out.println("  Read " + bytes.length + " bytes");
                 return bytes;
-//                File f = new File(configURL.getFile());
-//                if (f.exists()) {
-//                    byte[] bytes = Files.readAllBytes(f.toPath());
-//                    return bytes;
-//                } else {
-//                    System.out.println("WARN: " + hz_client_config + " does not exist");
-//                    return null;
-//                }
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;

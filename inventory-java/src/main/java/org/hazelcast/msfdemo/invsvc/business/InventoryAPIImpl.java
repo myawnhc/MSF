@@ -76,7 +76,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         event.setQuantity(request.getQuantity());
 
         // Persist Event object
-        InventoryEventStore store = InventoryEventStore.getInstance();
+        InventoryEventStore store = new InventoryEventStore(controller.getHazelcastInstance());
         store.append(event);
 
         // Apply changes to DAO
@@ -140,7 +140,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         event.setQuantity(request.getQuantity());
 
         // Persist Event object
-        InventoryEventStore store = InventoryEventStore.getInstance();
+        InventoryEventStore store = new InventoryEventStore(controller.getHazelcastInstance());
         store.append(event);
 
         // Apply changes to DAO

@@ -1,0 +1,10 @@
+hazelcast-client:
+  cluster-name: ua-1293
+  properties:
+    # Following property needed only when testing in UAT environment
+    hazelcast.client.cloud.url: https://uat.hazelcast.cloud
+  network:
+    hazelcast-cloud:
+      enabled: true
+      discovery-token: jZSVYU8N0MRGzwbtERhkHGso73GWzsPPOM9xi62hPhIBnnPPj2
+

@@ -12,6 +12,7 @@ hazelcast:
           enabled: true
   properties:
     hazelcast.config.schema.validation.enabled: false
+    hazelcast.jet-resource-upload-enabled: true
   serialization:
     compact-serialization:
       enabled: true

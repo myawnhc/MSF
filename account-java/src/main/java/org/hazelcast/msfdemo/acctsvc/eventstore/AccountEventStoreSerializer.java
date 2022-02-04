@@ -47,8 +47,8 @@ public class AccountEventStoreSerializer implements CompactSerializer<AccountEve
     @Override
     public void write(@Nonnull CompactWriter compactWriter, @Nonnull AccountEventStore accountEventStore) throws IOException {
         compactWriter.writeString("mapName", accountEventStore.getEventMap().getName());
-        compactWriter.writeString("sequenceProviderName", accountEventStore.getSequenceProvider().getName());
-        compactWriter.writeObject("domainObjectInit", accountEventStore.getDomainObjectConstructor());
+//        compactWriter.writeString("sequenceProviderName", accountEventStore.getSequenceProvider().getName());
+//        compactWriter.writeObject("domainObjectInit", accountEventStore.getDomainObjectConstructor());
     }
 
     @Override

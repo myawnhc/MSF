@@ -53,8 +53,6 @@ public class OpenAccountPipeline implements Runnable {
     public void run() {
         try {
             MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
-            //File f = new File("./account/target/AccountService-1.0-SNAPSHOT.jar");
-            //System.out.println("OpenAccountPipeline Found service: " + f.exists());
             System.out.println("OpenAccountPipeline.run() invoked, submitting job");
             controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid

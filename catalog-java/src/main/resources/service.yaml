@@ -2,3 +2,7 @@
 service_name: catalog-service
 grpc_hostname: localhost
 grpc_port: 50054
+hz_mode: embedded
+# client config is ignored when hz_mode is embedded
+hz_client_config: hazelcast-client.local.yaml
+

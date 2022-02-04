@@ -116,7 +116,7 @@ public class PullInventoryPipeline implements Runnable {
             String item = combo.getItemNumber();
             String location = combo.getLocation();
             int quantity = combo.getQuantity();
-            System.out.println("PullInventoryPipeline - Sending Pull request to account service");
+            System.out.println("OrderSvc.PullInventoryPipeline - Sending Pull request to inventory service");
             InventoryOuterClass.PullRequest request = InventoryOuterClass.PullRequest.newBuilder()
                     .setItemNumber(item)
                     .setLocation(location)

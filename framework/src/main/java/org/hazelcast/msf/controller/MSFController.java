@@ -45,6 +45,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -257,7 +258,19 @@ public class MSFController {
     // (likely via configuration) whether we're doing embedded or client/server,
     // how many instances to start, etc.
     public void startJob(String service, String jobName, Pipeline p) {
+        startJob(service, jobName, p, new URL[]{});
+    }
+
+    // Adding jars still results in Serialization errors on lambda functions within
+    // createContextFn of services ... so dropping back to adding jars to platform classpath
+    // (self-managed deploy) or uploading thru cloud console (managed service deploy) until I
+    // can figure out why this fails.
+    public void startJob(String service, String jobName, Pipeline p, URL[] jars) {
         JobConfig jconfig = new JobConfig();
+        for (URL url : jars) {
+            jconfig.addJar(url);
+            System.out.println(" Added to JobConfig: " + url.toString());
+        }
         jconfig.setName(jobName);
 
         System.out.println("MSFController starting job " + jobName);

@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.invsvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryReserved;
@@ -26,7 +27,14 @@ public class ReserveInventoryEvent extends InventoryEvent implements Serializabl
     private String orderNumber = "[not provided]";
     private String locationID;
     private int quantity;
-    private static SubscriptionManager<InventoryReserved> subscriptionManger = new SubscriptionManager<>(InventoryReserved.getDescriptor().getFullName());
+    private static SubscriptionManager<InventoryReserved> subscriptionManger;
+
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManger == null) {
+            subscriptionManger = new SubscriptionManager<>(hz, InventoryReserved.getDescriptor().getFullName());
+            subscriptionManger.setVerbose(false);
+        }
+    }
 
     public ReserveInventoryEvent() {
         super(InventoryEventTypes.RESERVE);

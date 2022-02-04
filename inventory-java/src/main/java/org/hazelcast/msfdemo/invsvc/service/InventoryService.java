@@ -39,18 +39,18 @@ public class InventoryService {
     private boolean embedded;
     private URL clientConfigURL;
 
-    private void init(boolean isEmbedded, byte[] clientConfig) {
+    private void init(boolean isEmbedded, byte[] clientConfig, String dbhost) {
         controller = MSFController.createInstance(isEmbedded, clientConfig);
         inventoryDAO = new InventoryDAO(controller);
         itemDAO = new ItemDAO(controller);
 
         // Initialize the EventStore
-        eventStore = InventoryEventStore.getInstance();
+        eventStore = new InventoryEventStore(controller.getHazelcastInstance());
         // TODO: should have process that occasionally snapshots & evicts
 
         // Start the various Jet transaction handler pipelines
         ExecutorService executor = Executors.newCachedThreadPool();
-        CDCPipeline cdcPipeline = new CDCPipeline();
+        CDCPipeline cdcPipeline = new CDCPipeline(dbhost);
         executor.submit(cdcPipeline);
 
         // Item and Inventory data is persistent, but if we're running the first time
@@ -66,13 +66,15 @@ public class InventoryService {
                 generator.generateInventory(1000, 100, 10);
             }
         });
-
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
+        String dbhost = props.getDatabaseHost();
+        String grpchost = props.getGrpcHostname();
+        System.out.println("Hosts are " + dbhost + " & " + grpchost);
         InventoryService inventoryService = new InventoryService();
-        inventoryService.init(props.isEmbedded(), props.getClientConfig());
+        inventoryService.init(props.isEmbedded(), props.getClientConfig(), dbhost);
 
         final GrpcServer server = new GrpcServer();
         server.start();

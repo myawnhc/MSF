@@ -16,17 +16,26 @@
 
 package org.hazelcast.msfdemo.invsvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 
 import java.io.Serializable;
 
-// TODO: this is a Clone of Reserve event, update as appropriate
+import static org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.InventoryPulled;
+
 public class PullInventoryEvent extends InventoryEvent implements Serializable {
     private String orderNumber = "[not provided]";
     private String locationID;
     private int quantity;
-    private static SubscriptionManager<InventoryOuterClass.InventoryPulled> subscriptionManger = new SubscriptionManager<>(InventoryOuterClass.InventoryPulled.getDescriptor().getFullName());
+    private static SubscriptionManager<InventoryPulled> subscriptionManger;
+
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManger == null) {
+            subscriptionManger = new SubscriptionManager<>(hz, InventoryPulled.getDescriptor().getFullName());
+            subscriptionManger.setVerbose(false);
+        }
+    }
 
     public PullInventoryEvent() {
         super(InventoryEventTypes.PULL);
@@ -48,12 +57,12 @@ public class PullInventoryEvent extends InventoryEvent implements Serializable {
         this.quantity = quantity;
     }
 
-    public static void subscribe(StreamObserver<InventoryOuterClass.InventoryPulled> observer) {
+    public static void subscribe(StreamObserver<InventoryPulled> observer) {
         subscriptionManger.subscribe(observer, 0);
     }
     @Override
     public void publish() {
-        InventoryOuterClass.InventoryPulled event = InventoryOuterClass.InventoryPulled.newBuilder()
+        InventoryPulled event = InventoryPulled.newBuilder()
                 .setOrderNumber(orderNumber)
                 .setItemNumber(getItemNumber())
                 .setLocation(locationID)

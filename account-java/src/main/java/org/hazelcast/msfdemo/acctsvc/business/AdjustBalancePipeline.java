@@ -36,6 +36,8 @@ import org.hazelcast.msfdemo.acctsvc.events.AdjustBalanceEvent;
 import org.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import org.hazelcast.msfdemo.acctsvc.service.AccountService;
 
+import java.io.File;
+import java.net.URL;
 import java.util.AbstractMap;
 
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
@@ -55,6 +57,18 @@ public class AdjustBalancePipeline implements Runnable {
         try {
             MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
             System.out.println("AdjustBalancePipeline.run() invoked, submitting job");
+            ClassLoader cl = AdjustBalanceEvent.class.getClassLoader();
+            // tried target/classes/ext/* and every subpath therein ...
+            // In Docker image, jars have been copied to /ext ...
+            File fw = new File("/ext/framework-1.0-SNAPSHOT.jar");
+            URL framework = fw.toURI().toURL();
+            File grpc = new File("/ext/account-proto-1.0-SNAPSHOT.jar");
+            URL grpcdefs = grpc.toURI().toURL();
+            File svc = new File("/application.jar");
+            URL service = svc.toURI().toURL();
+            //System.out.println(">>> Found files? " + fw.exists() + " " + grpc.exists() + " " + svc.exists());
+            URL[] jobJars = new URL[] { framework, grpcdefs, service };
+            // Reverted to non-uploading version -- wasn't get all classes properly resolved
             controller.startJob("AccountService", "AccountService.AdjustBalance", createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();

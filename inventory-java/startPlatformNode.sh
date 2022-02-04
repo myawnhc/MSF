@@ -16,8 +16,8 @@
 #
 
 export FRAMEWORK_JAR=../framework/target/framework-1.0-SNAPSHOT.jar
-export SERVICE_PROTO_JAR=../account-protobuf/target/account-proto-1.0-SNAPSHOT.jar
-export SERVICE_JAR=./target/account.service-1.0-SNAPSHOT.jar
+export SERVICE_PROTO_JAR=../inventory-protobuf/target/inventory.protobuf-1.0-SNAPSHOT.jar
+export SERVICE_JAR=./target/inventory-java-1.0-SNAPSHOT.jar
 
 # Notes: schema validation can be re-enabled on 5.1
 # Uploading jars with JobConfig still results in not found, so adding explicitly here

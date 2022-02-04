@@ -61,6 +61,13 @@
                     <include>framework-*.jar</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>../inventory-protobuf/target</directory>
+                <targetPath>ext</targetPath>
+                <includes>
+                    <include>inventory.protobuf-*.jar</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>

@@ -16,59 +16,22 @@
 
 package org.hazelcast.msfdemo.invsvc.events;
 
-import org.hazelcast.msf.controller.MSFController;
+import com.hazelcast.core.HazelcastInstance;
 import org.hazelcast.msf.eventstore.EventStore;
 import org.hazelcast.msfdemo.invsvc.domain.Item;
 
 
 public class InventoryEventStore extends EventStore<Item, String, InventoryEvent> {
 
-    public static final String EVENT_STORE_NAME = "InventoryEventStore";
+    private static final String mapName = "InventoryEventStore";
+    private static final String keyName = "itemNumber";
 
-    // Singleton implementation
-    private InventoryEventStore() {
-        super(InventoryEventStore.class.getCanonicalName(), Item::new);
-        MSFController controller = MSFController.getInstance();
-        String keyName = "itemNumber"; // builds an index, so case sensitive!
-        eventMap = controller.createEventStore(EVENT_STORE_NAME, keyName);
+    public InventoryEventStore(HazelcastInstance hazelcast) {
+        super(mapName, keyName, Item::new, hazelcast);
+        // NOTE: if more events are added, they need to be initialized here as well
+        PullInventoryEvent.setHazelcastInstance(hazelcast);
+        ReserveInventoryEvent.setHazelcastInstance(hazelcast);
     }
-
-    private static class Singleton {
-        private static final InventoryEventStore INSTANCE = new InventoryEventStore();
-    }
-
-    public static InventoryEventStore getInstance() {
-        return Singleton.INSTANCE;
-    }
-
-
-//    public void removeEventListener(UUID id) {
-//        eventMap.removeEntryListener(id);
-//    }
-//
-//    public UUID registerEventHandler(String orderNumber, InventoryAPIImpl.EventHandler handler) {
-//
-//        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,InventoryEvent>() {
-//            @Override
-//            public void entryAdded(EntryEvent<Long, InventoryEvent> entryEvent) {
-//                InventoryEvent event = entryEvent.getValue();
-//                handler.handleEvent(event);
-//            }
-//        }, Predicates.sql("orderNumber=" + orderNumber), true);
-//
-//        // There is a lag in registering handlers - pick events we've missed
-//        Set<Map.Entry<Long,InventoryEvent>> missedEvents = eventMap.entrySet(Predicates.sql("orderNumber=" + orderNumber));
-//        //System.out.println("Re-processing " + missedEvents.size() + " missed events");
-//        for (Map.Entry<Long,InventoryEvent> mapEntry : missedEvents) {
-//            InventoryEvent event = mapEntry.getValue();
-//            if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
-//                //System.out.println("Skipping create event");
-//            } else {
-//                handler.handleEvent(event);
-//            }
-//        }
-//        return id;
-//    }
 
     // Materialize method generified and moved to EventStore base class
 

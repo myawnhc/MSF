@@ -29,12 +29,18 @@ import static com.hazelcast.jet.cdc.mysql.MySqlCdcSources.mysql;
 //  want to rewrite this pipeline using SQL
 public class CDCPipeline implements Runnable {
 
+    private final String dbHost;
+
+    public CDCPipeline(String dbHost) {
+        this.dbHost = dbHost;
+    }
+
     @Override
     public void run() {
         try {
             MSFController controller = MSFController.getInstance();
             System.out.println("CDCPipeline.run() invoked, submitting job");
-            controller.startJob("InventoryService", "InventoryService.CDCPipeline", createPipeline());
+            controller.startJob("InventoryService", "InventoryService.CDCPipeline", createPipeline(dbHost));
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }
@@ -53,12 +59,12 @@ public class CDCPipeline implements Runnable {
         }
     }
 
-    private static Pipeline createPipeline() {
+    private static Pipeline createPipeline(String dbHost) {
         Pipeline p = Pipeline.create();
         p.readFrom(
                 // Name needs to be unique so using service rather than db; passed to Kafka
                 mysql("invservice")
-                        .setDatabaseAddress("invdb")
+                        .setDatabaseAddress(dbHost)
                         .setDatabasePort(3306)
                         .setDatabaseUser("invuser")
                         .setDatabasePassword("invpass")
