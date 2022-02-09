@@ -51,7 +51,10 @@ public class InventoryService {
         // Start the various Jet transaction handler pipelines
         ExecutorService executor = Executors.newCachedThreadPool();
         CDCPipeline cdcPipeline = new CDCPipeline(dbhost);
-        executor.submit(cdcPipeline);
+        // CDCPipeline causes other services to block until inventory map is fully loaded, this
+        // slows us down significantly especially in remote setups
+        System.out.println("NOTE: InventoryService not starting CDCPipeline in this version");
+        //executor.submit(cdcPipeline);
 
         // Item and Inventory data is persistent, but if we're running the first time
         // after pulling a new DB image we'll need to generate our test data

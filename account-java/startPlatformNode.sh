@@ -1,4 +1,3 @@
-
 #
 # Copyright 2018-2022 Hazelcast, Inc
 #

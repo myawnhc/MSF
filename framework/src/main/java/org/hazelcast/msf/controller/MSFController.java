@@ -195,6 +195,9 @@ public class MSFController {
 
         if (hz == null) {
             try {
+                // TODO: this is now out of sync with the way client config is
+                //  being handled elsewhere ... should get the client config file
+                //  name from the service.yaml file
                 String cfgFile = "hazelcast-client-" + serviceName + ".yaml";
                 ClientConfig remoteConfig = new YamlClientConfigBuilder(cfgFile).build();
                 hz = HazelcastClient.newHazelcastClient(remoteConfig);
@@ -258,19 +261,21 @@ public class MSFController {
     // (likely via configuration) whether we're doing embedded or client/server,
     // how many instances to start, etc.
     public void startJob(String service, String jobName, Pipeline p) {
-        startJob(service, jobName, p, new URL[]{});
+        startJob(service, jobName, p, new URL[]{}, new Class[]{});
     }
 
     // Adding jars still results in Serialization errors on lambda functions within
     // createContextFn of services ... so dropping back to adding jars to platform classpath
     // (self-managed deploy) or uploading thru cloud console (managed service deploy) until I
     // can figure out why this fails.
-    public void startJob(String service, String jobName, Pipeline p, URL[] jars) {
+    public void startJob(String service, String jobName, Pipeline p, URL[] jars, Class[] classes) {
         JobConfig jconfig = new JobConfig();
         for (URL url : jars) {
             jconfig.addJar(url);
             System.out.println(" Added to JobConfig: " + url.toString());
         }
+        jconfig.addClass(classes);
+
         jconfig.setName(jobName);
 
         System.out.println("MSFController starting job " + jobName);

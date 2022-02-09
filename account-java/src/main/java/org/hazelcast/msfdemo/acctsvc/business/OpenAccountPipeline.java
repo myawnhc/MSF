@@ -34,6 +34,8 @@ import org.hazelcast.msfdemo.acctsvc.events.OpenAccountEvent;
 import org.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import org.hazelcast.msfdemo.acctsvc.service.AccountService;
 
+import java.io.File;
+import java.net.URL;
 import java.util.AbstractMap;
 
 import static com.hazelcast.jet.datamodel.Tuple2.tuple2;
@@ -53,8 +55,19 @@ public class OpenAccountPipeline implements Runnable {
     public void run() {
         try {
             MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
+            File fw = new File("/ext/framework-1.0-SNAPSHOT.jar");
+            URL framework = fw.toURI().toURL();
+            File grpc = new File("/ext/account-proto-1.0-SNAPSHOT.jar");
+            URL grpcdefs = grpc.toURI().toURL();
+            File svc = new File("/application.jar");
+            URL service = svc.toURI().toURL();
+            //System.out.println(">>> Found files? " + fw.exists() + " " + grpc.exists() + " " + svc.exists());
+            URL[] jobJars = new URL[] { framework, grpcdefs, service };
+            Class[] jobClasses = new Class[] {}; // {AccountOuterClass.class };
             System.out.println("OpenAccountPipeline.run() invoked, submitting job");
             controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline());
+            //controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline(), jobJars, jobClasses);
+
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }
