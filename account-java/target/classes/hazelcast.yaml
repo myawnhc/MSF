@@ -10,12 +10,15 @@ hazelcast:
         # Health check is enabled by default once rest-api enabled, so this is unnecessary
         HEALTH_CHECK:
           enabled: true
-  properties:
-    hazelcast.config.schema.validation.enabled: false
-    hazelcast.jet.resource-upload-enabled: true
-  serialization:
-    compact-serialization:
-      enabled: true
+#  properties:
+#    # Needed until 5.1 to allow compact-serialization entry
+#    hazelcast.config.schema.validation.enabled: false
+#  serialization:
+#    compact-serialization:
+#      enabled: true
+  jet:
+    enabled: true
+    resource-upload-enabled: true
   map:
     AccountEvent_*:
       event-journal:

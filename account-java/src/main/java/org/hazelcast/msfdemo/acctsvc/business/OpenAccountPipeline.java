@@ -65,8 +65,8 @@ public class OpenAccountPipeline implements Runnable {
             URL[] jobJars = new URL[] { framework, grpcdefs, service };
             Class[] jobClasses = new Class[] {}; // {AccountOuterClass.class };
             System.out.println("OpenAccountPipeline.run() invoked, submitting job");
-            controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline());
-            //controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline(), jobJars, jobClasses);
+//            controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline());
+            controller.startJob("AccountService", "AccountService.OpenAccount", createPipeline(), jobJars, jobClasses);
 
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();

@@ -69,7 +69,7 @@ public class AdjustBalancePipeline implements Runnable {
             //System.out.println(">>> Found files? " + fw.exists() + " " + grpc.exists() + " " + svc.exists());
             URL[] jobJars = new URL[] { framework, grpcdefs, service };
             // Reverted to non-uploading version -- wasn't get all classes properly resolved
-            controller.startJob("AccountService", "AccountService.AdjustBalance", createPipeline());
+            controller.startJob("AccountService", "AccountService.AdjustBalance", createPipeline(), jobJars, new Class[]{});
         } catch (Exception e) { // Happens if our pipeline is not valid
             e.printStackTrace();
         }

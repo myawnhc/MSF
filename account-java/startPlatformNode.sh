@@ -19,10 +19,10 @@ export SERVICE_PROTO_JAR=../account-protobuf/target/account-proto-1.0-SNAPSHOT.j
 export SERVICE_JAR=./target/account.service-1.0-SNAPSHOT.jar
 
 # Notes: schema validation can be re-enabled on 5.1
-# Uploading jars with JobConfig still results in not found, so adding explicitly here
+# Uploading jars with JobConfig is not a complete solution - it doesn't work for serializers,
+# so still need to put jars on the member classpath here.
 
 echo Starting Hazelcast Platform
 hz start -J-Dhazelcast.config.schema.validation.enabled=false \
-         -J-Dhz.jet.resource-upload-enabled=true \
-         --config=target/classes/hazelcast.yaml \
+         --config=target/classes/hazelcast.yaml
          --jar=$FRAMEWORK_JAR,$SERVICE_PROTO_JAR,$SERVICE_JAR
