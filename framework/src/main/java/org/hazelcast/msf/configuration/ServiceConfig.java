@@ -51,10 +51,10 @@ public class ServiceConfig {
         public String getDatabaseHost() { return database_host; }
         //public String getClientConfigFilename() { return  hz_client_config; }
         public byte[] getClientConfig() {
-            System.out.println("ServiceConfig.getClientConfig: " + hz_client_config);
-            if (hz_client_config == null) {
+            if (isEmbedded() || hz_client_config == null) {
                 return new byte[0];
             }
+            System.out.println("ServiceConfig.getClientConfig for " + service_name + ": " + hz_client_config);
             try {
                 URL configURL = ServiceConfig.class.getClassLoader().getResource(hz_client_config);
                 byte[] bytes = configURL.openStream().readAllBytes();
@@ -74,6 +74,7 @@ public class ServiceConfig {
             System.out.println("Specified client config as url: " + url.toString());
             return url;
         }
+
         public boolean isEmbedded() {
             validateMode();
             return hz_mode.equalsIgnoreCase("embedded");
@@ -97,29 +98,58 @@ public class ServiceConfig {
         }
     }
 
-    static {
-        read();
-    }
+//    static {
+//        read();
+//    }
 
     public static ServiceProperties get(String serviceName) {
+        return get(serviceName, null);
+    }
+
+    // In some cases (dataload in particular) using the default classloader pulls in the
+    // wrong service.yaml, so it is safest to pass in a CL associated with the module that
+    // is home to the correct service.yaml file.
+    public static ServiceProperties get(String serviceName, ClassLoader classLoaderForResources) {
+        return get("service.yaml", serviceName, classLoaderForResources);
+    }
+
+    public static ServiceProperties get(String filename, String serviceName, ClassLoader classLoaderForResources) {
+        read(classLoaderForResources, filename);
         return configurations.get(serviceName);
     }
 
-    static private void read() {
+    // Open question as to whether we should clear configurations map when this runs ...
+    //
+    static private void read(ClassLoader classLoaderForServiceYaml, String filename) {
+        if (classLoaderForServiceYaml == null)
+            classLoaderForServiceYaml = ServiceConfig.class.getClassLoader();
         YAMLFactory yfactory = new YAMLFactory();
         ObjectMapper mapper = new ObjectMapper(yfactory);
         MappingIterator<ServiceProperties> configInfo;
         try {
-            URL yamlFile = ServiceConfig.class.getClassLoader().getResource("service.yaml");
+
+//            // DEBUG
+//            // May have multiple service.yamls along classpath - are we getting wrong one?
+//            InputStream is = classLoaderForServiceYaml.getResourceAsStream(filename);
+//            InputStreamReader isr = new InputStreamReader(is);
+//            BufferedReader br = new BufferedReader(isr);
+//            while (br.ready()) {
+//                System.out.println(" :" + br.readLine());
+//            }
+//            // !DEBUG
+
+            URL yamlFile = classLoaderForServiceYaml.getResource(filename);
             YAMLParser parser = yfactory.createParser(yamlFile);
             System.out.println("ServiceConfig reading config info from " + yamlFile.toExternalForm());
             configInfo = mapper.readValues(parser, ServiceProperties.class);
+            int configsLoaded = 0;
             while (configInfo.hasNext()) {
                 ServiceProperties sp = configInfo.next();
                 configurations.put(sp.service_name, sp);
+                configsLoaded++;
                 System.out.println(" -- " + sp.service_name);
             }
-            System.out.println("ServiceConfig loaded " + configurations.size() + " service definitions");
+            System.out.println("ServiceConfig loaded " + configsLoaded + " service definitions, now has " + configurations.size());
 
         } catch (Exception e) {
             e.printStackTrace();

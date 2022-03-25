@@ -17,6 +17,7 @@
 package org.hazelcast.msf.persistence;
 
 import com.hazelcast.map.IMap;
+import com.hazelcast.query.Predicates;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import com.hazelcast.sql.SqlStatement;
@@ -24,6 +25,7 @@ import org.hazelcast.msf.controller.MSFController;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /* T = domain object type
    K = key type
@@ -51,9 +53,13 @@ public abstract class DAO<T extends DTO<K>, K> {
     public void insert(K key, T dobj) {
         map.set(key, dobj);
     }
+    public void insertAll(Map<K,T> items) {
+        map.putAll(items);
+    }
     public void delete(T dobj) {
         map.remove(dobj.getKey());
     }
+    public void deleteAll() { map.removeAll(Predicates.alwaysTrue()); }
     public void deleteByKey(K key) {
         map.remove(key);
     }

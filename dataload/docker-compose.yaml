@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    container_name: invdb
+    deploy:
+      replicas: 1
+    cap_add:
+      - sys_nice
+    ports:
+      - "3306:3306"
+    networks:
+      - "msfnet"
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+    command: --log-bin --binlog_format=ROW
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  account:
+    image: msf/account.service:latest
+    container_name: acctsvc
+    deploy:
+      replicas: 1
+    ports:
+      - "5701:5701"
+      - "50051:50051"
+    networks:
+      - "msfnet"
+
+  inventory:
+      image: msf/inventory.service:latest
+      container_name: invsvc
+      deploy:
+        replicas: 1
+      ports:
+        - "5721:5721"
+        - "50053:50053"
+      networks:
+        - "msfnet"
+      depends_on:
+        db:
+          condition: service_healthy
+
+  client:
+    image: msf/dataload:latest
+    container_name: dataload
+    deploy:
+      replicas: 1
+    networks:
+      - "msfnet"
+    depends_on:
+      - account
+      - inventory
+
+networks:
+  msfnet:

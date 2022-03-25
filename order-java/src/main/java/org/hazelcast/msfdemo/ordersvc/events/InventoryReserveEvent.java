@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -24,6 +25,8 @@ import org.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import java.io.Serializable;
 import java.util.EnumSet;
 
+import static org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryReserved;
+
 public class InventoryReserveEvent extends OrderEvent implements Serializable {
 
     private String accountNumber;
@@ -31,7 +34,15 @@ public class InventoryReserveEvent extends OrderEvent implements Serializable {
     private int quantity;
     private String location;
     private String failureReason;
-    private static final SubscriptionManager<OrderOuterClass.InventoryReserved> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.InventoryReserved.getDescriptor().getFullName());
+    private static SubscriptionManager<InventoryReserved> subscriptionManager;
+
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, InventoryReserved.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
 
     public InventoryReserveEvent(String orderNumber) {
         super(orderNumber);

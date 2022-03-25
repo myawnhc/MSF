@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -25,13 +26,22 @@ import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.function.UnaryOperator;
 
+import static org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.AccountCharged;
+
 public class ChargeAccountEvent extends OrderEvent implements Serializable, UnaryOperator<Order> {
 
     private String accountNumber;
     private int amountCharged;
 
-    private static final SubscriptionManager<OrderOuterClass.AccountCharged> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.AccountCharged.getDescriptor().getFullName());
+    private static SubscriptionManager<AccountCharged> subscriptionManager;
 
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, AccountCharged.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
     public ChargeAccountEvent(String orderNumber) {
         super(orderNumber);
     }

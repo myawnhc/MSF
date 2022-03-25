@@ -101,6 +101,7 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
     public void subscribeToOrderCreated(OrderOuterClass.SubscribeRequest request,
                                         StreamObserver<OrderOuterClass.OrderCreated> responseObserver) {
         // request is an empty type
+        CreateOrderEvent.setHazelcastInstance(controller.getHazelcastInstance());
         CreateOrderEvent.subscribe(responseObserver);
     }
 
@@ -108,6 +109,7 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
     public void subscribeToOrderShipped(OrderOuterClass.SubscribeRequest request,
                                         StreamObserver<OrderOuterClass.OrderShipped> responseObserver) {
         // request is an empty type
+        OrderShippedEvent.setHazelcastInstance(controller.getHazelcastInstance());
         OrderShippedEvent.subscribe(responseObserver);
     }
 }

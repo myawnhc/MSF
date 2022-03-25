@@ -20,7 +20,6 @@ import org.hazelcast.msf.configuration.ServiceConfig;
 import org.hazelcast.msf.controller.MSFController;
 import org.hazelcast.msfdemo.invsvc.business.CDCPipeline;
 import org.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
-import org.hazelcast.msfdemo.invsvc.testdata.GenerateData;
 import org.hazelcast.msfdemo.invsvc.views.InventoryDAO;
 import org.hazelcast.msfdemo.invsvc.views.ItemDAO;
 
@@ -58,17 +57,17 @@ public class InventoryService {
 
         // Item and Inventory data is persistent, but if we're running the first time
         // after pulling a new DB image we'll need to generate our test data
-        executor.submit(() -> {
-            GenerateData generator = new GenerateData(controller);
-            if (itemDAO.getItemCount() == 0) {
-                System.out.println("InventoryService - items empty, generating");
-                generator.generateItems(1000);
-            }
-            if (inventoryDAO.getInventoryRecordCount() == 0) {
-                System.out.println("InventoryService - inventory empty, generating");
-                generator.generateInventory(1000, 100, 10);
-            }
-        });
+//        executor.submit(() -> {
+//            GenerateData generator = new GenerateData(controller);
+//            if (itemDAO.getItemCount() == 0) {
+//                System.out.println("InventoryService - items empty, generating");
+//                generator.generateItems(1000);
+//            }
+//            if (inventoryDAO.getInventoryRecordCount() == 0) {
+//                System.out.println("InventoryService - inventory empty, generating");
+//                generator.generateInventory(1000, 100, 10);
+//            }
+//        });
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

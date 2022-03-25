@@ -65,12 +65,16 @@ public class PriceLookupPipeline implements Runnable {
             ServiceConfig.ServiceProperties props = ServiceConfig.get("catalog-service");
             priceLookupServiceHost = props.getGrpcHostname();
             priceLookupServicePort = props.getGrpcPort();
+            System.out.println("OrderService.PriceLookup will connect to catalog-service @ " + priceLookupServiceHost + ":" + priceLookupServicePort);
 
             // Price Lookup is invoked as soon as an order is created.  So we subscribe to
             // OrderCreated notifications to initiate a pipeline entry
             String mapName = "JRN."+ "PLP." + OrderCreated.getDescriptor().getFullName();
             orderCreatedEvents = controller.getMap(mapName);
             IAtomicLong sequence = controller.getSequenceGenerator(mapName);
+            // If we subscribe before the Event class is initialized it NPEs so we do our own init.
+            // This really breaks encapsulation, should probably pass instance to subscribe instead.
+            CreateOrderEvent.setHazelcastInstance(controller.getHazelcastInstance());
             CreateOrderEvent.subscribe(new StreamObserverToIMapAdapter<>(orderCreatedEvents, sequence));
 
             // Build pipeline and submit job
@@ -83,12 +87,65 @@ public class PriceLookupPipeline implements Runnable {
     }
 
     private static Pipeline createPipeline() {
+        try {
+            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
+                    s1 = unaryService(() -> ManagedChannelBuilder.forAddress("localhost", priceLookupServicePort).usePlaintext(),
+                    channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("localhost OK");
+        } catch (Exception e) {
+            System.out.println("localhost FAILED");
+        }
+        try {
+            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
+                    s2 = unaryService(() -> ManagedChannelBuilder.forAddress("172.19.0.5", priceLookupServicePort).usePlaintext(),
+                channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("docker IP OK");
+        } catch (Exception e) {
+            System.out.println("docker IP FAILED");
+        }
+        try {
+            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
+                    s3 = unaryService(() -> ManagedChannelBuilder.forAddress("catalogsvc", priceLookupServicePort).usePlaintext(),
+                    channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("service name OK");
+        } catch (Exception e) {
+            System.out.println("service name FAILED");
+        }
+        try {
+            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
+                    s4 = unaryService(() -> ManagedChannelBuilder.forAddress("192.168.86.25", priceLookupServicePort).usePlaintext(),
+                    channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("actual local IP OK");
+        } catch (Exception e) {
+            System.out.println("actual local IP FAILED");
+        }
+        try {
+            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
+                    s5 = unaryService(() -> ManagedChannelBuilder.forAddress("127.0.0.1", priceLookupServicePort).usePlaintext(),
+                    channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("loopback OK");
+        } catch (Exception e) {
+            System.out.println("lookback FAILED");
+        }
 
         ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                priceLookupService = unaryService(
-                () -> ManagedChannelBuilder.forAddress(priceLookupServiceHost, priceLookupServicePort) .usePlaintext(),
-                channel -> CatalogGrpc.newStub(channel)::priceLookup
-        );
+                priceLookupService = null;
+        try {
+            priceLookupService = unaryService(
+                    () -> ManagedChannelBuilder.forAddress(priceLookupServiceHost, priceLookupServicePort).usePlaintext(),
+                    channel -> CatalogGrpc.newStub(channel)::priceLookup
+            );
+            System.out.println("Managed Channel for PriceLookupService @ "+ priceLookupServiceHost + ":" + priceLookupServicePort + " OK");
+
+        } catch (Exception e) {
+            System.out.println("Managed Channel for PriceLookupService @ "+ priceLookupServiceHost + ":" + priceLookupServicePort + "failed");
+            e.printStackTrace();
+        }
 
         Pipeline p = Pipeline.create();
 
@@ -116,7 +173,7 @@ public class PriceLookupPipeline implements Runnable {
         // Persist to Event Store and Materialized View
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
                 ServiceFactories.sharedService(
-                        (ctx) -> OrderEventStore.getInstance()
+                        (ctx) -> new OrderEventStore(ctx.hazelcastInstance())
                 );
 
         ServiceFactory<?,IMap<String,Order>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());

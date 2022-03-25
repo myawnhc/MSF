@@ -66,6 +66,7 @@ public class PullInventoryPipeline implements Runnable {
             ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
             inventoryServiceHost = props.getGrpcHostname();
             inventoryServicePort = props.getGrpcPort();
+            System.out.println("OrderService.PullInventory will connect to inventory-service @ " + inventoryServiceHost + ":" + inventoryServicePort);
 
             // We pull from map that has merged events
             String comboMap = "JRN.completedValidation";
@@ -92,7 +93,7 @@ public class PullInventoryPipeline implements Runnable {
 
         // EventStore as a service
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
-                ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
+                ServiceFactories.sharedService((ctx) -> new OrderEventStore(ctx.hazelcastInstance()));
 
         // IMap/Materialized View as a service
         ServiceFactory<?, IMap<String, Order>> materializedViewServiceFactory =

@@ -88,16 +88,10 @@ public class CreateOrderPipeline implements Runnable {
                 })
                 .setName("Create OrderEvent.CREATE");
 
-        // Peek in on progress
-//        tupleStream.window(oneSecond)
-//                .aggregate(AggregateOperations.counting())
-//                .setName("Count operations per second")
-//                .writeTo(Sinks.logger(count -> "OrderEvent.CREATE count " + count));
-
         // Persist to Event Store and Materialized View
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
                 ServiceFactories.sharedService(
-                        (ctx) -> OrderEventStore.getInstance()
+                        (ctx) -> new OrderEventStore(ctx.hazelcastInstance())
                 );
 
         ServiceFactory<?,IMap<String, Order>> materializedViewServiceFactory = ServiceFactories.iMapService(service.getView().getName());

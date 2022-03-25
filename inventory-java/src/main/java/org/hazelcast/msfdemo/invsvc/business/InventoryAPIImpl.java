@@ -18,26 +18,109 @@ package org.hazelcast.msfdemo.invsvc.business;
 
 import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
+import io.grpc.Context;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.controller.MSFController;
 import org.hazelcast.msfdemo.invsvc.domain.Inventory;
+import org.hazelcast.msfdemo.invsvc.domain.Item;
 import org.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
 import org.hazelcast.msfdemo.invsvc.events.InventoryGrpc;
-import org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass;
 import org.hazelcast.msfdemo.invsvc.events.ReserveInventoryEvent;
 import org.hazelcast.msfdemo.invsvc.persistence.InventoryKey;
 import org.hazelcast.msfdemo.invsvc.views.InventoryDAO;
 import org.hazelcast.msfdemo.invsvc.views.ItemDAO;
 
+import static org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.*;
+
 public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
     final MSFController controller = MSFController.getInstance();
-
     InventoryDAO inventoryDAO = new InventoryDAO(controller);
     ItemDAO itemDAO = new ItemDAO(controller);
 
     @Override
-    public void reserve(InventoryOuterClass.ReserveRequest request, StreamObserver<InventoryOuterClass.ReserveResponse> responseObserver) {
+    public void clearAllData(ClearAllDataRequest request, StreamObserver<ClearAllDataResponse> response) {
+        Context ctx = Context.current().fork();
+        ctx.run(() -> {
+            inventoryDAO.deleteAll(); // affects MapStore as well
+            itemDAO.deleteAll(); // affects MapStore as well
+        });
+        response.onNext(ClearAllDataResponse.newBuilder().build());
+        // TODO: should wait until deletes propagate to the DB before marking complete
+        response.onCompleted();
+        System.out.println("*** All Item & Inventory Data cleared ***");
+    }
+
+    @Override
+    public StreamObserver<AddItemRequest> addItem(StreamObserver<AddItemResponse> response) {
+        return new StreamObserver<AddItemRequest>() {
+            @Override
+            public void onNext(AddItemRequest addItemRequest) {
+                Item item = new Item();
+                item.setItemNumber(addItemRequest.getItemNumber());
+                item.setDescription(addItemRequest.getDescription());
+                item.setCategoryID(addItemRequest.getCategoryID());
+                item.setCategoryName(addItemRequest.getCategoryName());
+                item.setPrice(addItemRequest.getPrice());
+                itemDAO.insert(item.getItemNumber(), item);
+                //System.out.println("InventoryAPIItem.addItem inserted " + item.getItemNumber());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println("InvAPI AddItemRequest.onError:");
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+                // Empty response
+                response.onNext(AddItemResponse.newBuilder().build());
+                response.onCompleted();
+                System.out.println("InventoryAPIImpl.addItem.onCompleted: all items done");
+            }
+        };
+    }
+
+    @Override
+    public StreamObserver<AddInventoryRequest> addInventory(StreamObserver<AddInventoryResponse> response) {
+        Context ctx = Context.current().fork(); // attempt to avoid 'client cancelled' errors
+        return new StreamObserver<>() {
+            @Override
+            public void onNext(AddInventoryRequest addInventoryRequest) {
+                ctx.run(() -> {
+                    Inventory stock = new Inventory();
+                    stock.setItemNumber(addInventoryRequest.getItemNumber());
+                    stock.setDescription(addInventoryRequest.getDescription());
+                    stock.setLocation(addInventoryRequest.getLocation());
+                    stock.setLocationType(addInventoryRequest.getLocationType());
+                    stock.setGeohash(addInventoryRequest.getGeohash());
+                    stock.setQuantityOnHand(addInventoryRequest.getQtyOnHand());
+                    stock.setQuantityReserved(addInventoryRequest.getQtyReserved());
+                    stock.setAvailableToPromise(addInventoryRequest.getAvailToPromise());
+                    InventoryKey key = new InventoryKey(stock.getItemNumber(), stock.getLocation());
+                    inventoryDAO.insert(key, stock);
+                });
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println("InvAPI AddInventoryRequest.onError:");
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCompleted() {
+                // Empty response
+                response.onNext(AddInventoryResponse.newBuilder().build());
+                response.onCompleted();
+                System.out.println("InventoryAPIImpl.addInventory complete");
+            }
+        };
+    }
+
+    @Override
+    public void reserve(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
         String itemNumber = request.getItemNumber();
         String location = request.getLocation();
         int quantity = request.getQuantity();
@@ -47,7 +130,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         InventoryKey invKey = new InventoryKey(itemNumber, location);
         Inventory inv = inventoryDAO.findByKey(invKey);
         if (inv == null) {
-            InventoryOuterClass.ReserveResponse nomatch = InventoryOuterClass.ReserveResponse.newBuilder()
+            ReserveResponse nomatch = ReserveResponse.newBuilder()
                     .setSuccess(false)
                     .setReason("No record exists for item/location combination")
                     .build();
@@ -58,7 +141,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
         if (inv.getAvailableToPromise() < request.getQuantity()) {
             System.out.printf("Insufficient ATP %d %d %d\n", inv.getQuantityOnHand(), inv.getQuantityReserved(), inv.getAvailableToPromise());
-            InventoryOuterClass.ReserveResponse shortage = InventoryOuterClass.ReserveResponse.newBuilder()
+            ReserveResponse shortage = ReserveResponse.newBuilder()
                     .setSuccess(false)
                     .setReason(("Insufficient quantity available"))
                     .build();
@@ -94,14 +177,14 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         });
 
         // Respond to caller
-        InventoryOuterClass.ReserveResponse success = InventoryOuterClass.ReserveResponse.newBuilder()
+        ReserveResponse success = ReserveResponse.newBuilder()
                 .setSuccess(true).build();
         responseObserver.onNext(success);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void pull(InventoryOuterClass.PullRequest request, StreamObserver<InventoryOuterClass.PullResponse> responseObserver) {
+    public void pull(PullRequest request, StreamObserver<PullResponse> responseObserver) {
         String itemNumber = request.getItemNumber();
         String location = request.getLocation();
         int quantity = request.getQuantity();
@@ -111,7 +194,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         InventoryKey invKey = new InventoryKey(itemNumber, location);
         Inventory inv = inventoryDAO.findByKey(invKey);
         if (inv == null) {
-            InventoryOuterClass.PullResponse nomatch = InventoryOuterClass.PullResponse.newBuilder()
+            PullResponse nomatch = PullResponse.newBuilder()
                     .setSuccess(false)
                     .setReason("No record exists for item/location combination")
                     .build();
@@ -122,7 +205,7 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
         if (inv.getAvailableToPromise() + inv.getQuantityReserved() < request.getQuantity() ) {
             System.out.printf("Insufficient ATP %d %d %d\n", inv.getQuantityOnHand(), inv.getQuantityReserved(), inv.getAvailableToPromise());
-            InventoryOuterClass.PullResponse shortage = InventoryOuterClass.PullResponse.newBuilder()
+            PullResponse shortage = PullResponse.newBuilder()
                     .setSuccess(false)
                     .setReason(("Insufficient quantity available"))
                     .build();
@@ -159,26 +242,26 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
         });
 
         // Respond to caller
-        InventoryOuterClass.PullResponse success = InventoryOuterClass.PullResponse.newBuilder()
+        PullResponse success = PullResponse.newBuilder()
                 .setSuccess(true).build();
         responseObserver.onNext(success);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void unreserve(InventoryOuterClass.ReserveRequest request, StreamObserver<InventoryOuterClass.ReserveResponse> responseObserver) {
+    public void unreserve(ReserveRequest request, StreamObserver<ReserveResponse> responseObserver) {
         System.out.println("unreserve unimplemented in InventoryAPIImpl");
     }
 
     @Override
-    public void restock(InventoryOuterClass.PullRequest request, StreamObserver<InventoryOuterClass.PullResponse> responseObserver) {
+    public void restock(PullRequest request, StreamObserver<PullResponse> responseObserver) {
         System.out.println("restock unimplemented in InventoryAPIImpl");
     }
 
     @Override
-    public void getItemCount(InventoryOuterClass.ItemCountRequest request, StreamObserver<InventoryOuterClass.ItemCountResponse> responseObserver) {
+    public void getItemCount(ItemCountRequest request, StreamObserver<ItemCountResponse> responseObserver) {
         // Request is empty so ignore it
-        InventoryOuterClass.ItemCountResponse response = InventoryOuterClass.ItemCountResponse.newBuilder()
+        ItemCountResponse response = ItemCountResponse.newBuilder()
             .setCount(itemDAO.getItemCount())
                 .build();
         responseObserver.onNext(response);
@@ -186,9 +269,9 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
     }
 
     @Override
-    public void getInventoryRecordCount(InventoryOuterClass.InventoryCountRequest request, StreamObserver<InventoryOuterClass.InventoryCountResponse> responseObserver) {
+    public void getInventoryRecordCount(InventoryCountRequest request, StreamObserver<InventoryCountResponse> responseObserver) {
         // Request is empty so ignore it
-        InventoryOuterClass.InventoryCountResponse response = InventoryOuterClass.InventoryCountResponse.newBuilder()
+        InventoryCountResponse response = InventoryCountResponse.newBuilder()
                 .setCount(inventoryDAO.getInventoryRecordCount())
                 .build();
         responseObserver.onNext(response);

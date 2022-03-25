@@ -3,6 +3,8 @@ package inventory;
 option java_package = "org.hazelcast.msfdemo.invsvc.events";
 
 service Inventory {
+  rpc AddItem (stream AddItemRequest) returns (AddItemResponse) {}
+  rpc AddInventory (stream AddInventoryRequest) returns (AddInventoryResponse) {}
   rpc CheckAvailability (ATPRequest) returns (ATPResponse) {}
   rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
   rpc Ship (ShipRequest) returns (ShipResponse) {}
@@ -15,10 +17,38 @@ service Inventory {
   // ahead of data generation and order items not yet added
   rpc GetItemCount (ItemCountRequest) returns (ItemCountResponse) {}
   rpc GetInventoryRecordCount (InventoryCountRequest) returns (InventoryCountResponse) {}
+  rpc ClearAllData (ClearAllDataRequest) returns (ClearAllDataResponse) {}
   // Additional APIs including add / move not required for initial demo use case
 
   rpc SubscribeToInventoryReserved (SubscribeRequest) returns (stream InventoryReserved)  {}
   rpc SubscribeToInventoryPulled (SubscribeRequest) returns (stream InventoryPulled) {}
+}
+
+message AddItemRequest {
+  string itemNumber = 1;
+  string description = 2;
+  int32 price = 3;
+  string categoryID = 4;
+  string categoryName = 5;
+}
+
+message AddItemResponse {
+
+}
+
+message AddInventoryRequest {
+  string itemNumber = 1;
+  string description = 2;
+  string location = 3;
+  string locationType = 4;
+  string geohash = 5;
+  int32 qtyOnHand = 6;
+  int32 qtyReserved = 7;
+  int32 availToPromise = 8;
+}
+
+message AddInventoryResponse {
+
 }
 
 message ATPRequest {
@@ -73,6 +103,9 @@ message InventoryCountRequest {}
 message InventoryCountResponse {
   int32 count = 1;
 }
+
+message ClearAllDataRequest {}
+message ClearAllDataResponse {}
 
 message SubscribeRequest {}
 

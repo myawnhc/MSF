@@ -22,16 +22,16 @@ spec:
       containers:
         - image: "$(REGISTRY)/$(NAMESPACE)/catalog.service:latest"
           imagePullPolicy: $(IPP)
-          livenessProbe:
-            httpGet:
-              path: /hazelcast/health/node-state
-              port: 5731
+#          livenessProbe:
+#            httpGet:
+#              path: /hazelcast/health/node-state
+#              port: 5731
           name: container-account-svc
-          readinessProbe:
-            httpGet:
-              path: /hazelcast/health/node-state
-              port: 5731
-            initialDelaySeconds: 30
+#          readinessProbe:
+#            httpGet:
+#              path: /hazelcast/health/node-state
+#              port: 5731
+#            initialDelaySeconds: 30
 ---
 # =========================================================
 ---

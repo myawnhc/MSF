@@ -26,4 +26,9 @@ public class InventoryKey implements Serializable {
         this.itemNumber = item;
         this.locationID = loc;
     }
+
+    @Override
+    public String toString() {
+        return itemNumber + " @ " + locationID;
+    }
 }

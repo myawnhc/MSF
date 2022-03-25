@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -25,13 +26,23 @@ import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.function.UnaryOperator;
 
+import static org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.CreditChecked;
+
 public class CreditCheckEvent extends OrderEvent implements Serializable, UnaryOperator<Order> {
 
     private String accountNumber;
     private int amountRequested;
     private boolean sufficient;
 
-    private static final SubscriptionManager<OrderOuterClass.CreditChecked> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.CreditChecked.getDescriptor().getFullName());
+    private static SubscriptionManager<OrderOuterClass.CreditChecked> subscriptionManager;
+
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, CreditChecked.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
 
     public CreditCheckEvent(String orderNumber) {
         super(orderNumber);

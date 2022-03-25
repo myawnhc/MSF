@@ -59,7 +59,7 @@ public class AccountServiceClient {
     private ManagedChannel initChannel() {
         ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
         String target = props.getTarget();
-        logger.info("Target from service.yaml.test " + target);
+        logger.info("Target from service.yaml " + target);
 
         channel = ManagedChannelBuilder.forTarget(target)
                 .usePlaintext()

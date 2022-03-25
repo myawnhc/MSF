@@ -6,18 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="order.protobuf" />
+        <module name="catalog-java" />
+        <module name="inventory.protobuf" />
+        <module name="grpc-source" />
+        <module name="account-proto" />
+        <module name="catalog.protobuf" />
         <module name="order-java" />
         <module name="inventory-java" />
         <module name="framework" />
-        <module name="order.protobuf" />
         <module name="TestClient" />
-        <module name="catalog-java" />
-        <module name="inventory.protobuf" />
         <module name="mancenter" />
-        <module name="grpc-source" />
+        <module name="dataload" />
         <module name="account.service" />
-        <module name="account-proto" />
-        <module name="catalog.protobuf" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -33,7 +33,7 @@ kubectl delete service acctsvc
 kubectl delete service invsvc
 kubectl delete service catalogsvc
 kubectl delete service ordersvc
-kubectl delete service mysql-invdb-service
+kubectl delete service invdb
 kubectl delete service management-center-service
 
 #kubectl delete horizontalpodautoscaler bankinabox-imdg

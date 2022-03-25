@@ -65,11 +65,11 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                     ")";
 
     private static final String insertInventoryTemplate =
-            "insert into inventory (item_number, location, quantity, reserved, atp, last_updated_by) " +
+            "replace into inventory (item_number, location, quantity, reserved, atp, last_updated_by) " +
                     " values (?, ?, ?, ?, ?, ?)";
 
     private static final String insertLocationTemplate =
-            "insert into location (location_id, location_type, geohash, last_updated_by) " +
+            "replace into location (location_id, location_type, geohash, last_updated_by) " +
                     " values (?, ?, ?, ?)";
 
     private static final String selectInventoryTemplate =
@@ -87,6 +87,10 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
 
     private static final String selectKeysString = "select item_number, location from inventory";
 
+    private static final String deleteAllInventoryString = "delete from inventory";
+    private static final String deleteAllLocationsString = "delete from location";
+    private static final String deleteInventoryString = "delete from inventory where item_number = ? and location = ?";
+
     private PreparedStatement createStatement;
     private PreparedStatement insertInventoryStatement;
     private PreparedStatement insertLocationStatement;
@@ -95,6 +99,9 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
     private PreparedStatement selectItemStatement;
     private PreparedStatement selectItemKeysStatement;
     private PreparedStatement updateInventoryStatement;
+    private PreparedStatement deleteAllInventoryStatement;
+    private PreparedStatement deleteAllLocationsStatement;
+    private PreparedStatement deleteInventoryStatement;
 
     public InventoryMapStore() {
         // Connect and create database if it doesn't yet exist
@@ -117,7 +124,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             createStatement = conn.prepareStatement(createInventoryTableString);
             createStatement.executeUpdate();
             createStatement.close();
-            log.info("Created Inventory table ");
+            //log.info("Created (if needed) Inventory table ");
         } catch (SQLException se) {
             se.printStackTrace();
             System.exit(-1);
@@ -129,7 +136,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             createStatement = conn.prepareStatement(createLocationTableString);
             createStatement.executeUpdate();
             createStatement.close();
-            log.info("Created Location table ");
+            //log.info("Created (if needed) Location table ");
         } catch (SQLException se) {
             se.printStackTrace();
             System.exit(-1);
@@ -202,7 +209,7 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
                 inv.setItemNumber( rs.getString(1));
                 Item item = readItem(itemNumber);
                 if (item == null) {
-                    System.out.println("No item record for " + itemNumber);
+                    //System.out.println("No item record for " + itemNumber);
                     return null;
                 }
                 inv.setDescription(item.getDescription());
@@ -299,17 +306,46 @@ public class InventoryMapStore implements MapStore<InventoryKey, Inventory> {
             InventoryKey key = new InventoryKey(inv.getItemNumber(), inv.getLocation());
             store(key, inv);
         }
-        System.out.println("StoreAll complete");
+        //System.out.println("StoreAll complete");
     }
 
     @Override
     public void delete(InventoryKey key) {
-        System.out.printf("Delete %s %s", key.itemNumber, key.locationID);
+        try {
+            if (deleteInventoryStatement == null)
+                deleteInventoryStatement = conn.prepareStatement(deleteInventoryString);
+            deleteInventoryStatement.setString(1, key.itemNumber);
+            deleteInventoryStatement.setString(2, key.locationID);
+            int rows = deleteInventoryStatement.executeUpdate();
+            if (rows > 0)
+                System.out.println("Deleted " + key + " from inventory table");
+            else
+                System.out.println("No record " + key + " to delete in inventory table");
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
     }
 
     @Override
     public void deleteAll(Collection<InventoryKey> collection) {
-        System.out.println("deleteAll");
+        System.out.println("DeleteAll inventory with " + collection.size() + " items");
+        for (InventoryKey key : collection)
+            delete(key);
+    }
+
+    public void deleteAllItems() {
+        try {
+            if (deleteAllInventoryStatement == null)
+                deleteAllInventoryStatement = conn.prepareStatement(deleteAllInventoryString);
+            int d1 = deleteAllInventoryStatement.executeUpdate();
+            System.out.println(d1 + " inventory records deleted from InventoryDB by InventoryMapStore");
+            if (deleteAllLocationsStatement == null)
+                deleteAllLocationsStatement = conn.prepareStatement(deleteAllLocationsString);
+            int d2 = deleteAllLocationsStatement.executeUpdate();
+            System.out.println(d2 + " location records deleted from InventoryDB by InventoryMapStore");
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
     }
 
     //////////////////////////////

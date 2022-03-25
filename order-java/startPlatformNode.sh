@@ -1,0 +1,31 @@
+#
+# Copyright 2018-2022 Hazelcast, Inc
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+
+export FRAMEWORK_JAR=../framework/target/framework-1.0-SNAPSHOT.jar
+export ACCOUNT_PROTO_JAR=../account-protobuf/target/account-proto-1.0-SNAPSHOT.jar
+export INV_PROTO_JAR=../inventory-protobuf/target/inventory.protobuf-1.0-SNAPSHOT.jar
+export CATALOG_PROTO_JAR=../catalog-protobuf/target/catalog.protobuf-1.0-SNAPSHOT.jar
+export ORDER_PROTO_JAR=../order-protobuf/target/order.protobuf-1.0-SNAPSHOT.jar
+export SERVICE_JAR=./target/order-java-1.0-SNAPSHOT.jar
+
+# Notes: schema validation can be re-enabled on 5.1
+# Uploading jars with JobConfig is not a complete solution - it doesn't work for serializers,
+# so still need to put jars on the member classpath here.
+
+echo Starting Hazelcast Platform
+hz start -J-Dhazelcast.config.schema.validation.enabled=false \
+         --config=target/classes/hazelcast.yaml \
+         --jar=$FRAMEWORK_JAR,$ACCOUNT_PROTO_JAR,$INV_PROTO_JAR,$CATALOG_PROTO_JAR,$ORDER_PROTO_JAR,$SERVICE_JAR

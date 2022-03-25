@@ -16,7 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.eventstore;
 
-import org.hazelcast.msf.controller.MSFController;
+import com.hazelcast.core.HazelcastInstance;
 import org.hazelcast.msf.eventstore.EventStore;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
 import org.hazelcast.msfdemo.ordersvc.events.CompactionEvent;
@@ -24,66 +24,12 @@ import org.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 
 public class OrderEventStore extends EventStore<Order, String, OrderEvent> {
 
-    public static final String EVENT_STORE_NAME = "OrderEventStore";
+    public static final String mapName = "OrderEventStore";
+    public static final String keyName = "orderNumber";
 
-    // Singleton implementation
-    private OrderEventStore() {
-        super(OrderEventStore.class.getCanonicalName(), Order::new);
-        MSFController controller = MSFController.getInstance();
-        String keyName = "orderNumber"; // builds an index, so case sensitive!
-        eventMap = controller.createEventStore(EVENT_STORE_NAME, keyName);
+    public OrderEventStore(HazelcastInstance hz) {
+        super(mapName, keyName, Order::new, hz);
     }
-    private static class Singleton {
-        private static final OrderEventStore INSTANCE = new OrderEventStore();
-    }
-    public static OrderEventStore getInstance() {
-        return Singleton.INSTANCE;
-    }
-
-    // Experimental, once working abstract and move into base class
-    // Callback is the state machine, driven by OrderStatus field of the OrderEvent
-    // There may be an overloaded version that filters on specific state changes
-    // (maybe via EnumSet)
-//    public UUID registerEventListener(String orderNumber, Consumer<OrderEvent>
-//            callback) {
-//        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
-//            @Override
-//            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
-//                OrderEvent event = entryEvent.getValue();
-//                callback.accept(event);
-//            }
-//        }, Predicates.sql("orderNumber=" + orderNumber), true);
-//        return id;
-//    }
-
-//    public void removeEventListener(UUID id) {
-//        eventMap.removeEntryListener(id);
-//    }
-//
-//    public UUID registerEventHandler(String orderNumber, OrderAPIImpl.EventHandler handler) {
-//
-//        UUID id = eventMap.addEntryListener(new EntryAddedListener<Long,OrderEvent>() {
-//            @Override
-//            public void entryAdded(EntryEvent<Long, OrderEvent> entryEvent) {
-//                OrderEvent event = entryEvent.getValue();
-//                handler.handleEvent(event);
-//            }
-//        }, Predicates.sql("orderNumber=" + orderNumber), true);
-//
-//        // There is a lag in registering handlers - pick events we've missed
-//        Set<Map.Entry<Long,OrderEvent>> missedEvents = eventMap.entrySet(Predicates.sql("orderNumber=" + orderNumber));
-//        //System.out.println("Re-processing " + missedEvents.size() + " missed events");
-//        for (Map.Entry<Long,OrderEvent> mapEntry : missedEvents) {
-//            OrderEvent event = mapEntry.getValue();
-//            if (event.getEventName().equals(OrderEventTypes.CREATE.getQualifiedName())) {
-//                //System.out.println("Skipping create event");
-//            } else {
-//                System.out.println("Re-processing missed event (happened before handler armed)" + event);
-//                handler.handleEvent(event);
-//            }
-//        }
-//        return id;
-//    }
 
     // Materialize method generified and moved to EventStore base class
 

@@ -76,7 +76,6 @@ public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> 
 
     // New design: completely independent of MSFController, requires HazelcastInstance
     public EventStore(String mapName, String keyName, Supplier<? extends D> domainObjConstructor, HazelcastInstance hazelcast) {
-        System.out.println("EventStore.<init>, new version, invoked");
         sequenceProvider = hazelcast.getCPSubsystem().getAtomicLong(mapName);
         domainObjectConstructor = domainObjConstructor;
         // UnsupportedOperationException: Client config object only supports adding new data structure configurations

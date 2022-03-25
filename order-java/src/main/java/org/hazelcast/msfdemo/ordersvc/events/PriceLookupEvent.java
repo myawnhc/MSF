@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -33,7 +34,15 @@ public class PriceLookupEvent extends OrderEvent implements Serializable {
     private final String location;
     private final int quantity;
 
-    private static final SubscriptionManager<OrderPriced> subscriptionManager = new SubscriptionManager<>(OrderPriced.getDescriptor().getFullName());
+    private static SubscriptionManager<OrderPriced> subscriptionManager;
+
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, OrderPriced.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
 
     public PriceLookupEvent(String orderNumber, String itemNumber, String location, int quantity, int price) {
         super(orderNumber);
@@ -49,6 +58,7 @@ public class PriceLookupEvent extends OrderEvent implements Serializable {
     public static void subscribe(StreamObserver<OrderPriced> observer) {
         subscriptionManager.subscribe(observer, 0);
     }
+
     @Override
     public void publish() {
         OrderPriced event = OrderPriced.newBuilder()

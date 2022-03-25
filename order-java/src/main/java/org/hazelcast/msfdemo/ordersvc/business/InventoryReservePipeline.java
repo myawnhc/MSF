@@ -70,11 +70,13 @@ public class InventoryReservePipeline implements Runnable {
             ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
             inventoryServiceHost = props.getGrpcHostname();
             inventoryServicePort = props.getGrpcPort();
+            System.out.println("OrderService.ReserveInventory will connect to inventory-service @ " + inventoryServiceHost + ":" + inventoryServicePort);
 
             // Reserve inventory is triggered by order pricing
             String mapName = "JRN.IRP." + OrderPriced.getDescriptor().getFullName();
             orderPricedEvents = controller.getMap(mapName);
             IAtomicLong sequence = controller.getSequenceGenerator(mapName);
+            PriceLookupEvent.setHazelcastInstance(controller.getHazelcastInstance());
             PriceLookupEvent.subscribe(new StreamObserverToIMapAdapter<>(orderPricedEvents, sequence));
 
             // Build pipeline and submit job
@@ -144,7 +146,7 @@ public class InventoryReservePipeline implements Runnable {
         // Persist to Event Store and Materialized View
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
                 ServiceFactories.sharedService(
-                        (ctx) -> OrderEventStore.getInstance()
+                        (ctx) -> new OrderEventStore(ctx.hazelcastInstance())
                 );
 
         ServiceFactory<?,IMap<String,Order>> materializedViewServiceFactory =

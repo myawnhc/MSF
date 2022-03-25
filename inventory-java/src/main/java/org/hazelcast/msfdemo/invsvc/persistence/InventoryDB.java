@@ -69,10 +69,8 @@ public class InventoryDB {
             throw new IllegalStateException("Must establish connection before creating the database!");
         }
         try (Statement stmt = conn.createStatement()) {
-            //stmt.executeUpdate(dropDatabaseString);
-            //log.info("Dropped (if exists) database InventoryDB");
             stmt.executeUpdate(createDatabaseString);
-            log.info("Created Database InventoryDB");
+            //log.info("Created (if nreded) Database InventoryDB");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,9 +86,7 @@ public class InventoryDB {
             stmt.executeUpdate(createUserString);
             stmt.executeUpdate(grantUserString);
             stmt.executeUpdate(grantAdditional);
-
-            log.info("Created user invuser");
-
+            //log.info("Created (if needed) user invuser");
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(-1);

@@ -73,11 +73,13 @@ public class CreditCheckPipeline implements Runnable {
             ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
             accountServiceHost = props.getGrpcHostname();
             accountServicePort = props.getGrpcPort();
+            System.out.println("OrderService.CreditCheck will connect to account-service @ " + accountServiceHost + ":" + accountServicePort);
 
             // We are invoked following PriceLookup, so subscribe to those notifications
             String mapName = "JRN.CCP." + OrderPriced.getDescriptor().getFullName();
             orderPricedEvents = controller.getMap(mapName);
             IAtomicLong sequence = controller.getSequenceGenerator(mapName);
+            PriceLookupEvent.setHazelcastInstance(controller.getHazelcastInstance());
             PriceLookupEvent.subscribe(new StreamObserverToIMapAdapter<>(orderPricedEvents, sequence));
 
             // Build pipeline and submit job
@@ -101,7 +103,7 @@ public class CreditCheckPipeline implements Runnable {
 
         // EventStore as a service
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
-                ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
+                ServiceFactories.sharedService((ctx) -> new OrderEventStore(ctx.hazelcastInstance()));
 
         // IMap/Materialized View as a service
         ServiceFactory<?, IMap<String,Order>> materializedViewServiceFactory =

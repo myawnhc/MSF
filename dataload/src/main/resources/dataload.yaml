@@ -1,0 +1,13 @@
+# dataload
+---
+service_name: account-service
+grpc_hostname: acctsvc
+grpc_port: 50051
+hz_mode: embedded
+hz_client_config: hazelcast-client.ERROR.yaml
+---
+service_name: inventory-service
+grpc_hostname: invsvc
+grpc_port: 50053
+hz_mode: client-server
+hz_client_config: hazelcast-client.local.yaml

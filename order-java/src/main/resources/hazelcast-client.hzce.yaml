@@ -1,0 +1,9 @@
+hazelcast-client:
+  cluster-name: order
+  properties:
+    # Following property needed only when testing in UAT ernvironment
+    hazelcast.client.cloud.url: https://uat.hazelcast.cloud
+  network:
+    hazelcast-cloud:
+      enabled: true
+      discovery-token: TODO

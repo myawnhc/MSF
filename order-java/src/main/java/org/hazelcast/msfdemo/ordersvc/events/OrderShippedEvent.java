@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -24,14 +25,23 @@ import org.hazelcast.msfdemo.ordersvc.domain.WaitingOn;
 import java.io.Serializable;
 import java.util.EnumSet;
 
+import static org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.OrderShipped;
+
 public class OrderShippedEvent extends OrderEvent implements Serializable {
 
     private int quantityShipped;
     private String itemNumber;
     private String location;
 
-    static SubscriptionManager<OrderOuterClass.OrderShipped> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.OrderShipped.getDescriptor().getFullName());
+    static SubscriptionManager<OrderShipped> subscriptionManager;
 
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, OrderShipped.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
     public OrderShippedEvent(String orderNumber) {
         super(orderNumber);
     }

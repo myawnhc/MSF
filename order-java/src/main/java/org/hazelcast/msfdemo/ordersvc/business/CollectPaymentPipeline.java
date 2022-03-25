@@ -66,6 +66,7 @@ public class CollectPaymentPipeline implements Runnable {
             ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
             accountServiceHost = props.getGrpcHostname();
             accountServicePort = props.getGrpcPort();
+            System.out.println("OrderService.CollectPayment will connect to account-service @ " + accountServiceHost + ":" + accountServicePort);
 
             // We pull from map that has merged events
             String comboMap = "JRN.completedValidation";
@@ -90,7 +91,9 @@ public class CollectPaymentPipeline implements Runnable {
 
         // EventStore as a service
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
-                ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
+                ServiceFactories.sharedService(
+                        (ctx) -> new OrderEventStore(ctx.hazelcastInstance())
+                );
 
         // IMap/Materialized View as a service
         ServiceFactory<?, IMap<String, Order>> materializedViewServiceFactory =

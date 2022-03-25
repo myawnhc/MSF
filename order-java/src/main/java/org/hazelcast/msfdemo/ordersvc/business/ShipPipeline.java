@@ -75,7 +75,8 @@ public class ShipPipeline implements Runnable {
 
         // EventStore as a service
         ServiceFactory<?, OrderEventStore> eventStoreServiceFactory =
-                ServiceFactories.sharedService((ctx) -> OrderEventStore.getInstance());
+                ServiceFactories.sharedService((ctx) -> new OrderEventStore(ctx.hazelcastInstance())
+                );
 
         // IMap/Materialized View as a service
         ServiceFactory<?, IMap<String, Order>> materializedViewServiceFactory =

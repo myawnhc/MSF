@@ -61,11 +61,11 @@ public class ItemMapStore implements MapStore<String, Item> {
                     ")";
 
     private static final String insertItemTemplate =
-            "insert into item (item_number, description, category, price, last_updated_by) " +
+            "replace into item (item_number, description, category, price, last_updated_by) " +
                     " values (?, ?, ?, ?, ?)";
 
     private static final String insertCategoryTemplate =
-            "insert into category (category_id, description, last_updated_by) " +
+            "replace into category (category_id, description, last_updated_by) " +
                     " values (?, ?, ?)";
 
     private static final String selectItemTemplate =
@@ -76,12 +76,19 @@ public class ItemMapStore implements MapStore<String, Item> {
 
     private static final String selectKeysString = "select item_number from item";
 
+    private static final String deleteAllItemsString = "delete from item";
+    private static final String deleteAllCategoriesString = "delete from category";
+    private static final String deleteItemString = "delete from item where item_number = ?";
+
     private PreparedStatement createStatement;
     private PreparedStatement insertCategoryStatement;
     private PreparedStatement insertItemStatement;
     private PreparedStatement selectCategoryStatement;
     private PreparedStatement selectItemStatement;
     private PreparedStatement selectItemKeysStatement;
+    private PreparedStatement deleteAllItemsStatement;
+    private PreparedStatement deleteAllCategoriesStatement;
+    private PreparedStatement deleteItemStatement;
 
     public ItemMapStore() {
         // Connect and create database if it doesn't yet exist
@@ -104,7 +111,7 @@ public class ItemMapStore implements MapStore<String, Item> {
             createStatement = conn.prepareStatement(createItemTableString);
             createStatement.executeUpdate();
             createStatement.close();
-            log.info("Created Item table ");
+            //log.info("Created (if needed) Item table ");
         } catch (SQLException se) {
             se.printStackTrace();
             System.exit(-1);
@@ -116,7 +123,7 @@ public class ItemMapStore implements MapStore<String, Item> {
             createStatement = conn.prepareStatement(createCategoryTableString);
             createStatement.executeUpdate();
             createStatement.close();
-            log.info("Created Category table ");
+            //log.info("Created (if needed) Category table ");
         } catch (SQLException se) {
             se.printStackTrace();
             System.exit(-1);
@@ -229,17 +236,49 @@ public class ItemMapStore implements MapStore<String, Item> {
         for (Item item : map.values()) {
             store(item.getItemNumber(), item);
         }
-        System.out.println("StoreAll complete");
+        //System.out.println("StoreAll complete");
     }
 
     @Override
     public void delete(String s) {
-        System.out.printf("Delete %s", s);
+        try {
+            if (deleteItemStatement == null)
+                deleteItemStatement = conn.prepareStatement(deleteItemString);
+            deleteItemStatement.setString(1, s);
+            int rows = deleteItemStatement.executeUpdate();
+//            if (rows > 0)
+//                System.out.println("Deleted " + s + " from item table");
+//            else
+//                System.out.println("No record " + s + " to delete in item table");
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+
     }
 
     @Override
     public void deleteAll(Collection<String> collection) {
-        System.out.println("deleteAll");
+        System.out.println("DeleteAll items with " + collection.size() + " items");
+        for (String key : collection)
+            delete(key);
+    }
+
+    // NON-API
+    public void deleteAllItems() {
+        // Note that this deletes everything, not just the items in the collection!
+        try {
+            if (deleteAllItemsStatement == null)
+                deleteAllItemsStatement = conn.prepareStatement(deleteAllItemsString);
+            int rows = deleteAllItemsStatement.executeUpdate();
+            System.out.println(rows + " items deleted from InventoryDB by ItemMapStore");
+            if (deleteAllCategoriesStatement == null)
+                deleteAllCategoriesStatement = conn.prepareStatement(deleteAllCategoriesString);
+            rows = deleteAllCategoriesStatement.executeUpdate();
+            System.out.println(rows + " categories deleted from InventoryDB by ItemMapStore");
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+        //System.out.println("deleteAll");
     }
 
     //////////////////////////////

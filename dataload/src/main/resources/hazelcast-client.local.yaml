@@ -1,0 +1,5 @@
+hazelcast-client:
+  cluster-name: inventory
+  network:
+    cluster-members:
+      - invsvc:5721

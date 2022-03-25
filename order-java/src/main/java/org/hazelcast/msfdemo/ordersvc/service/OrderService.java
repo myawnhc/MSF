@@ -49,7 +49,7 @@ public class OrderService {
         orderDAO = new OrderDAO(controller);
 
         // Initialize the EventStore
-        eventStore = OrderEventStore.getInstance();
+        eventStore = new OrderEventStore(controller.getHazelcastInstance());
         // TODO: should have process that occasionally snapshots & compacts
 
         // Start the various Jet transaction handler pipelines

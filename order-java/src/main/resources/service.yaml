@@ -1,26 +1,18 @@
 ---
 service_name: order-service
-grpc_hostname: localhost
+grpc_hostname: ordersvc
 grpc_port: 50052
 hz_mode: embedded
+hz_client_config: hazelcast-client.local.yaml
 ---
 service_name: catalog-service
 grpc_hostname: catalogsvc
 grpc_port: 50054
-#hazelcast_hostname: catalogsvc
-#hazelcast_port: 5731
-#hazelcast_cluster_name: catalog
 ---
 service_name: inventory-service
 grpc_hostname: invsvc
 grpc_port: 50053
-#hazelcast_hostname: invsvc
-#hazelcast_port: 5721
-#hazelcast_cluster_name: inventory
 ---
 service_name: account-service
 grpc_hostname: acctsvc
 grpc_port: 50051
-#hazelcast_hostname: acctsvc
-#hazelcast_port: 5701
-#hazelcast_cluster_name: account

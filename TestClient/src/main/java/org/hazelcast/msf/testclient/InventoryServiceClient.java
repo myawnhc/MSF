@@ -35,7 +35,7 @@ public class InventoryServiceClient {
 
         ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
         String target = props.getTarget();
-        logger.info("Target from service.yaml.test " + target);
+        logger.info("Target from service.yaml " + target);
 
 
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)

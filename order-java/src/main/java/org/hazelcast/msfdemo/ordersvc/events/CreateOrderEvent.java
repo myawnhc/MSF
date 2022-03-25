@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -32,8 +33,15 @@ public class CreateOrderEvent extends OrderEvent implements Serializable  {
     private int    quantity;
     private String location;
 
-    static SubscriptionManager<OrderCreated> subscriptionManager = new SubscriptionManager<>(OrderCreated.getDescriptor().getFullName());
+    private static SubscriptionManager<OrderCreated> subscriptionManager;
 
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, OrderCreated.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
     public CreateOrderEvent(String orderNumber, String acctNumber, String itemNumber, String location,
                             int quantity) {
         super(orderNumber);

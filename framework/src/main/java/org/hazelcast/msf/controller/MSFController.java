@@ -120,7 +120,9 @@ public class MSFController {
             System.out.println("              Target cluster: " + hazelcast.getConfig().getClusterName());
 
             // HZCE doesn't have GUI support for enabling Map Journal
-            enableMapJournal();
+            String serviceName = hazelcast.getConfig().getClusterName();
+            serviceName = serviceName.substring(0, 1).toUpperCase() + serviceName.substring(1);
+            enableMapJournal(serviceName);
         }
         messageID = hazelcast.getFlakeIdGenerator("messageID");
         jobsStarted = hazelcast.getMultiMap("servicesRunning");
@@ -129,13 +131,18 @@ public class MSFController {
     public HazelcastInstance getHazelcastInstance() { return hazelcast; }
 
     // This needs to run on cluster, not on client, so need to submit this via Runnable/Callable
-    private void enableMapJournal() {
+    private void enableMapJournal(String serviceName) {
         ExecutorService executor = hazelcast.getExecutorService("Executor");
-        executor.submit(new MapJournalEnabler());
+        executor.submit(new MapJournalEnabler(serviceName));
     }
 
     public static class MapJournalEnabler implements Runnable, Serializable, HazelcastInstanceAware {
         private transient HazelcastInstance hazelcast;
+        private String serviceName;
+
+        public MapJournalEnabler(String serviceName) {
+           this.serviceName = serviceName;
+        }
 
         @Override
         public void setHazelcastInstance(HazelcastInstance hazelcastInstance) {
@@ -144,15 +151,14 @@ public class MSFController {
 
         @Override
         public void run() {
+            // Assumes the maps we're interested in journaling are of the form serviceName_*,
+            // e.g., Order_Event, Account_Event.  Since this is a temporary workaround not too
+            // worried about the assumption holding true past initial prototype work.
             MapConfig jmconfig = new MapConfig();
-            // TODO: should not be using 'Account' specific settings at this level - this is a temp
-            //  workaround for not being able to enable MapJournal thru HZCE console.  If this needs
-            //  to persist long-term, services will need to pass us patterns to use for journal
-            //  enablement.
-            jmconfig.setName("AccountEvent_*");
+            jmconfig.setName(serviceName + "_*");
             jmconfig.getEventJournalConfig().setEnabled(true).setCapacity(100000);
             hazelcast.getConfig().addMapConfig(jmconfig);
-            System.out.println("Enabled MapJournal for AccountEvent_*");
+            System.out.println("Enabled MapJournal for " + jmconfig.getName());
         }
     }
 

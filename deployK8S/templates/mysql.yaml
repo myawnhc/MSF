@@ -25,7 +25,7 @@ spec:
           name: container-mysql-invdb
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: msf-secret
+              value: secret
 
 ---
 # =========================================================
@@ -33,7 +33,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-invdb-service
+  name: invdb
 spec:
   clusterIP: None
   selector:

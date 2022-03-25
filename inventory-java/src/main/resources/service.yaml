@@ -1,3 +1,4 @@
+# inventory-java
 ---
 service_name: inventory-service
 grpc_hostname: localhost

@@ -38,6 +38,7 @@
         <module>catalog-java</module>
         <module>grpc-source</module>
         <module>mancenter</module>
+        <module>dataload</module>
 
     </modules>
 

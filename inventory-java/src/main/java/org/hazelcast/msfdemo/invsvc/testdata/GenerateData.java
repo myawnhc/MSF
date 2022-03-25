@@ -38,7 +38,7 @@ public class GenerateData {
             "Groceries", "Gardening", "Health", "Cosmetics", "Accessories",
             "Jewelry", "Camera & Photo", "Automotive", "Antiques", "Appliances" };
 
-    // Categories are build as a side effect
+    // Categories are built as a side effect
     public void generateItems(int count) {
         ItemDAO itemDAO = new ItemDAO(controller);
         int initialItemNumber = 10101;

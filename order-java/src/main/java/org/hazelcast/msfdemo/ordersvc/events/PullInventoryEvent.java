@@ -16,6 +16,7 @@
 
 package org.hazelcast.msfdemo.ordersvc.events;
 
+import com.hazelcast.core.HazelcastInstance;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.eventstore.SubscriptionManager;
 import org.hazelcast.msfdemo.ordersvc.domain.Order;
@@ -25,13 +26,23 @@ import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.function.UnaryOperator;
 
+import static org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass.InventoryPulled;
+
 public class PullInventoryEvent extends OrderEvent implements Serializable, UnaryOperator<Order> {
 
     private String itemNumber;
     private String location;
     private int quantityPulled;
 
-    private static final SubscriptionManager<OrderOuterClass.InventoryPulled> subscriptionManager = new SubscriptionManager<>(OrderOuterClass.InventoryPulled.getDescriptor().getFullName());
+    private static SubscriptionManager<InventoryPulled> subscriptionManager;
+
+    // Called from pipeline that creates the events
+    public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
+        if (subscriptionManager == null) {
+            subscriptionManager = new SubscriptionManager<>(hz, InventoryPulled.getDescriptor().getFullName());
+            subscriptionManager.setVerbose(false);
+        }
+    }
 
     public PullInventoryEvent(String orderNumber) {
         super(orderNumber);
