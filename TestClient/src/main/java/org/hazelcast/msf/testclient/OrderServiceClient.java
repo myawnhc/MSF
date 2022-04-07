@@ -29,6 +29,8 @@ import org.hazelcast.msf.configuration.ServiceConfig;
 import org.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
 import org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -40,6 +42,8 @@ public class OrderServiceClient {
     private final OrderGrpc.OrderBlockingStub blockingStub; // unused
     private final OrderGrpc.OrderFutureStub futureStub;
     private final OrderGrpc.OrderStub asyncStub;
+    // probably temporary, for debugging
+    boolean stackTraceAlreadyShown = false;
 
     private List<String> validAccounts;
 
@@ -60,8 +64,22 @@ public class OrderServiceClient {
                 .build();
 
         try {
+            System.out.println("Before OSC create");
             OrderServiceClient orderServiceClient = new OrderServiceClient(channel);
+            // Wait for service to become ready
+            System.out.println("Wait for ordersvc");
+            boolean notReady = true;
+            while (notReady) {
+                try (Socket ignored = new Socket(props.getGrpcHostname(), props.getGrpcPort())) {
+                    break;
+                } catch (IOException e) {}
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {}
+            }
+            System.out.println("Ordsvc ready, subscribe");
             orderServiceClient.subscribeToShipmentNotifications();
+            System.out.println("subscribed, send orders");
             orderServiceClient.nonBlockingOrder();
         } finally {
 
@@ -90,14 +108,18 @@ public class OrderServiceClient {
         blockingStub = OrderGrpc.newBlockingStub(channel);
         futureStub = OrderGrpc.newFutureStub(channel);
         asyncStub = OrderGrpc.newStub(channel);
+        retrieveAccountInfo();
+    }
 
+    private void retrieveAccountInfo() {
         AccountServiceClient asc = new AccountServiceClient();
         // Expect no accounts initially, but check in case we later make account info
         // persistent.
         try {
             validAccounts = asc.getAllAccountNumbers();
+            // Now that dataload is separated out, we don't expect to see empty account list
             if (validAccounts.size() == 0) {
-                logger.info("Initializing 1000 test accounts");
+                logger.info("******* UNEXPECTED ********* Initializing 1000 test accounts");
                 asc.openTestAccounts(1000);
                 validAccounts = asc.getAllAccountNumbers();
                 logger.info("After test data init, have " + validAccounts.size() + " accounts");
@@ -137,6 +159,7 @@ public class OrderServiceClient {
 //    }
 
     public void subscribeToShipmentNotifications() {
+        System.out.println("Sending subscribe request for order shipments");
         OrderOuterClass.SubscribeRequest request = OrderOuterClass.SubscribeRequest.newBuilder().build();
         asyncStub.subscribeToOrderShipped(request, new StreamObserver<>() {
 
@@ -162,7 +185,7 @@ public class OrderServiceClient {
     }
 
     public void nonBlockingOrder()  {
-        //logger.info("Starting OSC.nonBlockingOrder");
+        logger.info("Starting OSC.nonBlockingOrder");
 
         // Data generation for inventory might be happening concurrently with the
         // client sending in orders; we'd like to avoid sending orders for items
@@ -176,6 +199,7 @@ public class OrderServiceClient {
         InventoryServiceClient iclient = new InventoryServiceClient();
         // This will actually block, logging RetryableHazelcastException, until the load from
         // backing data store has completed.  So we never see partially loaded data.
+        System.out.println("Calling getInventoryRecordCount -- might block");
         int invRecordCount = iclient.getInventoryRecordCount();
         System.out.println("Starting to place orders, inventory record count " + invRecordCount);
         int NUM_LOCATIONS = 100;
@@ -210,7 +234,10 @@ public class OrderServiceClient {
                     @Override
                     public void onFailure(Throwable throwable) {
                         System.out.println("Order creation failed: " + throwable.getMessage());
-
+                        if (!stackTraceAlreadyShown) {
+                            throwable.printStackTrace();
+                            stackTraceAlreadyShown = true;
+                        }
                     }
                 }, e);
                 // When changed to server-side streaming RPC, createOrder disappeared from futureStub!

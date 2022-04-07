@@ -25,6 +25,7 @@ import org.hazelcast.msfdemo.invsvc.domain.Inventory;
 import org.hazelcast.msfdemo.invsvc.domain.Item;
 import org.hazelcast.msfdemo.invsvc.events.InventoryEventStore;
 import org.hazelcast.msfdemo.invsvc.events.InventoryGrpc;
+import org.hazelcast.msfdemo.invsvc.events.PullInventoryEvent;
 import org.hazelcast.msfdemo.invsvc.events.ReserveInventoryEvent;
 import org.hazelcast.msfdemo.invsvc.persistence.InventoryKey;
 import org.hazelcast.msfdemo.invsvc.views.InventoryDAO;
@@ -37,6 +38,15 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
     final MSFController controller = MSFController.getInstance();
     InventoryDAO inventoryDAO = new InventoryDAO(controller);
     ItemDAO itemDAO = new ItemDAO(controller);
+
+    private int unacknowledgedAddInventoryRequests = 0;
+    private int airBatchSize = 1000;
+
+    public InventoryAPIImpl() {
+        // Events need instance to support pub/sub functionality
+        ReserveInventoryEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        PullInventoryEvent.setHazelcastInstance(controller.getHazelcastInstance());
+    }
 
     @Override
     public void clearAllData(ClearAllDataRequest request, StreamObserver<ClearAllDataResponse> response) {
@@ -84,23 +94,30 @@ public class InventoryAPIImpl extends InventoryGrpc.InventoryImplBase {
 
     @Override
     public StreamObserver<AddInventoryRequest> addInventory(StreamObserver<AddInventoryResponse> response) {
-        Context ctx = Context.current().fork(); // attempt to avoid 'client cancelled' errors
+        //Context ctx = Context.current().fork(); // attempt to avoid 'client cancelled' errors
         return new StreamObserver<>() {
             @Override
             public void onNext(AddInventoryRequest addInventoryRequest) {
-                ctx.run(() -> {
-                    Inventory stock = new Inventory();
-                    stock.setItemNumber(addInventoryRequest.getItemNumber());
-                    stock.setDescription(addInventoryRequest.getDescription());
-                    stock.setLocation(addInventoryRequest.getLocation());
-                    stock.setLocationType(addInventoryRequest.getLocationType());
-                    stock.setGeohash(addInventoryRequest.getGeohash());
-                    stock.setQuantityOnHand(addInventoryRequest.getQtyOnHand());
-                    stock.setQuantityReserved(addInventoryRequest.getQtyReserved());
-                    stock.setAvailableToPromise(addInventoryRequest.getAvailToPromise());
-                    InventoryKey key = new InventoryKey(stock.getItemNumber(), stock.getLocation());
-                    inventoryDAO.insert(key, stock);
-                });
+                //ctx.run(() -> {
+                unacknowledgedAddInventoryRequests++;
+                Inventory stock = new Inventory();
+                stock.setItemNumber(addInventoryRequest.getItemNumber());
+                stock.setDescription(addInventoryRequest.getDescription());
+                stock.setLocation(addInventoryRequest.getLocation());
+                stock.setLocationType(addInventoryRequest.getLocationType());
+                stock.setGeohash(addInventoryRequest.getGeohash());
+                stock.setQuantityOnHand(addInventoryRequest.getQtyOnHand());
+                stock.setQuantityReserved(addInventoryRequest.getQtyReserved());
+                stock.setAvailableToPromise(addInventoryRequest.getAvailToPromise());
+                InventoryKey key = new InventoryKey(stock.getItemNumber(), stock.getLocation());
+                inventoryDAO.insert(key, stock);
+                if (unacknowledgedAddInventoryRequests > airBatchSize) {
+                    AddInventoryResponse batchAck = AddInventoryResponse.newBuilder().setAckCount(airBatchSize).build();
+                    response.onNext(batchAck);
+                    unacknowledgedAddInventoryRequests -= airBatchSize;
+                    //System.out.println("Acknowledged " + airBatchSize + " AddInventory requests, " + unacknowledgedAddInventoryRequests + "  still in flight");
+                }
+                //});
             }
 
             @Override

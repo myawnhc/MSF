@@ -22,12 +22,17 @@ import com.hazelcast.query.Predicates;
 import io.grpc.stub.StreamObserver;
 import org.hazelcast.msf.controller.MSFController;
 import org.hazelcast.msf.messaging.APIResponse;
+import org.hazelcast.msfdemo.ordersvc.events.ChargeAccountEvent;
 import org.hazelcast.msfdemo.ordersvc.events.CreateOrderEvent;
+import org.hazelcast.msfdemo.ordersvc.events.CreditCheckEvent;
+import org.hazelcast.msfdemo.ordersvc.events.InventoryReserveEvent;
 import org.hazelcast.msfdemo.ordersvc.events.OrderEvent;
 import org.hazelcast.msfdemo.ordersvc.events.OrderEventTypes;
 import org.hazelcast.msfdemo.ordersvc.events.OrderGrpc;
 import org.hazelcast.msfdemo.ordersvc.events.OrderOuterClass;
 import org.hazelcast.msfdemo.ordersvc.events.OrderShippedEvent;
+import org.hazelcast.msfdemo.ordersvc.events.PriceLookupEvent;
+import org.hazelcast.msfdemo.ordersvc.events.PullInventoryEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +53,17 @@ public class OrderAPIImpl extends OrderGrpc.OrderImplBase {
     final IMap<Long, APIResponse<String>> orderPipelineOutput = controller.getMap(createResponseMapName);
 
     final private Map<Long, UUID> listenersByRequestID = new HashMap<>();
+
+    public OrderAPIImpl() {
+        // TODO: pull init of these out of pipelines and do it just once here for all of them
+        ChargeAccountEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        CreateOrderEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        CreditCheckEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        InventoryReserveEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        OrderShippedEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        PriceLookupEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        PullInventoryEvent.setHazelcastInstance(controller.getHazelcastInstance());
+    }
 
 
     @Override

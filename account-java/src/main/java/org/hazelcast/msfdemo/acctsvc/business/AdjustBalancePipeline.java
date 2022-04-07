@@ -58,7 +58,6 @@ public class AdjustBalancePipeline implements Runnable {
             MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
             System.out.println("AdjustBalancePipeline.run() invoked, submitting job");
             ClassLoader cl = AdjustBalanceEvent.class.getClassLoader();
-            // tried target/classes/ext/* and every subpath therein ...
             // In Docker image, jars have been copied to /ext ...
             File fw = new File("/ext/framework-1.0-SNAPSHOT.jar");
             URL framework = fw.toURI().toURL();
@@ -99,7 +98,6 @@ public class AdjustBalancePipeline implements Runnable {
                     //System.out.println("Creating AccountEvent, returning Tuple2");
                     Long uniqueRequestID = (Long) entry.getKey();
                     AdjustBalanceRequest request = entry.getValue();
-                    AdjustBalanceEvent.setHazelcastInstance(hz);
                     AdjustBalanceEvent event = new AdjustBalanceEvent(
                             request.getAccountNumber(), request.getAmount());
                     Tuple2<Long,AdjustBalanceEvent> item = tuple2(uniqueRequestID, event);

@@ -33,7 +33,7 @@ public class StreamObserverToIMapAdapter<V> implements StreamObserver<V> {
     public void onNext(V v) {
         long key = sequence.getAndIncrement();
         map.set(key, v);
-        System.out.println("StreamObserverToIMapAdapter writes " + v.getClass().getSimpleName() + " to " + map.getName() + " sequence " + key);
+        //System.out.println("StreamObserverToIMapAdapter writes " + v.getClass().getSimpleName() + " to " + map.getName() + " sequence " + key);
     }
 
     @Override

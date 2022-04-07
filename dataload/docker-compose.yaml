@@ -57,3 +57,6 @@ services:
 
 networks:
   msfnet:
+    # share network with the docker-compose in TestClient
+    name: msfnet
+    attachable: true

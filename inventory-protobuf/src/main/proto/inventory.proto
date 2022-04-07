@@ -4,7 +4,7 @@ option java_package = "org.hazelcast.msfdemo.invsvc.events";
 
 service Inventory {
   rpc AddItem (stream AddItemRequest) returns (AddItemResponse) {}
-  rpc AddInventory (stream AddInventoryRequest) returns (AddInventoryResponse) {}
+  rpc AddInventory (stream AddInventoryRequest) returns (stream AddInventoryResponse) {}
   rpc CheckAvailability (ATPRequest) returns (ATPResponse) {}
   rpc CheckAvailabilityAllLocations (ATPRequest) returns (stream ATPResponse) {}
   rpc Ship (ShipRequest) returns (ShipResponse) {}
@@ -48,7 +48,7 @@ message AddInventoryRequest {
 }
 
 message AddInventoryResponse {
-
+  int32 ackCount = 1;
 }
 
 message ATPRequest {

@@ -82,6 +82,8 @@ public class CreditCheckPipeline implements Runnable {
             PriceLookupEvent.setHazelcastInstance(controller.getHazelcastInstance());
             PriceLookupEvent.subscribe(new StreamObserverToIMapAdapter<>(orderPricedEvents, sequence));
 
+            CreditCheckEvent.setHazelcastInstance(controller.getHazelcastInstance());
+
             // Build pipeline and submit job
             File f = new File("./order/target/OrderService-1.0-SNAPSHOT.jar");
             System.out.println("CreditCheckPipeline.run() invoked, submitting job");
@@ -180,13 +182,13 @@ public class CreditCheckPipeline implements Runnable {
                         combo.setAccountFields(ccevent);
                         map.remove(combo.getOrderNumber());
                         //completedMap.set(orderNumber, combo);
-                        System.out.println("CCPipeline: CC+IR Combo completed with acct fields " + combo);
+                        //System.out.println("CCPipeline: CC+IR Combo completed with acct fields " + combo);
                         return combo;
                     } else {
                         combo = new AccountInventoryCombo();
                         combo.setAccountFields(ccevent);
                         map.set(combo.getOrderNumber(), combo);
-                        System.out.println("CCPipeline: CC+IR Combo created with acct fields");
+                        //System.out.println("CCPipeline: CC+IR Combo created with acct fields");
                         return null;
                     }
                 })

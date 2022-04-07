@@ -97,8 +97,34 @@ public class AccountServiceClient {
         }
     }
 
+//    public List<String> getAllAccountNumbers() {
+//        return accountNumbers;
+//    }
+
     public List<String> getAllAccountNumbers() {
+        ConnectivityState state = channel.getState(true);
+        // Can treat IDLE, CONNECTING, READY as good to go
+        while( state != ConnectivityState.READY) {
+            try {
+                Thread.sleep(10_000);
+                logger.info("Waiting on acctsvc to be ready, channel state " + state.toString());
+                state = channel.getState(true);
+
+            } catch (InterruptedException e) {
+                // OK
+            }
+        }
+        logger.info("*** Connected to account service");
+        AllAccountsRequest request = AllAccountsRequest.newBuilder().build();
+        AllAccountsResponse response = blockingStub.allAccountNumbers(request);
+        accountNumbers = response.getAccountNumberList();
         return accountNumbers;
+    }
+
+    public int getNumberOfAccounts() {
+        // Refresh the list in case it has changed
+        getAllAccountNumbers();
+        return accountNumbers.size();
     }
 
     public static void main(String[] args) throws Exception {

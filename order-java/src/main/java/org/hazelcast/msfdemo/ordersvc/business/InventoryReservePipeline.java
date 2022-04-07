@@ -79,6 +79,8 @@ public class InventoryReservePipeline implements Runnable {
             PriceLookupEvent.setHazelcastInstance(controller.getHazelcastInstance());
             PriceLookupEvent.subscribe(new StreamObserverToIMapAdapter<>(orderPricedEvents, sequence));
 
+            InventoryReserveEvent.setHazelcastInstance(controller.getHazelcastInstance());
+
             // Build pipeline and submit job
             //File f = new File("./order/target/OrderService-1.0-SNAPSHOT.jar");
             System.out.println("InventoryReservePipeline.run() invoked, submitting job");

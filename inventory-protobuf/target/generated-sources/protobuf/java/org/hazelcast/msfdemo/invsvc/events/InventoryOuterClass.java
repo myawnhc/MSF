@@ -2901,6 +2901,12 @@ public final class InventoryOuterClass {
   public interface AddInventoryResponseOrBuilder extends
       // @@protoc_insertion_point(interface_extends:inventory.AddInventoryResponse)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 ackCount = 1;</code>
+     * @return The ackCount.
+     */
+    int getAckCount();
   }
   /**
    * Protobuf type {@code inventory.AddInventoryResponse}
@@ -2947,6 +2953,11 @@ public final class InventoryOuterClass {
             case 0:
               done = true;
               break;
+            case 8: {
+
+              ackCount_ = input.readInt32();
+              break;
+            }
             default: {
               if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
@@ -2979,6 +2990,17 @@ public final class InventoryOuterClass {
               org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse.class, org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse.Builder.class);
     }
 
+    public static final int ACKCOUNT_FIELD_NUMBER = 1;
+    private int ackCount_;
+    /**
+     * <code>int32 ackCount = 1;</code>
+     * @return The ackCount.
+     */
+    @java.lang.Override
+    public int getAckCount() {
+      return ackCount_;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -2993,6 +3015,9 @@ public final class InventoryOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (ackCount_ != 0) {
+        output.writeInt32(1, ackCount_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -3002,6 +3027,10 @@ public final class InventoryOuterClass {
       if (size != -1) return size;
 
       size = 0;
+      if (ackCount_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, ackCount_);
+      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -3017,6 +3046,8 @@ public final class InventoryOuterClass {
       }
       org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse other = (org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse) obj;
 
+      if (getAckCount()
+          != other.getAckCount()) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -3028,6 +3059,8 @@ public final class InventoryOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + ACKCOUNT_FIELD_NUMBER;
+      hash = (53 * hash) + getAckCount();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -3161,6 +3194,8 @@ public final class InventoryOuterClass {
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        ackCount_ = 0;
+
         return this;
       }
 
@@ -3187,6 +3222,7 @@ public final class InventoryOuterClass {
       @java.lang.Override
       public org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse buildPartial() {
         org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse result = new org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse(this);
+        result.ackCount_ = ackCount_;
         onBuilt();
         return result;
       }
@@ -3235,6 +3271,9 @@ public final class InventoryOuterClass {
 
       public Builder mergeFrom(org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse other) {
         if (other == org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse.getDefaultInstance()) return this;
+        if (other.getAckCount() != 0) {
+          setAckCount(other.getAckCount());
+        }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -3261,6 +3300,37 @@ public final class InventoryOuterClass {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private int ackCount_ ;
+      /**
+       * <code>int32 ackCount = 1;</code>
+       * @return The ackCount.
+       */
+      @java.lang.Override
+      public int getAckCount() {
+        return ackCount_;
+      }
+      /**
+       * <code>int32 ackCount = 1;</code>
+       * @param value The ackCount to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAckCount(int value) {
+        
+        ackCount_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 ackCount = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAckCount() {
+        
+        ackCount_ = 0;
+        onChanged();
         return this;
       }
       @java.lang.Override
@@ -13973,58 +14043,58 @@ public final class InventoryOuterClass {
       "r\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\022\020\n\010location" +
       "\030\003 \001(\t\022\024\n\014locationType\030\004 \001(\t\022\017\n\007geohash\030" +
       "\005 \001(\t\022\021\n\tqtyOnHand\030\006 \001(\005\022\023\n\013qtyReserved\030" +
-      "\007 \001(\005\022\026\n\016availToPromise\030\010 \001(\005\"\026\n\024AddInve" +
-      "ntoryResponse\"2\n\nATPRequest\022\022\n\nitemNumbe" +
-      "r\030\001 \001(\t\022\020\n\010location\030\002 \001(\t\" \n\013ATPResponse" +
-      "\022\021\n\tavailable\030\001 \001(\005\"E\n\013ShipRequest\022\022\n\nit" +
-      "emNumber\030\001 \001(\t\022\020\n\010location\030\002 \001(\t\022\020\n\010quan" +
-      "tity\030\003 \001(\005\"/\n\014ShipResponse\022\017\n\007success\030\001 " +
-      "\001(\010\022\016\n\006reason\030\002 \001(\t\"b\n\016ReserveRequest\022\022\n" +
-      "\nitemNumber\030\001 \001(\t\022\020\n\010location\030\002 \001(\t\022\020\n\010q" +
-      "uantity\030\003 \001(\005\022\030\n\020duration_minutes\030\004 \001(\005\"" +
-      "2\n\017ReserveResponse\022\017\n\007success\030\001 \001(\010\022\016\n\006r" +
-      "eason\030\002 \001(\t\"E\n\013PullRequest\022\022\n\nitemNumber" +
-      "\030\001 \001(\t\022\020\n\010location\030\002 \001(\t\022\020\n\010quantity\030\003 \001" +
-      "(\005\"/\n\014PullResponse\022\017\n\007success\030\001 \001(\010\022\016\n\006r" +
-      "eason\030\002 \001(\t\"\022\n\020ItemCountRequest\"\"\n\021ItemC" +
-      "ountResponse\022\r\n\005count\030\001 \001(\005\"\027\n\025Inventory" +
-      "CountRequest\"\'\n\026InventoryCountResponse\022\r" +
-      "\n\005count\030\001 \001(\005\"\025\n\023ClearAllDataRequest\"\026\n\024" +
-      "ClearAllDataResponse\"\022\n\020SubscribeRequest" +
-      "\"h\n\021InventoryReserved\022\023\n\013orderNumber\030\001 \001" +
-      "(\t\022\022\n\nitemNumber\030\002 \001(\t\022\020\n\010location\030\003 \001(\t" +
-      "\022\030\n\020quantityReserved\030\004 \001(\005\"d\n\017InventoryP" +
-      "ulled\022\023\n\013orderNumber\030\001 \001(\t\022\022\n\nitemNumber" +
-      "\030\002 \001(\t\022\020\n\010location\030\003 \001(\t\022\026\n\016quantityPull" +
-      "ed\030\004 \001(\0052\272\010\n\tInventory\022D\n\007AddItem\022\031.inve" +
-      "ntory.AddItemRequest\032\032.inventory.AddItem" +
-      "Response\"\000(\001\022S\n\014AddInventory\022\036.inventory" +
-      ".AddInventoryRequest\032\037.inventory.AddInve" +
-      "ntoryResponse\"\000(\001\022D\n\021CheckAvailability\022\025" +
-      ".inventory.ATPRequest\032\026.inventory.ATPRes" +
-      "ponse\"\000\022R\n\035CheckAvailabilityAllLocations" +
-      "\022\025.inventory.ATPRequest\032\026.inventory.ATPR" +
-      "esponse\"\0000\001\0229\n\004Ship\022\026.inventory.ShipRequ" +
-      "est\032\027.inventory.ShipResponse\"\000\022B\n\007Reserv" +
-      "e\022\031.inventory.ReserveRequest\032\032.inventory" +
-      ".ReserveResponse\"\000\0229\n\004Pull\022\026.inventory.P" +
-      "ullRequest\032\027.inventory.PullResponse\"\000\022D\n" +
-      "\tUnreserve\022\031.inventory.ReserveRequest\032\032." +
-      "inventory.ReserveResponse\"\000\022<\n\007Restock\022\026" +
-      ".inventory.PullRequest\032\027.inventory.PullR" +
-      "esponse\"\000\022K\n\014GetItemCount\022\033.inventory.It" +
-      "emCountRequest\032\034.inventory.ItemCountResp" +
-      "onse\"\000\022`\n\027GetInventoryRecordCount\022 .inve" +
-      "ntory.InventoryCountRequest\032!.inventory." +
-      "InventoryCountResponse\"\000\022Q\n\014ClearAllData" +
-      "\022\036.inventory.ClearAllDataRequest\032\037.inven" +
-      "tory.ClearAllDataResponse\"\000\022]\n\034Subscribe" +
-      "ToInventoryReserved\022\033.inventory.Subscrib" +
-      "eRequest\032\034.inventory.InventoryReserved\"\000" +
-      "0\001\022Y\n\032SubscribeToInventoryPulled\022\033.inven" +
-      "tory.SubscribeRequest\032\032.inventory.Invent" +
-      "oryPulled\"\0000\001B%\n#org.hazelcast.msfdemo.i" +
-      "nvsvc.eventsb\006proto3"
+      "\007 \001(\005\022\026\n\016availToPromise\030\010 \001(\005\"(\n\024AddInve" +
+      "ntoryResponse\022\020\n\010ackCount\030\001 \001(\005\"2\n\nATPRe" +
+      "quest\022\022\n\nitemNumber\030\001 \001(\t\022\020\n\010location\030\002 " +
+      "\001(\t\" \n\013ATPResponse\022\021\n\tavailable\030\001 \001(\005\"E\n" +
+      "\013ShipRequest\022\022\n\nitemNumber\030\001 \001(\t\022\020\n\010loca" +
+      "tion\030\002 \001(\t\022\020\n\010quantity\030\003 \001(\005\"/\n\014ShipResp" +
+      "onse\022\017\n\007success\030\001 \001(\010\022\016\n\006reason\030\002 \001(\t\"b\n" +
+      "\016ReserveRequest\022\022\n\nitemNumber\030\001 \001(\t\022\020\n\010l" +
+      "ocation\030\002 \001(\t\022\020\n\010quantity\030\003 \001(\005\022\030\n\020durat" +
+      "ion_minutes\030\004 \001(\005\"2\n\017ReserveResponse\022\017\n\007" +
+      "success\030\001 \001(\010\022\016\n\006reason\030\002 \001(\t\"E\n\013PullReq" +
+      "uest\022\022\n\nitemNumber\030\001 \001(\t\022\020\n\010location\030\002 \001" +
+      "(\t\022\020\n\010quantity\030\003 \001(\005\"/\n\014PullResponse\022\017\n\007" +
+      "success\030\001 \001(\010\022\016\n\006reason\030\002 \001(\t\"\022\n\020ItemCou" +
+      "ntRequest\"\"\n\021ItemCountResponse\022\r\n\005count\030" +
+      "\001 \001(\005\"\027\n\025InventoryCountRequest\"\'\n\026Invent" +
+      "oryCountResponse\022\r\n\005count\030\001 \001(\005\"\025\n\023Clear" +
+      "AllDataRequest\"\026\n\024ClearAllDataResponse\"\022" +
+      "\n\020SubscribeRequest\"h\n\021InventoryReserved\022" +
+      "\023\n\013orderNumber\030\001 \001(\t\022\022\n\nitemNumber\030\002 \001(\t" +
+      "\022\020\n\010location\030\003 \001(\t\022\030\n\020quantityReserved\030\004" +
+      " \001(\005\"d\n\017InventoryPulled\022\023\n\013orderNumber\030\001" +
+      " \001(\t\022\022\n\nitemNumber\030\002 \001(\t\022\020\n\010location\030\003 \001" +
+      "(\t\022\026\n\016quantityPulled\030\004 \001(\0052\274\010\n\tInventory" +
+      "\022D\n\007AddItem\022\031.inventory.AddItemRequest\032\032" +
+      ".inventory.AddItemResponse\"\000(\001\022U\n\014AddInv" +
+      "entory\022\036.inventory.AddInventoryRequest\032\037" +
+      ".inventory.AddInventoryResponse\"\000(\0010\001\022D\n" +
+      "\021CheckAvailability\022\025.inventory.ATPReques" +
+      "t\032\026.inventory.ATPResponse\"\000\022R\n\035CheckAvai" +
+      "labilityAllLocations\022\025.inventory.ATPRequ" +
+      "est\032\026.inventory.ATPResponse\"\0000\001\0229\n\004Ship\022" +
+      "\026.inventory.ShipRequest\032\027.inventory.Ship" +
+      "Response\"\000\022B\n\007Reserve\022\031.inventory.Reserv" +
+      "eRequest\032\032.inventory.ReserveResponse\"\000\0229" +
+      "\n\004Pull\022\026.inventory.PullRequest\032\027.invento" +
+      "ry.PullResponse\"\000\022D\n\tUnreserve\022\031.invento" +
+      "ry.ReserveRequest\032\032.inventory.ReserveRes" +
+      "ponse\"\000\022<\n\007Restock\022\026.inventory.PullReque" +
+      "st\032\027.inventory.PullResponse\"\000\022K\n\014GetItem" +
+      "Count\022\033.inventory.ItemCountRequest\032\034.inv" +
+      "entory.ItemCountResponse\"\000\022`\n\027GetInvento" +
+      "ryRecordCount\022 .inventory.InventoryCount" +
+      "Request\032!.inventory.InventoryCountRespon" +
+      "se\"\000\022Q\n\014ClearAllData\022\036.inventory.ClearAl" +
+      "lDataRequest\032\037.inventory.ClearAllDataRes" +
+      "ponse\"\000\022]\n\034SubscribeToInventoryReserved\022" +
+      "\033.inventory.SubscribeRequest\032\034.inventory" +
+      ".InventoryReserved\"\0000\001\022Y\n\032SubscribeToInv" +
+      "entoryPulled\022\033.inventory.SubscribeReques" +
+      "t\032\032.inventory.InventoryPulled\"\0000\001B%\n#org" +
+      ".hazelcast.msfdemo.invsvc.eventsb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -14053,7 +14123,7 @@ public final class InventoryOuterClass {
     internal_static_inventory_AddInventoryResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_inventory_AddInventoryResponse_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "AckCount", });
     internal_static_inventory_ATPRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_inventory_ATPRequest_fieldAccessorTable = new

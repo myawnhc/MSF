@@ -26,6 +26,8 @@ import org.hazelcast.msfdemo.acctsvc.domain.Account;
 import org.hazelcast.msfdemo.acctsvc.events.AccountEventTypes;
 import org.hazelcast.msfdemo.acctsvc.events.AccountGrpc;
 import org.hazelcast.msfdemo.acctsvc.events.AccountOuterClass;
+import org.hazelcast.msfdemo.acctsvc.events.AdjustBalanceEvent;
+import org.hazelcast.msfdemo.acctsvc.events.OpenAccountEvent;
 import org.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 
 import java.util.ArrayList;
@@ -59,6 +61,11 @@ public class AccountAPIImpl extends AccountGrpc.AccountImplBase {
     final private Map<Long, UUID> listenersByRequestID = new HashMap<>();
 
     private AccountDAO accountDAO = new AccountDAO(controller);
+
+    public AccountAPIImpl() {
+        AdjustBalanceEvent.setHazelcastInstance(controller.getHazelcastInstance());
+        OpenAccountEvent.setHazelcastInstance(controller.getHazelcastInstance());
+    }
 
 
     @Override

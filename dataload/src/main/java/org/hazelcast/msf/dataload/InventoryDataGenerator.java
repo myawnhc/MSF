@@ -53,6 +53,8 @@ public class InventoryDataGenerator {
     private int items; // passed in
     private int locationsPerItem = 100;
     private int warehousesPerItem = 10; // locationsPerItem - whPerItem = storesPerItem
+    private int maxInFlightRequests = 10000;
+    private int currentInFlightRequests = 0;
 
     public boolean dataloadFinished() {
         return allBatchesFinished;
@@ -257,9 +259,9 @@ public class InventoryDataGenerator {
 
                     @Override
                     public void onNext(InventoryOuterClass.AddInventoryResponse addInventoryResponse) {
-                        // Currently returns empty message, maybe just return a simple count
-                        // of items?
-                        System.out.println("IDG: Next AddInventoryResponse received");
+                        int ackCount = addInventoryResponse.getAckCount();
+                        currentInFlightRequests -= ackCount;
+                        //System.out.println("IDG: Received ack of " + ackCount + " requests, in flight now " + currentInFlightRequests);
                     }
 
                     @Override
@@ -283,6 +285,14 @@ public class InventoryDataGenerator {
 
         for (int item=startingItem; item<maxItem; item++) {
             for (int lidx = 0; lidx < locationsPerItem; lidx++) {
+                while (currentInFlightRequests > maxInFlightRequests) {
+                    System.out.println("Pausing: in flight " + currentInFlightRequests + " exceeds threshold " + maxInFlightRequests);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 int qty = (int) Math.random() * 1000;
                 String location = lidx < warehousesPerItem ? "W" + lidx : "S" + lidx;
                 String locType = lidx < warehousesPerItem ? "WH" : "S";
@@ -297,6 +307,7 @@ public class InventoryDataGenerator {
                                 .setQtyReserved(0)
                                 .setAvailToPromise(qty)
                                 .build();
+                currentInFlightRequests++;
                 requestObserver.onNext(request);
             }
         }

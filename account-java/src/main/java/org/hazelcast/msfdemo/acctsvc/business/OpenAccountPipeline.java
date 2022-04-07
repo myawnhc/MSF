@@ -86,7 +86,7 @@ public class OpenAccountPipeline implements Runnable {
                             // Stuffing HZ into the event object while we have it, as in
                             // the mapping stage we can't retrieve it easily
                             HazelcastInstance hz = ctx.hazelcastInstance();
-                            OpenAccountEvent.setHazelcastInstance(hz);
+                            //OpenAccountEvent.setHazelcastInstance(hz);
                             return hz.getFlakeIdGenerator("accountNumber");
                         }
                 );

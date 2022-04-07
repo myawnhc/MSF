@@ -52,7 +52,7 @@ public final class InventoryGrpc {
       fullMethodName = SERVICE_NAME + '/' + "AddInventory",
       requestType = org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest.class,
       responseType = org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
   public static io.grpc.MethodDescriptor<org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest,
       org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse> getAddInventoryMethod() {
     io.grpc.MethodDescriptor<org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest, org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse> getAddInventoryMethod;
@@ -61,7 +61,7 @@ public final class InventoryGrpc {
         if ((getAddInventoryMethod = InventoryGrpc.getAddInventoryMethod) == null) {
           InventoryGrpc.getAddInventoryMethod = getAddInventoryMethod =
               io.grpc.MethodDescriptor.<org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest, org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "AddInventory"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -609,7 +609,7 @@ public final class InventoryGrpc {
                   this, METHODID_ADD_ITEM)))
           .addMethod(
             getAddInventoryMethod(),
-            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
               new MethodHandlers<
                 org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest,
                 org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse>(
@@ -728,7 +728,7 @@ public final class InventoryGrpc {
      */
     public io.grpc.stub.StreamObserver<org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryRequest> addInventory(
         io.grpc.stub.StreamObserver<org.hazelcast.msfdemo.invsvc.events.InventoryOuterClass.AddInventoryResponse> responseObserver) {
-      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getAddInventoryMethod(), getCallOptions()), responseObserver);
     }
 
