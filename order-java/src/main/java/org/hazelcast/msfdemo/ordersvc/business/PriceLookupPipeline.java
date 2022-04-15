@@ -59,7 +59,7 @@ public class PriceLookupPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getInstance();
+            MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
 
             // Foreign service configuration
             ServiceConfig.ServiceProperties props = ServiceConfig.get("catalog-service");
@@ -87,67 +87,15 @@ public class PriceLookupPipeline implements Runnable {
     }
 
     private static Pipeline createPipeline() {
-        try {
-            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                    s1 = unaryService(() -> ManagedChannelBuilder.forAddress("localhost", priceLookupServicePort).usePlaintext(),
-                    channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("localhost OK");
-        } catch (Exception e) {
-            System.out.println("localhost FAILED");
-        }
-        try {
-            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                    s2 = unaryService(() -> ManagedChannelBuilder.forAddress("172.19.0.5", priceLookupServicePort).usePlaintext(),
-                channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("docker IP OK");
-        } catch (Exception e) {
-            System.out.println("docker IP FAILED");
-        }
-        try {
-            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                    s3 = unaryService(() -> ManagedChannelBuilder.forAddress("catalogsvc", priceLookupServicePort).usePlaintext(),
-                    channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("service name OK");
-        } catch (Exception e) {
-            System.out.println("service name FAILED");
-        }
-        try {
-            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                    s4 = unaryService(() -> ManagedChannelBuilder.forAddress("192.168.86.25", priceLookupServicePort).usePlaintext(),
-                    channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("actual local IP OK");
-        } catch (Exception e) {
-            System.out.println("actual local IP FAILED");
-        }
-        try {
-            ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                    s5 = unaryService(() -> ManagedChannelBuilder.forAddress("127.0.0.1", priceLookupServicePort).usePlaintext(),
-                    channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("loopback OK");
-        } catch (Exception e) {
-            System.out.println("lookback FAILED");
-        }
 
         ServiceFactory<?, ? extends GrpcService<CatalogOuterClass.PriceLookupRequest, CatalogOuterClass.PriceLookupResponse>>
-                priceLookupService = null;
-        try {
-            priceLookupService = unaryService(
-                    () -> ManagedChannelBuilder.forAddress(priceLookupServiceHost, priceLookupServicePort).usePlaintext(),
-                    channel -> CatalogGrpc.newStub(channel)::priceLookup
-            );
-            System.out.println("Managed Channel for PriceLookupService @ "+ priceLookupServiceHost + ":" + priceLookupServicePort + " OK");
-
-        } catch (Exception e) {
-            System.out.println("Managed Channel for PriceLookupService @ "+ priceLookupServiceHost + ":" + priceLookupServicePort + "failed");
-            e.printStackTrace();
-        }
+                priceLookupService = unaryService(
+                () -> ManagedChannelBuilder.forAddress(priceLookupServiceHost, priceLookupServicePort).usePlaintext(),
+                channel -> CatalogGrpc.newStub(channel)::priceLookup
+        );
 
         Pipeline p = Pipeline.create();
+        String serviceTarget = priceLookupServiceHost + ":" + priceLookupServicePort;
 
         StreamStage<Map.Entry<Long,PriceLookupEvent>> lookupStream = p.readFrom(Sources.mapJournal(orderCreatedEvents,
                 JournalInitialPosition.START_FROM_OLDEST))
@@ -160,6 +108,8 @@ public class PriceLookupPipeline implements Runnable {
                             CatalogOuterClass.PriceLookupRequest request = CatalogOuterClass.PriceLookupRequest.newBuilder()
                                     .setItemNumber(orderCreated.getItemNumber())
                                     .build();
+
+                            System.out.println("** In Order.PriceLookupPipeline, priceLookupService @ " + serviceTarget + " = " + service);
 
                             return service.call(request)
                                     .thenApply(response -> {

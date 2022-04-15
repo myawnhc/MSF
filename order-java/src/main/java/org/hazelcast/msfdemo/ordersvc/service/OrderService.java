@@ -31,7 +31,6 @@ import org.hazelcast.msfdemo.ordersvc.eventstore.OrderEventStore;
 import org.hazelcast.msfdemo.ordersvc.views.OrderDAO;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,9 +41,14 @@ public class OrderService {
     private OrderEventStore eventStore;
     public static final String SERVICE_NAME = "OrderService";
     private boolean embedded;
-    private URL clientConfigURL;
+    private byte[] clientConfig;
 
     public void init(boolean isEmbedded, byte[] clientConfig) {
+        this.embedded = isEmbedded;
+        this.clientConfig = clientConfig;
+        if (!embedded && clientConfig == null) {
+            throw new IllegalArgumentException("ClientConfig cannot be null for client-server deployment");
+        }
         controller = MSFController.createInstance(isEmbedded, clientConfig);
         orderDAO = new OrderDAO(controller);
 
@@ -76,6 +80,9 @@ public class OrderService {
         executor.submit(shipPipeline);
 
     }
+
+    public boolean isEmbedded() { return embedded; }
+    public byte[] getClientConfig() { return clientConfig; }
 
     public OrderEventStore getEventStore() { return eventStore; }
     public OrderDAO getDAO() { return orderDAO; }

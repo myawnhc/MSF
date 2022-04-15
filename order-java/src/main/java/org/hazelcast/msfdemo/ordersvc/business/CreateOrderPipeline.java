@@ -52,7 +52,7 @@ public class CreateOrderPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getInstance();
+            MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
             System.out.println("CreateOrderPipeline.run() invoked, submitting job");
             controller.startJob("OrderService", "OrderService.CreateOrder", createPipeline());
         } catch (Exception e) { // Happens if our pipeline is not valid

@@ -67,7 +67,7 @@ public class CreditCheckPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getInstance();
+            MSFController controller = MSFController.getOrCreateInstance(orderService.isEmbedded(), orderService.getClientConfig());
 
             // Foreign service configuration
             ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");

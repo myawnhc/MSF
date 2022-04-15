@@ -2,4 +2,4 @@ hazelcast-client:
   cluster-name: order
   network:
     cluster-members:
-      - 192.168.86.25:5711  # localhost for K8S, ordersvc for docker-compose ?
+      - ordersvc:5711  # localhost for K8S, ordersvc for docker-compose ?
