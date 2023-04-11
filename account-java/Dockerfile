@@ -4,6 +4,9 @@ FROM library/openjdk:11-jre-slim
 COPY target/classes/hazelcast.yaml     hazelcast.yaml
 COPY target/classes/hazelcast-client.* /
 COPY target/classes/service.yaml       service.yaml
+# Needed for cloud deployments when SSL enabled
+COPY target/classes/client.keystore    client.keystore
+COPY target/classes/client.truststore  client.truststore
 
 # add jar files (/ext directory)
 # latest framework jar will be copied to ext by maven build

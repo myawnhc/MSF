@@ -35,7 +35,7 @@ public class OpenAccountEvent extends AccountEvent implements Serializable,
     // Called from pipeline that creates the events
     public synchronized static void setHazelcastInstance(HazelcastInstance hz) {
         if (subscriptionManager == null) {
-            subscriptionManager = new SubscriptionManager<AccountOpened>(hz, AccountOpened.getDescriptor().getFullName());
+            subscriptionManager = new SubscriptionManager<>(hz, AccountOpened.getDescriptor().getFullName());
             subscriptionManager.setVerbose(false);
         }
     }

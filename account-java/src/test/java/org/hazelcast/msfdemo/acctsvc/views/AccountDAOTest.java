@@ -55,7 +55,7 @@ public class AccountDAOTest {
         ServiceConfig.ServiceProperties props = ServiceConfig.get("account-service");
         AccountService service = new AccountService();
         service.init(props.isEmbedded(), props.getClientConfig());
-        MSFController controller = MSFController.createInstance(props.isEmbedded(), props.getClientConfig());
+        MSFController controller = MSFController.createInstance("AccountService", props.isEmbedded(), props.getClientConfig());
         dao = new AccountDAO(controller);
         eventStore = service.getEventStore();
         eventStore.getEventMap().clear();

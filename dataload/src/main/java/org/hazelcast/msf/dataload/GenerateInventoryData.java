@@ -38,7 +38,7 @@ public class GenerateInventoryData {
     public GenerateInventoryData() {
         ClassLoader cl = GenerateInventoryData.class.getClassLoader();
         ServiceConfig.ServiceProperties props = ServiceConfig.get("dataload.yaml", "inventory-service", cl);
-        MSFController controller = MSFController.getOrCreateInstance(props.isEmbedded(), props.getClientConfig());
+        MSFController controller = MSFController.getOrCreateInstance("InventoryService", props.isEmbedded(), props.getClientConfig());
         itemDAO = new ItemDAO(controller);
         inventoryDAO = new InventoryDAO(controller);
     }

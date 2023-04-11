@@ -1,7 +1,0 @@
-org/hazelcast/msf/testclient/AccountServiceClient.class
-org/hazelcast/msf/testclient/AccountServiceClient$TransferRunnable.class
-org/hazelcast/msf/testclient/OrderServiceClient$1.class
-org/hazelcast/msf/testclient/AccountServiceClient$OpenRunnable.class
-org/hazelcast/msf/testclient/OrderServiceClient.class
-org/hazelcast/msf/testclient/InventoryServiceClient.class
-org/hazelcast/msf/testclient/OrderServiceClient$2.class

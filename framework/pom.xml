@@ -65,8 +65,10 @@
 
     <dependencies>
         <dependency>
+            <!-- Enterprise required for SSL, which is needed to use Cloud Serverless -->
+            <!-- comes from hazelcast-ee repository defined below -->
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
+            <artifactId>hazelcast-enterprise</artifactId>
             <version>${hazelcast-platform-version}</version>
             <scope>compile</scope>
         </dependency>
@@ -116,4 +118,13 @@
             <version>2.10.2</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>hazelcast-ee</id>
+            <name>Sonatype Repository</name>
+            <url>https://repository.hazelcast.com/release</url>
+        </repository>
+    </repositories>
+
 </project>

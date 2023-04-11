@@ -49,7 +49,7 @@ public class OrderService {
         if (!embedded && clientConfig == null) {
             throw new IllegalArgumentException("ClientConfig cannot be null for client-server deployment");
         }
-        controller = MSFController.createInstance(isEmbedded, clientConfig);
+        controller = MSFController.createInstance("OrderService", isEmbedded, clientConfig);
         orderDAO = new OrderDAO(controller);
 
         // Initialize the EventStore

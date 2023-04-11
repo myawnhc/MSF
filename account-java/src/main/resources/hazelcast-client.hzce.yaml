@@ -1,5 +1,5 @@
 hazelcast-client:
-    cluster-name: ua-1130
+    cluster-name: ua-2353
     properties:
       # Following property needed only when testing in UAT environment
       hazelcast.client.cloud.url: https://uat.hazelcast.cloud
@@ -8,9 +8,23 @@ hazelcast-client:
         enabled: false
       aws:
         enabled: false
+      ssl:
+        enabled: true
+# When SSL enabled, MSFCcontroller will set the appropriate property values
+#        factory-class-name: com.hazelcast.nio.ssl.BasicSSLContextFactory
+#        properties:
+#          protocol: TLSv1.2
+#          trustStore: client.truststore
+#          trustStorePassword: 2ec95573367
+#          trustStoreType: JKS
+#
+#          # Following properties are only needed when the mutual authentication is used.
+#          keyStore: client.keystore
+#          keyStorePassword: 2ec95573367
+#          keyStoreType: JKS
       hazelcast-cloud:
         enabled: true
-        discovery-token: wUM1VJiLK2FzrDkPIw4pMSw0ahNjRjcH5A5BeUM4ED0rRJIHO3
+        discovery-token: AIl3dNnzTk0VbRgEL2TQK5OBl9s6G109HjMqP7KFQq8oohpigO
 
 
 

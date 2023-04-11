@@ -49,6 +49,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 /** Controller class to serve as central point-of-management for Hazelcast; will be responsible for
@@ -59,6 +60,7 @@ public class MSFController {
 
     private HazelcastInstance hazelcast;
     private FlakeIdGenerator messageID;
+    private String serviceName;
 
     private MultiMap<String, String> jobsStarted;
     private boolean initialized = false;
@@ -79,9 +81,9 @@ public class MSFController {
         return Singleton.INSTANCE;
     }
 
-    public static MSFController getOrCreateInstance(boolean embedded, byte[] clientConfig) {
+    public static MSFController getOrCreateInstance(String serviceName, boolean embedded, byte[] clientConfig) {
         if (!Singleton.INSTANCE.initialized) {
-            return createInstance(embedded, clientConfig);
+            return createInstance(serviceName, embedded, clientConfig);
         } else {
             return getInstance();
         }
@@ -94,14 +96,19 @@ public class MSFController {
     // call createInstance().  Objects like EventStores and DAOs should still call
     // getInstance(), as they are always called from either a Pipeline or a Service that
     // will have initialized the controller.
-    public static MSFController createInstance(boolean embedded, byte[] clientConfig) {
-        Singleton.INSTANCE.init(embedded, clientConfig);
+    public static MSFController createInstance(String serviceName, boolean embedded, byte[] clientConfig, Properties sslProperties) {
+        Singleton.INSTANCE.init(serviceName, embedded, clientConfig, sslProperties);
         Singleton.INSTANCE.initialized = true;
         Singleton.INSTANCE.embedded = embedded;
+        Singleton.INSTANCE.serviceName = serviceName;
         return Singleton.INSTANCE;
     }
 
-    private void init(boolean embedded, byte[] clientConfig) {
+    public static MSFController createInstance(String serviceName, boolean embedded, byte[] clientConfig) {
+        return createInstance(serviceName, embedded, clientConfig, null);
+    }
+
+    private void init(String serviceName, boolean embedded, byte[] clientConfig, Properties sslProperties) {
         if (embedded) {
             Config config = new YamlConfigBuilder().build();
             config.getJetConfig().setEnabled(true);
@@ -111,18 +118,24 @@ public class MSFController {
             InputStream is = new ByteArrayInputStream(clientConfig);
             ClientConfig config = new YamlClientConfigBuilder(is).build();
 
+            if (sslProperties != null) {
+                System.out.println("Setting SSL properties programmatically");
+                config.getNetworkConfig().getSSLConfig().setEnabled(true).setProperties(sslProperties);
+            }
+
             // Doing programmatically for now since YAML marked invalid
             config.getSerializationConfig().getCompactSerializationConfig().setEnabled(true);
             System.out.println("MSFController has explicitly enabled compact serialization (can remove in 5.1)");
 
             System.out.println("MSFController starting Hazelcast Platform client with config from classpath");
             hazelcast = HazelcastClient.newHazelcastClient(config);
-            System.out.println("              Target cluster: " + hazelcast.getConfig().getClusterName());
+            System.out.println(" Target cluster: " + hazelcast.getConfig().getClusterName());
 
             // HZCE doesn't have GUI support for enabling Map Journal
-            String serviceName = hazelcast.getConfig().getClusterName();
-            serviceName = serviceName.substring(0, 1).toUpperCase() + serviceName.substring(1);
             enableMapJournal(serviceName);
+            // just for confirmation in the client logs, as executor output goes to server logs
+            serviceName = serviceName.replace("Service", "Event_*");
+            System.out.println("Enabled map journal for " + serviceName);
         }
         messageID = hazelcast.getFlakeIdGenerator("messageID");
         jobsStarted = hazelcast.getMultiMap("servicesRunning");
@@ -151,11 +164,11 @@ public class MSFController {
 
         @Override
         public void run() {
-            // Assumes the maps we're interested in journaling are of the form serviceName_*,
-            // e.g., Order_Event, Account_Event.  Since this is a temporary workaround not too
+            // Assumes the maps we're interested in journaling are of the form <serviceName>Event_*,
+            // e.g., OrderEvent_SHIP, AccountEvent_OPEN.  Since this is a temporary workaround not too
             // worried about the assumption holding true past initial prototype work.
             MapConfig jmconfig = new MapConfig();
-            jmconfig.setName(serviceName + "_*");
+            jmconfig.setName(serviceName.replace("Service", "Event_*"));
             jmconfig.getEventJournalConfig().setEnabled(true).setCapacity(100000);
             hazelcast.getConfig().addMapConfig(jmconfig);
             System.out.println("Enabled MapJournal for " + jmconfig.getName());

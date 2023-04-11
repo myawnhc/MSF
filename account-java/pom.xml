@@ -71,6 +71,7 @@
             </resource>
         </resources>
         <plugins>
+
             <!-- build jar without dependencies -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

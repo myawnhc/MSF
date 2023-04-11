@@ -26,6 +26,8 @@ import org.hazelcast.msfdemo.acctsvc.eventstore.AccountEventStore;
 import org.hazelcast.msfdemo.acctsvc.views.AccountDAO;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,7 +47,27 @@ public class AccountService {
         if (!embedded && clientConfig == null) {
             throw new IllegalArgumentException("ClientConfig cannot be null for client-server deployment");
         }
-        controller = MSFController.createInstance(isEmbedded, clientConfig);
+
+        ClassLoader classLoader = AccountService.class.getClassLoader();
+        Properties props = null;
+        URL keystorePath = classLoader.getResource("client.keystore");
+        if (keystorePath != null) {
+            props = new Properties();
+            System.out.println(" KeyStore Resource path: " + keystorePath);
+            props.setProperty("javax.net.ssl.keyStore", "client.keystore");
+            System.out.println("WARNING: TODO: hardcoded keystore password, should read from service.yaml");
+            props.setProperty("javax.net.ssl.keyStorePassword", "2ec95573367");
+        } else System.out.println(" null keystorePath");
+        URL truststorePath = classLoader.getResource("client.truststore");
+        if (truststorePath != null) {
+            if (props == null) props = new Properties();
+            System.out.println(" Truststore Resource path: " + truststorePath);
+            props.setProperty("javax.net.ssl.trustStore", "client.truststore");
+            props.setProperty("javax.net.ssl.trustStorePassword", "2ec95573367");
+        } else System.out.println(" null truststorePath");
+
+
+        controller = MSFController.createInstance("AccountService", isEmbedded, clientConfig, props);
         // DAO not currently being used but will be back as a Materialized View ...
         accountDAO = new AccountDAO(controller);
 

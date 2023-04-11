@@ -55,7 +55,7 @@ public class AdjustBalancePipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
+            MSFController controller = MSFController.getOrCreateInstance("AccountService", service.isEmbedded(), service.getClientConfig());
             System.out.println("AdjustBalancePipeline.run() invoked, submitting job");
             ClassLoader cl = AdjustBalanceEvent.class.getClassLoader();
             // In Docker image, jars have been copied to /ext ...
@@ -85,6 +85,8 @@ public class AdjustBalancePipeline implements Runnable {
         // Event object where it is needed to initialize SubscriptionManager
         ServiceFactory<?, HazelcastInstance> hzSF = ServiceFactories.sharedService( (ctx) -> {
             HazelcastInstance hz = ctx.hazelcastInstance();
+            AdjustBalanceEvent.setHazelcastInstance(hz);
+            System.out.println("AdjustBalanceEvent HZ instance initialized!");
             return hz;
         });
 
@@ -98,6 +100,7 @@ public class AdjustBalancePipeline implements Runnable {
                     //System.out.println("Creating AccountEvent, returning Tuple2");
                     Long uniqueRequestID = (Long) entry.getKey();
                     AdjustBalanceRequest request = entry.getValue();
+                    AdjustBalanceEvent.setHazelcastInstance(hz);
                     AdjustBalanceEvent event = new AdjustBalanceEvent(
                             request.getAccountNumber(), request.getAmount());
                     Tuple2<Long,AdjustBalanceEvent> item = tuple2(uniqueRequestID, event);

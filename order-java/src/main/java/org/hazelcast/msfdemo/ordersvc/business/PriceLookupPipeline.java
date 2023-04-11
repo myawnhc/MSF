@@ -59,7 +59,7 @@ public class PriceLookupPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
+            MSFController controller = MSFController.getOrCreateInstance("OrderService", service.isEmbedded(), service.getClientConfig());
 
             // Foreign service configuration
             ServiceConfig.ServiceProperties props = ServiceConfig.get("catalog-service");

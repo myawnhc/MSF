@@ -39,7 +39,7 @@ public class InventoryService {
     private URL clientConfigURL;
 
     private void init(boolean isEmbedded, byte[] clientConfig, String dbhost) {
-        controller = MSFController.createInstance(isEmbedded, clientConfig);
+        controller = MSFController.createInstance("InventoryService", isEmbedded, clientConfig);
         inventoryDAO = new InventoryDAO(controller);
         itemDAO = new ItemDAO(controller);
 

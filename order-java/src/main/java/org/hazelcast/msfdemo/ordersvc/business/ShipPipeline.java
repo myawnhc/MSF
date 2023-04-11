@@ -48,7 +48,7 @@ public class ShipPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getOrCreateInstance(orderService.isEmbedded(), orderService.getClientConfig());
+            MSFController controller = MSFController.getOrCreateInstance("OrderService", orderService.isEmbedded(), orderService.getClientConfig());
 
             // We pull from map that has merged events
             String comboMap = "JRN.completedTransactions";

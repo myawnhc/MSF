@@ -54,7 +54,7 @@ public class OpenAccountPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getOrCreateInstance(service.isEmbedded(), service.getClientConfig());
+            MSFController controller = MSFController.getOrCreateInstance("AccountService", service.isEmbedded(), service.getClientConfig());
             File fw = new File("/ext/framework-1.0-SNAPSHOT.jar");
             URL framework = fw.toURI().toURL();
             File grpc = new File("/ext/account-proto-1.0-SNAPSHOT.jar");
@@ -83,10 +83,11 @@ public class OpenAccountPipeline implements Runnable {
         ServiceFactory<?, FlakeIdGenerator> sequenceGeneratorServiceFactory =
                 ServiceFactories.sharedService(
                         (ctx) -> {
-                            // Stuffing HZ into the event object while we have it, as in
+                            // obsolete comment? Stuffing HZ into the event object while we have it, as in
                             // the mapping stage we can't retrieve it easily
                             HazelcastInstance hz = ctx.hazelcastInstance();
-                            //OpenAccountEvent.setHazelcastInstance(hz);
+                            OpenAccountEvent.setHazelcastInstance(hz);
+                            System.out.println("OpenAccountEvent HZ Instance is now set");
                             return hz.getFlakeIdGenerator("accountNumber");
                         }
                 );
@@ -101,6 +102,7 @@ public class OpenAccountPipeline implements Runnable {
                     Long uniqueRequestID = entry.getKey();
                     OpenAccountRequest request = entry.getValue();
                     long acctNumber = seqGen.newId();
+                    //OpenAccountEvent.setHazelcastInstance() needed - where to get the value?
                     OpenAccountEvent event = new OpenAccountEvent(
                             ""+acctNumber, request.getAccountName(), request.getInitialBalance());
                     Tuple2<Long,OpenAccountEvent> item = tuple2(uniqueRequestID, event);

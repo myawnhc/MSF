@@ -80,8 +80,8 @@ public abstract class EventStore<D extends DTO<K>, K, T extends SequencedEvent> 
         domainObjectConstructor = domainObjConstructor;
         // UnsupportedOperationException: Client config object only supports adding new data structure configurations
         //MapConfig existingConfig = hazelcast.getConfig().getMapConfig(mapName);
-        if (true) {
-            Config config = new Config();
+        if (false) {
+            Config config = new Config(); // Permissions (read from user.dir) on cloud serverlessId
             MapConfig mapConfig = config.getMapConfig(keyName);
             IndexConfig timeStampIndex = new IndexConfig(IndexType.SORTED);
             timeStampIndex.addAttribute("timestamp");

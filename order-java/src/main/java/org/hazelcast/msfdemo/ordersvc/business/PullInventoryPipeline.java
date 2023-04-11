@@ -60,7 +60,7 @@ public class PullInventoryPipeline implements Runnable {
     @Override
     public void run() {
         try {
-            MSFController controller = MSFController.getOrCreateInstance(orderService.isEmbedded(), orderService.getClientConfig());
+            MSFController controller = MSFController.getOrCreateInstance("OrderService", orderService.isEmbedded(), orderService.getClientConfig());
 
             // Foreign service configuration
             ServiceConfig.ServiceProperties props = ServiceConfig.get("inventory-service");
